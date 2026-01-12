@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/07 11:38:27 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/12 09:52:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	main(void)
 {
-	char	*rl;
+	char	*line;
+
 	while (1)
 	{
-		rl = readline("Minishell > ");
-		printf("%s\n", rl);
-		
+		line = readline("Minishell > ");
+		if (!*line || !line)
+			break ;
+		line_lexer(line);
+		add_history(line);
 	}
 	return (0);
 }

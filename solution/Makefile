@@ -5,7 +5,8 @@ CFLAGS = #-Wall -Wextra -Werror -g -O0
 LIBFT_DIR = libft
 SRC_DIR = src
 
-SRC_FILES = minishell.c
+SRC_FILES = minishell.c \
+	lexer/lexer.c
 
 OBJS_FILES = $(SRC_FILES:%.c=%.o)
 
