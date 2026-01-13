@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/12 10:57:39 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/13 11:27:53 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
 # include <readline/history.h>
 
 /*
-	word = TOKEN_WORD
-	|    = TOKEN_PIPE
-	<    = TOKEN_REDIR_IN
-	>    = TOKEN_REDIR_OUT
-	<<   = TOKEN_HEREDOC,
-	>>   = TOKEN_APPEND
+	0 word = TOKEN_WORD
+	1 |    = TOKEN_PIPE
+	2 <    = TOKEN_REDIR_IN
+	3 >    = TOKEN_REDIR_OUT
+	4 <<   = TOKEN_HEREDOC,
+	5 >>   = TOKEN_APPEND
 	BONUS PART
-	&&   = TOKEN_AND,
-	||   = TOKEN_OR,
-	(    = TOKEN_LPAREN,
-	)    = TOKEN_RPAREN,
-	;    = TOKEN_SEMICOLON
+	6 &&   = TOKEN_AND,
+	7 ||   = TOKEN_OR,
+	8 (    = TOKEN_LPAREN,
+	9 )    = TOKEN_RPAREN,
+	10 ;    = TOKEN_SEMICOLON
 */
 enum e_token_type
 {

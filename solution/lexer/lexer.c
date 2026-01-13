@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/12 12:02:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/13 12:46:45 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,69 +15,135 @@
 /*
 	Creates new token by type and string value
 */
-t_token *create_token(enum e_token_type type, char *value)
+int create_token(t_token **token, enum e_token_type type, char *value)
 {
 	t_token *new_token;
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (NULL);
+		return (0);
 	new_token->type = type;
 	new_token->value = value;
 	new_token->next = NULL;
-	return (new_token);
+	*token = new_token;
+	return (1);
 }
 
-int	check_command_char(t_token	*token, char *line, int start_word_pos)
+/*
+Search for double special characters (<<, >>, &&, ||)
+	in the line string from start_word_pos
+If we found this special characters - creates token
+Return
+	0-error (could't create token, malloc error)
+	1-ok
+*/
+int	search_for_double_token(t_token **token, char *line, int start_word_pos)
 {
-	int	cur_char_pos;
-	bool	isQuote;
+	if (line[start_word_pos] == '<' && line[start_word_pos + 1] == '<')
+		return (create_token(token, TOKEN_HEREDOC,
+				ft_substr(line, start_word_pos, 2)));
+	if (line[start_word_pos] == '>' && line[start_word_pos + 1] == '>')
+		return (create_token(token, TOKEN_APPEND,
+				ft_substr(line, start_word_pos, 2)));
+	if (line[start_word_pos] == '&' && line[start_word_pos + 1] == '&')
+		return (create_token(token, TOKEN_AND,
+				ft_substr(line, start_word_pos, 2)));
+	if (line[start_word_pos] == '|' && line[start_word_pos + 1] == '|')
+		return (create_token(token, TOKEN_OR,
+				ft_substr(line, start_word_pos, 2)));
+	return (1);
+}
 
-	if (line[start_word_pos + 1] == ' '
-			|| line[start_word_pos + 1] == '\0')
-	{
-		if (line[start_word_pos] == '|')
-			printf("TOKEN_PIPE\n");
-		if (line[start_word_pos] == '<')
-			printf("TOKEN_REDIR_IN\n");
-		if (line[start_word_pos] == '>')
-			printf("TOKEN_REDIR_OUT\n");
-		if (line[start_word_pos] == '(')
-			printf("TOKEN_LPAREN\n");
-		if (line[start_word_pos] == ')')
-			printf("TOKEN_RPAREN\n");
-		if (line[start_word_pos] == ';')
-			printf("TOKEN_SEMICOLON\n");
-		return (start_word_pos + 1);
-	}
-	if (line[start_word_pos + 2] == ' '
-			|| line[start_word_pos + 2] == '\0')
-	{
-		if (line[start_word_pos] == '<'
-			&& line[start_word_pos + 1] == '<')
-			printf("TOKEN_HEREDOC\n");
-		if (line[start_word_pos] == '>'
-			&& line[start_word_pos + 1] == '>')
-			printf("TOKEN_APPEND\n");
-		if (line[start_word_pos] == '&'
-			&& line[start_word_pos + 1] == '&')
-			printf("TOKEN_AND\n");
-		if (line[start_word_pos] == '|'
-			&& line[start_word_pos + 1] == '|')
-			printf("TOKEN_OR\n");
-		return (start_word_pos + 2);
-	}
+/*
+Search for single special characters (<, >, |, (, ), ;)
+	in the line string from start_word_pos
+If we found this special characters - creates token
+Return
+	0-error (could't create token, malloc error)
+	1-ok
+*/
+int	search_for_single_token(t_token **token, char *line, int start_word_pos)
+{
+	if (line[start_word_pos] == '<')
+		return (create_token(token, TOKEN_REDIR_IN,
+				ft_substr(line, start_word_pos, 1)));
+	if (line[start_word_pos] == '>')
+		return (create_token(token, TOKEN_REDIR_OUT,
+				ft_substr(line, start_word_pos, 1)));
+	if (line[start_word_pos] == '|')
+		return (create_token(token, TOKEN_PIPE,
+				ft_substr(line, start_word_pos, 1)));
+	if (line[start_word_pos] == '(')
+		return (create_token(token, TOKEN_LPAREN,
+				ft_substr(line, start_word_pos, 1)));
+	if (line[start_word_pos] == ')')
+		return (create_token(token, TOKEN_RPAREN,
+				ft_substr(line, start_word_pos, 1)));
+	if (line[start_word_pos] == ';')
+		return (create_token(token, TOKEN_SEMICOLON,
+				ft_substr(line, start_word_pos, 1)));
+	return (1);
+}
+
+/*
+Search for word
+
+Return
+	0-error (could't create token, malloc error)
+	1-ok
+*/
+int search_for_word(t_token **token, char *line, int *start_word_pos) //todo check '' and ""
+{
+	int cur_char_pos;
+
 	cur_char_pos = 0;
-	while (line[start_word_pos + cur_char_pos] != ' '
-		&& line[start_word_pos + cur_char_pos] != '\0')
+	while (line[*start_word_pos + cur_char_pos] != '\0'
+		&& line[*start_word_pos + cur_char_pos] != ' '
+		&& line[*start_word_pos + cur_char_pos] != '|'
+		&& line[*start_word_pos + cur_char_pos] != '<'
+		&& line[*start_word_pos + cur_char_pos] != '>'
+		&& line[*start_word_pos + cur_char_pos] != '&'
+		&& line[*start_word_pos + cur_char_pos] != '('
+		&& line[*start_word_pos + cur_char_pos] != ')'
+		&& line[*start_word_pos + cur_char_pos] != ';')
 	{
-		printf("char of word = %c\n", line[start_word_pos + cur_char_pos]);
 		cur_char_pos++;
 	}
-	printf("TOKEN_WORD\n");
-	return (start_word_pos + cur_char_pos);
+	if (cur_char_pos > 0)
+	{
+		if (!create_token(token, TOKEN_WORD,
+				ft_substr(line, *start_word_pos, cur_char_pos)))
+			return (0);
+		*start_word_pos = *start_word_pos + cur_char_pos;
+	}
+	return (1);
 }
 
+/*
+	Search for token
+	Return only first token in t_token **token
+	Change start_word_pos to the next token position
+	Return 0-error, 1-ok
+*/
+int	search_for_token(t_token **token, char *line, int *start_word_pos)
+{
+	*token = NULL;
+	if (!search_for_double_token(token, line, *start_word_pos))
+		return (0);
+	if (*token != NULL)
+	{
+		*start_word_pos = *start_word_pos + 2;
+		return (1);
+	}
+	if (!search_for_single_token(token, line, *start_word_pos))
+		return (0);
+	if (*token != NULL)
+	{
+		*start_word_pos = *start_word_pos + 1;
+		return (1);
+	}
+	return (search_for_word(token, line, start_word_pos));
+}
 
 t_token	*line_lexer(char *line)
 {
@@ -96,9 +162,12 @@ t_token	*line_lexer(char *line)
 		while (line[start_word_pos] == ' ')
 			start_word_pos++;
 		if (start_word_pos >= line_length)
-			break;
+			break ;
+		printf("\n");
 		printf("new word from %d\n", start_word_pos);
-		check_command_char(token, line, start_word_pos);
+		search_for_token(&token, line, &start_word_pos);
+		printf("token type=%d value='%s'\n", token->type, token->value);
+		printf("start_word_pos = %d\n", start_word_pos);
 	}
 	return (NULL);//todo return t_token
 }
