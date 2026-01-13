@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/13 12:46:45 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/13 22:07:01 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,21 +92,29 @@ Return
 	0-error (could't create token, malloc error)
 	1-ok
 */
-int search_for_word(t_token **token, char *line, int *start_word_pos) //todo check '' and ""
+int	search_for_word(t_token **token, char *line, int *start_word_pos)
 {
-	int cur_char_pos;
+	int		cur_char_pos;
+	bool	is_single_quote;
+	bool	is_double_quote;
 
 	cur_char_pos = 0;
+	is_single_quote = false;
 	while (line[*start_word_pos + cur_char_pos] != '\0'
-		&& line[*start_word_pos + cur_char_pos] != ' '
-		&& line[*start_word_pos + cur_char_pos] != '|'
-		&& line[*start_word_pos + cur_char_pos] != '<'
-		&& line[*start_word_pos + cur_char_pos] != '>'
-		&& line[*start_word_pos + cur_char_pos] != '&'
-		&& line[*start_word_pos + cur_char_pos] != '('
-		&& line[*start_word_pos + cur_char_pos] != ')'
-		&& line[*start_word_pos + cur_char_pos] != ';')
+		&& (is_single_quote || is_double_quote
+			|| (line[*start_word_pos + cur_char_pos] != ' '
+				&& line[*start_word_pos + cur_char_pos] != '|'
+				&& line[*start_word_pos + cur_char_pos] != '<'
+				&& line[*start_word_pos + cur_char_pos] != '>'
+				&& line[*start_word_pos + cur_char_pos] != '&'
+				&& line[*start_word_pos + cur_char_pos] != '('
+				&& line[*start_word_pos + cur_char_pos] != ')'
+				&& line[*start_word_pos + cur_char_pos] != ';')))
 	{
+		if (!is_double_quote && line[*start_word_pos + cur_char_pos] == '\'')
+			is_single_quote = !is_single_quote;
+		if (!is_single_quote && line[*start_word_pos + cur_char_pos] == '\"')
+			is_double_quote = !is_double_quote;
 		cur_char_pos++;
 	}
 	if (cur_char_pos > 0)
