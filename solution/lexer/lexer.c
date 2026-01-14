@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/13 22:07:01 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/14 09:53:53 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,35 @@ int create_token(t_token **token, enum e_token_type type, char *value)
 	new_token->next = NULL;
 	*token = new_token;
 	return (1);
+}
+
+void add_new_token(t_token **head, t_token *new_token)
+{
+	t_token *token;
+
+	if (new_token == NULL)
+		return ;
+	if (*head == NULL)
+	{
+		*head = new_token;
+		return ;
+	}
+	token = *head;
+	while (token->next != NULL)
+		token = token->next;
+	token->next = new_token;
+}
+
+void print_token_list(t_token *head)
+{
+	t_token *token;
+
+	token = head;
+	while (token != NULL)
+	{
+		printf("\ntoken type=%d value='%s'\n", token->type, token->value);
+		token = token->next;
+	}
 }
 
 /*
@@ -86,7 +115,7 @@ int	search_for_single_token(t_token **token, char *line, int start_word_pos)
 }
 
 /*
-Search for word
+Search for a word
 
 Return
 	0-error (could't create token, malloc error)
@@ -128,14 +157,13 @@ int	search_for_word(t_token **token, char *line, int *start_word_pos)
 }
 
 /*
-	Search for token
+	Search for a token
 	Return only first token in t_token **token
 	Change start_word_pos to the next token position
 	Return 0-error, 1-ok
 */
 int	search_for_token(t_token **token, char *line, int *start_word_pos)
 {
-	*token = NULL;
 	if (!search_for_double_token(token, line, *start_word_pos))
 		return (0);
 	if (*token != NULL)
@@ -153,29 +181,31 @@ int	search_for_token(t_token **token, char *line, int *start_word_pos)
 	return (search_for_word(token, line, start_word_pos));
 }
 
-t_token	*line_lexer(char *line)
+t_token *line_lexer(char *line)
 {
 	int	start_word_pos;
 	int	line_length;
-	enum e_token_type	type;
-	t_token	*token;
+	t_token *token_head;
+	t_token *next_token;
 
 	if (!line)
 		return (NULL);
 	start_word_pos = 0;
 	line_length = strlen(line);
 	printf("line len = %d\n", line_length);
+	token_head = NULL;
 	while (start_word_pos < line_length)
 	{
+		next_token = NULL;
 		while (line[start_word_pos] == ' ')
 			start_word_pos++;
 		if (start_word_pos >= line_length)
 			break ;
 		printf("\n");
-		printf("new word from %d\n", start_word_pos);
-		search_for_token(&token, line, &start_word_pos);
-		printf("token type=%d value='%s'\n", token->type, token->value);
+		search_for_token(&next_token, line, &start_word_pos);
+		add_new_token(&token_head, next_token);
 		printf("start_word_pos = %d\n", start_word_pos);
 	}
+	print_token_list(token_head);
 	return (NULL);//todo return t_token
 }
