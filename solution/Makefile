@@ -6,7 +6,11 @@ LIBFT_DIR = libft
 SRC_DIR = src
 
 SRC_FILES = minishell.c \
-	lexer/lexer.c
+	lexer/lexer.c \
+	lexer/line_lexer.c \
+	lexer/token_list_manager.c \
+	lexer/lexical_errors.c \
+	lexer/need_next_line.c
 
 OBJS_FILES = $(SRC_FILES:%.c=%.o)
 

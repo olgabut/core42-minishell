@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/13 11:27:53 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/18 18:17:03 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,17 @@ typedef struct s_token
 {
 	enum e_token_type	type;
 	char				*value;
-	bool				isFinish;
 	struct s_token		*next;
 }	t_token;
 
-t_token	*line_lexer(char *line);
+// lexer
+int		lexer(t_token **token_head);
+int		line_lexer(t_token **token_head, char *line);
+int		create_token(t_token **token, enum e_token_type type, char *value);
+void	add_new_token(t_token **head, t_token *new_token);
+t_token	*get_last_token(t_token *head);
+void	print_token_list(t_token *head);
+bool	command_with_error(t_token *token_head);
+bool	need_next_line(t_token *token_head);
 
 #endif
