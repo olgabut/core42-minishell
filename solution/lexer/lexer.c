@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/18 18:33:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/18 19:06:48 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 int	lexer(t_token **token_head)
 {
 	char	*line;
-	char *next_line;
-	bool need_new_line;
 
 	line = NULL;
 	*token_head = NULL;

@@ -1,7 +1,8 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror -g -O0
+CFLAGS = -Wall -Wextra -Werror -g -O0 #-fsanitize=address
+
 LIBFT_DIR = libft
 SRC_DIR = src
 

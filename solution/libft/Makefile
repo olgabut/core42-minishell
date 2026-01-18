@@ -1,14 +1,14 @@
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 SRC = ft_substr.c \
-	ft_count_words_in_str.c \
 	ft_strlen.c \
 	ft_strtoint.c \
 	ft_max.c \
 	ft_min.c \
-	ft_print_string.c
+	ft_print_string.c \
+	memory_manager/memory_manager.c
 
 OBJS = $(SRC:%.c=%.o)
 
