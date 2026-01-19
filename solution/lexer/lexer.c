@@ -6,20 +6,18 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/18 19:06:48 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:17:38 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 /*
 	Return
 		0 = we need to stop program (error)
 		1 = OK, continue
 */
-int	lexer(t_token **token_head)
+int	lexer(t_memory_info **memory_head, t_token **token_head)
 {
 	char	*line;
 
@@ -28,11 +26,12 @@ int	lexer(t_token **token_head)
 	line = readline("Minishell> ");
 	if (line == NULL)
 		return (0);
-	if (!line_lexer(token_head, line))
+	add_new_memory_link_for_control(memory_head, line);
+	if (!line_lexer(memory_head, token_head, line))
 		return (0);
 	if (command_with_error(*token_head))
 	{
-		// free current (we will be waiting new line from scratch)
+		free_memory_links(*memory_head);
 		return (1);
 	}
 	printf("before chack need new line \n");

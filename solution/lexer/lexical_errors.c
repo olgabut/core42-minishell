@@ -6,26 +6,26 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/18 18:25:20 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:19:05 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool print_lexical_error(char *print_string, bool result)
+bool	print_lexical_error(char *print_string, bool result)
 {
 	ft_print_string(print_string);
 	return (result);
 }
 
-bool command_error_close_brace_before_open(t_token *token_head)
+bool	command_error_close_brace_before_open(t_token *token_head)
 {
-	int open_braces;
-	t_token *token;
+	int		open_braces;
+	t_token	*token;
 
 	token = token_head;
 	open_braces = 0;
-	while(token != NULL)
+	while (token != NULL)
 	{
 		if (token->type == TOKEN_RPAREN)
 		{
@@ -40,9 +40,9 @@ bool command_error_close_brace_before_open(t_token *token_head)
 	return (false);
 }
 
-bool command_error_wrong_token_sequence(t_token *token_head)
+bool	command_error_wrong_token_sequence(t_token *token_head)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = token_head;
 	while (token->next != NULL)

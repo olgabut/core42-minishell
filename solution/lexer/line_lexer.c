@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/18 15:51:40 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:10:05 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ int	search_for_token(t_token **token, char *line, int *start_word_pos)
 	return (search_for_word(token, line, start_word_pos));
 }
 
-int	line_lexer(t_token **token_head, char *line)
+int	line_lexer(t_memory_info **memory_head,
+	t_token **token_head, char *line)
 {
 	int		start_word_pos;
 	int		line_length;
@@ -156,6 +157,8 @@ int	line_lexer(t_token **token_head, char *line)
 			break ;
 		if (!search_for_token(&next_token, line, &start_word_pos))
 			return (0);
+		add_new_memory_link_for_control(memory_head, next_token->value);
+		add_new_memory_link_for_control(memory_head, next_token);
 		add_new_token(token_head, next_token);
 	}
 	return (1);

@@ -6,18 +6,18 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 10:43:47 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/18 14:38:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:20:35 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool wait_for_closing_quote(t_token *token_head)
+bool	wait_for_closing_quote(t_token *token_head)
 {
-	t_token *last_token;
-	char *line;
-	char cur_quote;
-	int i;
+	t_token	*last_token;
+	char	*line;
+	char	cur_quote;
+	int		i;
 
 	cur_quote = '0';
 	last_token = get_last_token(token_head);
@@ -40,7 +40,7 @@ bool wait_for_closing_quote(t_token *token_head)
 	return (false);
 }
 
-bool need_next_line(t_token *token_head)
+bool	need_next_line(t_token *token_head)
 {
 	return (wait_for_closing_quote(token_head));
 }
