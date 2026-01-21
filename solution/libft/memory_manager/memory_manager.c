@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 18:44:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/19 09:16:01 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/21 14:12:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include <stdio.h>
 
 void	free_memory_links(t_memory_info *head)
 {
@@ -21,8 +22,11 @@ void	free_memory_links(t_memory_info *head)
 	while (node != NULL)
 	{
 		next_node = node->next;
-		free(node->link);
-		node->link = NULL;
+		if (node->link)
+		{
+			free(node->link);
+			node->link = NULL;
+		}
 		free(node);
 		node = next_node;
 	}
@@ -53,11 +57,13 @@ int	add_new_memory_link_for_control(t_memory_info **head, void *new_link)
 		free_memory_links(*head);
 		return (0);
 	}
+	printf("create memory_node\n");
 	if (*head == NULL)
 	{
 		*head = new_line_node;
 		return (1);
 	}
+	printf("before add new memory_node");
 	link_node = *head;
 	while (link_node->next != NULL)
 		link_node = link_node->next;

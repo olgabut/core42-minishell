@@ -6,11 +6,33 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/19 09:03:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/21 14:31:56 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*
+	Free all tokens
+*/
+void	free_tokens(t_token *head)
+{
+	t_token	*token;
+	t_token	*next_token;
+
+	token = head;
+	while (token != NULL)
+	{
+		next_token = token->next;
+		if (token->value)
+		{
+			free(token->value);
+			token->value = NULL;
+		}
+		free(token);
+		token = next_token;
+	}
+}
 
 /*
 	Creates new token by type and string value
@@ -67,6 +89,7 @@ void	print_token_list(t_token *head)
 	t_token	*token;
 
 	token = head;
+	printf("Print tokens:\n");
 	while (token != NULL)
 	{
 		printf("\ntoken type=%d value='%s'\n",
