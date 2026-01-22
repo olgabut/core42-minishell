@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 09:12:08 by obutolin         ###   ########.fr       */
+/*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
+/*   Updated: 2026/01/22 09:37:27 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	main(void)
+#include "../minishell.h"
+// Run
+// 
+int main(void)
 {
-	t_memory_info	*memory_head;
-	t_token			*token_head;
-
-	signals();
-	while (1)
-	{
-		if (!lexer(&memory_head, &token_head))
-			break ;
-		// if (token_head)
-		// {
-		// 	//continue
-		// }
-
-		// if (pid == 0)
-		// {
-		// 	signal(SIGINT, SIG_DFL);
-		// 	signal(SIGQUIT, SIG_DFL);
-		// 	execve(...);
-		// }
-	}
-	free_tokens(token_head);
+	command_with_error(NULL);
 	return (0);
 }

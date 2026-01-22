@@ -9,15 +9,19 @@ READLINE_LIB = /opt/homebrew/opt/readline/lib
 LIBFT_DIR = libft
 SRC_DIR = src
 
-SRC_FILES = minishell.c \
-	lexer/lexer.c \
+SRC_FILES_WITH_MAIN = minishell.c $(SRC_FILES)
+SRC_FILES = lexer/lexer.c \
 	lexer/line_lexer.c \
 	lexer/token_list_manager.c \
 	lexer/lexical_errors.c \
 	lexer/need_next_line.c \
 	signals/signals.c
 
-OBJS_FILES = $(SRC_FILES:%.c=%.o)
+TEST_NAME = tests
+TEST_FILES = test/test.c $(SRC_FILES)
+OBJS_TEST_FILES = $(TEST_FILES:%.c=%.o)
+
+OBJS_FILES = $(SRC_FILES_WITH_MAIN:%.c=%.o)
 
 all: $(NAME)
 
@@ -28,12 +32,18 @@ $(NAME): $(OBJS_FILES)
 	@$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJS_FILES) -L$(LIBFT_DIR) -L$(READLINE_LIB) -lft -lreadline -o $(NAME)
 
+tests: $(OBJS_TEST_FILES)
+	@$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $(OBJS_TEST_FILES) -L$(LIBFT_DIR) -lft -lreadline -o $(TEST_NAME)
+
 clean:
 	rm -f $(OBJS_FILES)
+	rm -f $(OBJS_TEST_FILES)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f $(TEST_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all

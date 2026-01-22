@@ -6,13 +6,13 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/21 12:13:09 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/22 09:11:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-volatile sig_atomic_t	g_sig_type = 0;
+// volatile sig_atomic_t	g_sig_type = 0;
 
 void	print_sigaction_error(void)
 {
@@ -30,18 +30,16 @@ void	print_sigaction_error(void)
 			"Error: unknown problem while setting signal handler.\n");
 }
 
-void signals_handler(int sig)
+void sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_sig_type = 'C';
+		// g_sig_type = 'C';
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (sig == SIGQUIT)
-		g_sig_type = '\\';
 }
 
 /*
@@ -61,11 +59,11 @@ void	signals(void)
 {
 	struct sigaction sa;
 
-	sa.sa_handler = &signals_handler;
-	// sigemptyset(&sa.sa_mask);
+	sa.sa_handler = &sigint_handler;
+	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1
-		|| sigaction(SIGQUIT, &sa, NULL) == -1)
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		// || sigaction(SIGQUIT, &sa, NULL) == -1)
 		print_sigaction_error();
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

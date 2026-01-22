@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/19 09:19:05 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/22 09:25:23 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ bool	command_with_error(t_token *token_head)
 {
 	t_token	*last_token;
 
+	printf("start to check errors in command\n");
 	if (token_head == NULL)
 		return (true);
-	printf("start to check errors in command\n");
 	last_token = get_last_token(token_head);
 	printf("last token = %s\n", last_token->value);
 	if (token_head->type == TOKEN_PIPE)
