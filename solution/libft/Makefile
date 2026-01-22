@@ -4,9 +4,9 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC = ft_substr.c \
 	ft_strlen.c \
+	ft_strncmp.c \
+	ft_strlcpy.c \
 	ft_strtoint.c \
-	ft_max.c \
-	ft_min.c \
 	ft_print_string.c \
 	memory_manager/memory_manager.c
 

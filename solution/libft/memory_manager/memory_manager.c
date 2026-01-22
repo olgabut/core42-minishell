@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 18:44:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 11:01:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/22 11:22:05 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ void	free_memory_links(t_memory_info *head)
 	t_memory_info	*next_node;
 
 	node = head;
-	printf("free_memory_links\n");
 	while (node != NULL)
 	{
 		next_node = node->next;
-		printf("before free line = '%s'\n", node->link);
 		free(node->link);
 		node->link = NULL;
 		free(node);
@@ -44,6 +42,10 @@ int	create_memory_link_node(t_memory_info **new_memory_info, void *new_link)
 	return (1);
 }
 
+/* Return
+	1 - ok
+	0 - malloc error
+ */
 int	add_new_memory_link_for_control(t_memory_info **head, void *new_link)
 {
 	t_memory_info	*link_node;
@@ -52,10 +54,7 @@ int	add_new_memory_link_for_control(t_memory_info **head, void *new_link)
 	if (new_link == NULL)
 		return (1);
 	if (!create_memory_link_node(&new_line_node, new_link))
-	{
-		free_memory_links(*head);
 		return (0);
-	}
 	if (*head == NULL)
 	{
 		*head = new_line_node;
