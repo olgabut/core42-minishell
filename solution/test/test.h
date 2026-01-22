@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 10:12:18 by obutolin         ###   ########.fr       */
+/*   Created: 2026/01/22 10:04:19 by obutolin          #+#    #+#             */
+/*   Updated: 2026/01/22 10:16:42 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include "test.h"
+#ifndef TEST_H
+# define TEST_H
 
-// Run
-// make tests
 
-int main(void)
-{
-	test_lexer();
-	return (0);
-}
+// lexer
+void	test_lexer(void);
+
+#endif

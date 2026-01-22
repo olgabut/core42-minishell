@@ -18,7 +18,9 @@ SRC_FILES = lexer/lexer.c \
 	signals/signals.c
 
 TEST_NAME = tests
-TEST_FILES = test/test.c $(SRC_FILES)
+TEST_FILES = $(SRC_FILES) \
+	test/test.c \
+	test/test_lexer.c
 OBJS_TEST_FILES = $(TEST_FILES:%.c=%.o)
 
 OBJS_FILES = $(SRC_FILES_WITH_MAIN:%.c=%.o)

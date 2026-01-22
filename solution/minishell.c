@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 09:12:08 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/22 11:03:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ int	main(void)
 	t_memory_info	*memory_head;
 	t_token			*token_head;
 
+	memory_head = NULL;
+	token_head = NULL;
 	signals();
 	while (1)
 	{
 		if (!lexer(&memory_head, &token_head))
+		{
+			printf("ctrl+D\n");
 			break ;
-		// if (token_head)
-		// {
-		// 	//continue
-		// }
+		}
+		if (token_head)
+		{
+			printf("Next step PARSING\n");
+		}
 
 		// if (pid == 0)
 		// {
@@ -34,6 +39,6 @@ int	main(void)
 		// 	execve(...);
 		// }
 	}
-	free_tokens(token_head);
+	free_memory_links(memory_head);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/21 14:51:14 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/01/22 11:04:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,15 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 {
 	char	*line;
 
-	*memory_head = NULL;
 	line = NULL;
-	*token_head = NULL;
 	line = readline("Minishell> ");
-	printf("line = '%s'\n", line);
 	if (line == NULL)
 		return (0);
+	add_new_memory_link_for_control(memory_head, line);
+	if (line[0] == '\0')
+		return (1);
 	if (!line_lexer(memory_head, token_head, line))
-	{
-		free(line);
 		return (0);
-	}
 	// if (command_with_error(*token_head))
 	// {
 	// 	free_memory_links(*memory_head);
@@ -44,6 +41,5 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 	// }
 	print_token_list(*token_head);
 	add_history(line);
-	free(line);
 	return (1);
 }
