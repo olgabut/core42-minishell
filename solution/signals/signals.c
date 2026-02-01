@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 09:11:57 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/01 18:59:41 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void sigint_handler(int sig)
 		// g_sig_type = 'C';
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);//macOS don't have
 		rl_redisplay();
 	}
 }
