@@ -6,12 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:46:39 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 12:12:19 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/02 10:55:00 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
 /*
 	The ft_strlcpy() copies a string from one place to another.

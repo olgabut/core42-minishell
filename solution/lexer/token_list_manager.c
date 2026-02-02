@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/21 14:31:56 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/02 09:22:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	free_tokens(t_token *head)
 
 /*
 	Creates new token by type and string value
+	Return
+		1 - ok
+		0 - malloc error
 */
 int	create_token(
 	t_token **token, enum e_token_type type, char *value)

@@ -6,6 +6,8 @@ SRC = ft_substr.c \
 	ft_strlen.c \
 	ft_strncmp.c \
 	ft_strlcpy.c \
+	ft_strjoin.c \
+	ft_straddchar.c \
 	ft_strtoint.c \
 	ft_print_string.c \
 	memory_manager/memory_manager.c

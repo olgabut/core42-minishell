@@ -6,12 +6,10 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 10:45:41 by obutolin          #+#    #+#             */
-/*   Updated: 2025/09/08 09:59:00 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/02 10:55:36 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "libft.h"
 
 /*

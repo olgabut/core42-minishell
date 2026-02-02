@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_straddchar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 13:44:25 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/02 10:55:17 by obutolin         ###   ########.fr       */
+/*   Created: 2026/02/02 10:15:30 by obutolin          #+#    #+#             */
+/*   Updated: 2026/02/02 11:08:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-	The ft_strlen() function shall compute the number of bytes in the string
-	to which s points, not including the terminating NUL character.
-*/
-size_t	ft_strlen(const char *s)
+char	*ft_straddchar(const char *str, char c)
 {
-	int	i;
+	size_t len;
+	char *new_str;
 
-	i = 0;
-	while (s[i] != 0)
-		i++;
-	return (i);
+	len = ft_strlen(str);
+	new_str = malloc(len + 2);
+	if (!new_str)
+		return NULL;
+	ft_strlcpy(new_str, str, len + 2);
+	new_str[len] = c;
+	new_str[len + 1] = '\0';
+	return new_str;
 }
-
-// int main()
-// {
-// 	printf("%lu %lu\n", strlen(""), ft_strlen(""));
-// 	printf("%lu %lu\n", strlen("123"), ft_strlen("123"));
-// }
