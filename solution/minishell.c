@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 11:18:10 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/03 12:59:12 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(void)
 			printf("ctrl+D\n");
 			break ;
 		}
-		if (token_head)
+		if (token_head != NULL)
 		{
 			printf("Next step PARSING\n");
 		}

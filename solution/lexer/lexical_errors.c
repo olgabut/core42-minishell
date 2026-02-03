@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 09:25:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/03 13:38:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ bool	command_error_wrong_token_sequence(t_token *token_head)
 				|| token->next->type == TOKEN_REDIR_IN))
 			return (true);
 		if (token->type == TOKEN_APPEND
-			&& token->next->type == TOKEN_REDIR_OUT)
+			&& (token->next->type == TOKEN_REDIR_OUT
+				|| token->next->type == TOKEN_REDIR_IN))
 			return (true);
 		if (token->type == TOKEN_SEMICOLON
 			&& token->next->type == TOKEN_SEMICOLON)
@@ -78,16 +79,14 @@ bool	command_with_error(t_token *token_head)
 {
 	t_token	*last_token;
 
-	printf("start to check errors in command\n");
 	if (token_head == NULL)
 		return (true);
 	last_token = get_last_token(token_head);
-	printf("last token = %s\n", last_token->value);
+	// printf("last token = %s\n", last_token->value);
 	if (token_head->type == TOKEN_PIPE)
 		return (print_lexical_error(
 				"ERROR near unexpected token `|`.\n", true));
-	if (token_head->type == TOKEN_SEMICOLON
-		|| last_token->type == TOKEN_SEMICOLON)
+	if (token_head->type == TOKEN_SEMICOLON)
 		return (print_lexical_error(
 				"ERROR near unexpected token `;`.\n", true));
 	if (token_head->type == TOKEN_AND)
@@ -96,7 +95,7 @@ bool	command_with_error(t_token *token_head)
 	if (token_head->type == TOKEN_OR)
 		return (print_lexical_error(
 				"ERROR near unexpected token `||`.\n", true));
-	if (last_token->type == TOKEN_HEREDOC || last_token->type == TOKEN_PIPE)
+	if (last_token->type == TOKEN_HEREDOC)
 		return (print_lexical_error(
 				"ERROR near unexpected token `newline`.\n",
 				true));

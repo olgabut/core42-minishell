@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/02 12:22:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/03 13:02:06 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,26 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 	if (line[0] == '\0')
 		return (1);
 	if (!line_lexer(memory_head, token_head, line))
-		return (0);
-	// while (need_next_line(*token_head))
-	// {
-	// 	new_line = readline("> ");
-	// 	if (!add_new_line(memory_head, &line, new_line))
-	// 		return (0);
-	// 	*memory_head = NULL;
-	// 	*token_head = NULL;
-	// 	add_new_memory_link_for_control(memory_head, line);
-	// 	printf("long line = '%s'\n", line);
-	// 	if (!line_lexer(memory_head, token_head, line))
-	// 		return (0);
-	// }
-
-
-	// if (command_with_error(*token_head))
-	// {
-	// 	free_memory_links(*memory_head);
-	// 	return (1);
-	// }
-	
+		return (1);
+	if (command_with_error(*token_head))
+	{
+		free_memory_links(*memory_head);
+		*memory_head = NULL;
+		*token_head = NULL;
+		return (1);
+	}
+	while (need_next_line(*token_head))
+	{
+		new_line = readline("> ");
+		if (!add_new_line(memory_head, &line, new_line))
+			return (0);
+		*memory_head = NULL;
+		*token_head = NULL;
+		add_new_memory_link_for_control(memory_head, line);
+		printf("long line = '%s'\n", line);
+		if (!line_lexer(memory_head, token_head, line))
+			return (0);
+	}
 	print_token_list(*token_head);
 	add_history(line);
 	return (1);

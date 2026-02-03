@@ -2,14 +2,31 @@
 
 ## Plan
 
-main
- ├── readline loop
- ├── lexer (tokens)
- ├── parser
- ├── executor
- ├── builtins
- ├── env
- └── signals
+
+## lexer (tokens)
+## parser
+## heredoc_handler
+## executor
+## builtins
+## env
+## signals
+
+
+Redirections
+>>
+>
+<<
+<
+Pipes
+|
+Commands
+echo with option -n
+cd with only a relative or absolute path
+pwd with no options
+export with no options
+unset with no options
+env with no options or arguments
+exit with no options
 
 
 Description

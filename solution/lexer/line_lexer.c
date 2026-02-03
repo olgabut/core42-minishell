@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/02 09:27:41 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/03 08:44:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	search_for_word(t_token **token, char *line, int *start_word_pos)
 	while (line[*start_word_pos + cur_char_pos] != '\0'
 		&& (is_single_quote || is_double_quote
 			|| (line[*start_word_pos + cur_char_pos] != ' '
+				&& line[*start_word_pos + cur_char_pos] != '\n'
 				&& line[*start_word_pos + cur_char_pos] != '|'
 				&& line[*start_word_pos + cur_char_pos] != '<'
 				&& line[*start_word_pos + cur_char_pos] != '>'
@@ -151,7 +152,7 @@ int	line_lexer(t_memory_info **memory_head,
 	while (start_word_pos < line_length)
 	{
 		next_token = NULL;
-		while (line[start_word_pos] == ' ')
+		while (line[start_word_pos] == ' ' || line[start_word_pos] == '\n')
 			start_word_pos++;
 		if (start_word_pos >= line_length)
 			break ;
