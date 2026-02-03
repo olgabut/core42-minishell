@@ -2,3 +2,5 @@
 minishell
 .vscode
 tests
+*/*.a
+compile_commands.json
