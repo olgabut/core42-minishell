@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/03 12:59:12 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 10:07:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	main(void)
 		// 	signal(SIGQUIT, SIG_DFL);
 		// 	execve(...);
 		// }
-		free_memory_links(memory_head);
+		free_memory_links(&memory_head);
 	}
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 	return (0);
 }

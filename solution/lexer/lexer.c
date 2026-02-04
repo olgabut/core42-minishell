@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/03 13:02:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 10:13:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int add_new_line(t_memory_info **memory_head, char **line, char *new_line)
 	new_long_line = ft_strjoin(new_long_line, new_line);
 	if (new_long_line == NULL)
 		return (0);
-	free_memory_links(*memory_head);
+	free_memory_links(memory_head);
 	*line = new_long_line;
 	return (1);
 }
@@ -57,8 +57,8 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 		return (1);
 	if (command_with_error(*token_head))
 	{
-		free_memory_links(*memory_head);
-		*memory_head = NULL;
+		free_memory_links(memory_head);
+		printf("token_head after free = %s", (*token_head)->value);
 		*token_head = NULL;
 		return (1);
 	}
@@ -67,7 +67,6 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 		new_line = readline("> ");
 		if (!add_new_line(memory_head, &line, new_line))
 			return (0);
-		*memory_head = NULL;
 		*token_head = NULL;
 		add_new_memory_link_for_control(memory_head, line);
 		printf("long line = '%s'\n", line);

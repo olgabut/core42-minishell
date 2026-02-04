@@ -6,19 +6,19 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 18:44:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 11:22:05 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 10:15:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 #include <stdio.h>
 
-void	free_memory_links(t_memory_info *head)
+void	free_memory_links(t_memory_info **head)
 {
 	t_memory_info	*node;
 	t_memory_info	*next_node;
 
-	node = head;
+	node = *head;
 	while (node != NULL)
 	{
 		next_node = node->next;
@@ -27,6 +27,7 @@ void	free_memory_links(t_memory_info *head)
 		free(node);
 		node = next_node;
 	}
+	*head = NULL;
 }
 
 int	create_memory_link_node(t_memory_info **new_memory_info, void *new_link)

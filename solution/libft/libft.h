@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:39:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/02 10:55:48 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 10:07:22 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ char	*ft_straddchar(const char *str, char c);
 int		ft_strtoint(int *num_result, char *str);
 void	ft_print_string(char *str);
 int		add_new_memory_link_for_control(t_memory_info **head, void *new_link);
-void	free_memory_links(t_memory_info *head);
+void	free_memory_links(t_memory_info **head);
 
 #endif
