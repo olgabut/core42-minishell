@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:13:01 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 09:59:40 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 16:23:23 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	line_lexer_test()
 		printf("1. OK\n");
 	else
 		printf("1. ERROR result token_head should be NULL\n");
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 
 	// One word
 	memory_head = NULL;
@@ -43,7 +43,7 @@ void	line_lexer_test()
 		printf("2. OK\n");
 	else
 		printf("2. ERROR one word\n");
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 
 	// Ignore spaces
 	memory_head = NULL;
@@ -57,7 +57,7 @@ void	line_lexer_test()
 		&& token->next->next->next == NULL)
 		printf("3. OK\n");
 	else printf("3. ERROR we need ignore spacis between words\n");
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 
 	// PIPE
 	memory_head = NULL;
@@ -71,7 +71,7 @@ void	line_lexer_test()
 		&& token->next->next->next == NULL)
 		printf("4. OK\n");
 	else printf("4. ERROR we need ignore spacis between words\n");
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 
 	// combination "cat< in.txt>     out.txt"
 	memory_head = NULL;
@@ -87,7 +87,7 @@ void	line_lexer_test()
 		&& token->next->next->next->next->next == NULL)
 		printf("5. OK\n");
 	else printf("5. ERROR combintation redir_in and redir_out\n");
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 
 	// Parenthesis "(echo hi && echo ok) | cat >> out.txt"
 	memory_head = NULL;
@@ -116,7 +116,7 @@ void	line_lexer_test()
 		&& token->next->next->next->next->next->next->next->next->next->next->next == NULL)
 		printf("6. OK\n");
 	else printf("6. ERROR parenthesis ()\n");
-	free_memory_links(memory_head);
+	free_memory_links(&memory_head);
 }
 
 void	need_next_line_test()
