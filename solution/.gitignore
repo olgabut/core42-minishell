@@ -2,3 +2,4 @@
 minishell
 .vscode
 tests
+*.a

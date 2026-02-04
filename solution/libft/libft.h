@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 12:39:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 10:07:22 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 10:51:16 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef struct s_memory_info
 {
-	char					*link;
+	void					*link;
 	struct s_memory_info	*next;
 }	t_memory_info;
 

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/03 09:15:36 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 14:48:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@
 	3 >    = TOKEN_REDIR_OUT
 	4 <<   = TOKEN_HEREDOC,
 	5 >>   = TOKEN_APPEND
-	BONUS PART
+	Not supported
 	6 &&   = TOKEN_AND,
 	7 ||   = TOKEN_OR,
 	8 (    = TOKEN_LPAREN,
 	9 )    = TOKEN_RPAREN,
 	10 ;    = TOKEN_SEMICOLON
+	11 &    = TOKEN_AMPERSAND
 */
 enum e_token_type
 {
@@ -52,7 +53,8 @@ enum e_token_type
 	TOKEN_OR,
 	TOKEN_LPAREN,
 	TOKEN_RPAREN,
-	TOKEN_SEMICOLON
+	TOKEN_SEMICOLON,
+	TOKEN_AMPERSAND
 };
 
 typedef struct s_token

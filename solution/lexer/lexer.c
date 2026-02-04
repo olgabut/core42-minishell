@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 10:13:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 10:56:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 	if (command_with_error(*token_head))
 	{
 		free_memory_links(memory_head);
-		printf("token_head after free = %s", (*token_head)->value);
 		*token_head = NULL;
 		return (1);
 	}
