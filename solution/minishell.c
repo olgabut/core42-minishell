@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 10:07:39 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 17:55:44 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(void)
 {
 	t_memory_info	*memory_head;
 	t_token			*token_head;
+	t_cmd			*cmd_head;
 
 	signals();
 	while (1)
@@ -27,10 +28,12 @@ int	main(void)
 			printf("ctrl+D\n");
 			break ;
 		}
-		if (token_head != NULL)
-		{
-			printf("Next step PARSING\n");
-		}
+		if (!token_head)
+			break ;
+		cmd_head = NULL;
+		printf("Next step PARSING\n");
+		if (!heredoc_handler(&memory_head, &cmd_head))
+			break ;
 
 		// if (pid == 0)
 		// {

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 14:48:39 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/04 18:00:06 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ enum e_token_type
 	TOKEN_REDIR_OUT,
 	TOKEN_HEREDOC,
 	TOKEN_APPEND,
-	//
+	// unsupported
 	TOKEN_AND,
 	TOKEN_OR,
 	TOKEN_LPAREN,
@@ -64,6 +64,24 @@ typedef struct s_token
 	struct s_token		*next;
 }	t_token;
 
+typedef struct s_heredoc
+{
+	char		*delimiter;
+	bool		expand;
+}	t_heredoc;
+
+typedef struct s_cmd
+{
+	char		**argv;
+	t_heredoc	*heredoc;
+}	t_cmd;
+
+typedef struct s_pipeline
+{
+	t_cmd	*cmds;
+	int		count;
+}	t_pipeline;
+
 // lexer
 int		lexer(t_memory_info **memory_head, t_token **token_head);
 int		line_lexer(t_memory_info **memory_head,
@@ -75,7 +93,9 @@ t_token	*get_last_token(t_token *head);
 void	print_token_list(t_token *head);
 bool	command_with_error(t_token *token_head);
 bool	need_next_line(t_token *token_head);
-
+// heredoc_handler
+int		heredoc_handler(t_memory_info **memory_head, t_cmd *cmd_head);
+// signals
 void	signals(void);
 
 #endif
