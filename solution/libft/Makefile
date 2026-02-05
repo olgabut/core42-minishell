@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC = ft_substr.c \
 	ft_strlen.c \
+	ft_strcmp.c \
 	ft_strncmp.c \
 	ft_strlcpy.c \
 	ft_strjoin.c \

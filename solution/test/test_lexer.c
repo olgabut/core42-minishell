@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:13:01 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 16:23:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/05 12:10:11 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	line_lexer_test()
 	ft_strlcpy(line, "ls", 3);
 	line_lexer(&memory_head, &token, line);
 	if (token != NULL
-		&& token->type == TOKEN_WORD && !strncmp(token->value, "ls", 3)
+		&& token->type == TOKEN_WORD && !ft_strcmp(token->value, "ls")
 		&& token->next == NULL)
 		printf("2. OK\n");
 	else
@@ -51,9 +51,9 @@ void	line_lexer_test()
 	ft_strlcpy(line, "   echo     hi world  ", 23);
 	line_lexer(&memory_head, &token, line);
 	if (token != NULL
-		&& token->type == TOKEN_WORD && !strncmp(token->value, "echo", 5)
-		&& token->next->type == TOKEN_WORD && !strncmp(token->next->value, "hi", 3)
-		&& token->next->next->type == TOKEN_WORD && !strncmp(token->next->next->value, "world", 6)
+		&& token->type == TOKEN_WORD && !ft_strcmp(token->value, "echo")
+		&& token->next->type == TOKEN_WORD && !ft_strcmp(token->next->value, "hi")
+		&& token->next->next->type == TOKEN_WORD && !ft_strcmp(token->next->next->value, "world")
 		&& token->next->next->next == NULL)
 		printf("3. OK\n");
 	else printf("3. ERROR we need ignore spacis between words\n");
@@ -65,9 +65,9 @@ void	line_lexer_test()
 	ft_strlcpy(line, "ls |wc", 7);
 	line_lexer(&memory_head, &token, line);
 	if (token != NULL
-		&& token->type == TOKEN_WORD && !strncmp(token->value, "ls", 3)
-		&& token->next->type == TOKEN_PIPE && !strncmp(token->next->value, "|", 2)
-		&& token->next->next->type == TOKEN_WORD && !strncmp(token->next->next->value, "wc", 3)
+		&& token->type == TOKEN_WORD && !ft_strcmp(token->value, "ls")
+		&& token->next->type == TOKEN_PIPE && !ft_strcmp(token->next->value, "|")
+		&& token->next->next->type == TOKEN_WORD && !ft_strcmp(token->next->next->value, "wc")
 		&& token->next->next->next == NULL)
 		printf("4. OK\n");
 	else printf("4. ERROR we need ignore spacis between words\n");
@@ -79,11 +79,11 @@ void	line_lexer_test()
 	ft_strlcpy(line, "cat< in.txt>     out.txt", 25);
 	line_lexer(&memory_head, &token, line);
 	if (token != NULL
-		&& token->type == TOKEN_WORD && !strncmp(token->value, "cat", 4)
-		&& token->next->type == TOKEN_REDIR_IN && !strncmp(token->next->value, "<", 2)
-		&& token->next->next->type == TOKEN_WORD && !strncmp(token->next->next->value, "in.txt", 7)
-		&& token->next->next->next->type == TOKEN_REDIR_OUT && !strncmp(token->next->next->next->value, ">", 2)
-		&& token->next->next->next->next->type == TOKEN_WORD && !strncmp(token->next->next->next->next->value, "out.txt", 8)
+		&& token->type == TOKEN_WORD && !ft_strcmp(token->value, "cat")
+		&& token->next->type == TOKEN_REDIR_IN && !ft_strcmp(token->next->value, "<")
+		&& token->next->next->type == TOKEN_WORD && !ft_strcmp(token->next->next->value, "in.txt")
+		&& token->next->next->next->type == TOKEN_REDIR_OUT && !ft_strcmp(token->next->next->next->value, ">")
+		&& token->next->next->next->next->type == TOKEN_WORD && !ft_strcmp(token->next->next->next->next->value, "out.txt")
 		&& token->next->next->next->next->next == NULL)
 		printf("5. OK\n");
 	else printf("5. ERROR combintation redir_in and redir_out\n");
@@ -95,23 +95,23 @@ void	line_lexer_test()
 	ft_strlcpy(line, "(echo hi && echo ok) | cat >> out.txt", 38);
 	line_lexer(&memory_head, &token, line);
 	if (token != NULL
-		&& token->type == TOKEN_LPAREN && !strncmp(token->value, "(", 2)
-		&& token->next->type == TOKEN_WORD && !strncmp(token->next->value, "echo", 5)
-		&& token->next->next->type == TOKEN_WORD && !strncmp(token->next->next->value, "hi", 3)
-		&& token->next->next->next->type == TOKEN_AND && !strncmp(token->next->next->next->value, "&&", 3)
-		&& !strncmp(token->next->next->next->next->value, "echo", 5)
+		&& token->type == TOKEN_LPAREN && !ft_strcmp(token->value, "(")
+		&& token->next->type == TOKEN_WORD && !ft_strcmp(token->next->value, "echo")
+		&& token->next->next->type == TOKEN_WORD && !ft_strcmp(token->next->next->value, "hi")
+		&& token->next->next->next->type == TOKEN_AND && !ft_strcmp(token->next->next->next->value, "&&")
+		&& !ft_strcmp(token->next->next->next->next->value, "echo")
 				 && token->next->next->next->next->type == TOKEN_WORD
-		&& !strncmp(token->next->next->next->next->next->value, "ok", 3)
+		&& !ft_strcmp(token->next->next->next->next->next->value, "ok")
 				 && token->next->next->next->next->next->type == TOKEN_WORD
-		&& !strncmp(token->next->next->next->next->next->next->value, ")", 2)
+		&& !ft_strcmp(token->next->next->next->next->next->next->value, ")")
 				 && token->next->next->next->next->next->next->type == TOKEN_RPAREN
-		&& !strncmp(token->next->next->next->next->next->next->next->value, "|", 2)
+		&& !ft_strcmp(token->next->next->next->next->next->next->next->value, "|")
 				 && token->next->next->next->next->next->next->next->type == TOKEN_PIPE
-		&& !strncmp(token->next->next->next->next->next->next->next->next->value, "cat", 4)
+		&& !ft_strcmp(token->next->next->next->next->next->next->next->next->value, "cat")
 				 && token->next->next->next->next->next->next->next->next->type == TOKEN_WORD
-		&& !strncmp(token->next->next->next->next->next->next->next->next->next->value, ">>", 3)
+		&& !ft_strcmp(token->next->next->next->next->next->next->next->next->next->value, ">>")
 				 && token->next->next->next->next->next->next->next->next->next->type == TOKEN_APPEND
-		&& !strncmp(token->next->next->next->next->next->next->next->next->next->next->value, "out.txt", 8)
+		&& !ft_strcmp(token->next->next->next->next->next->next->next->next->next->next->value, "out.txt")
 				 && token->next->next->next->next->next->next->next->next->next->next->type == TOKEN_WORD
 		&& token->next->next->next->next->next->next->next->next->next->next->next == NULL)
 		printf("6. OK\n");
@@ -136,7 +136,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "Hello world", 12);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 12)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("2. OK\n");
 	else printf("2. ERROR common line");
@@ -145,7 +145,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "\'Hello", 7);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 7)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("3. OK\n");
 	else printf("3. ERROR one single quote");
@@ -154,7 +154,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "He\"llo", 7);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 7)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("4. OK\n");
 	else printf("4. ERROR one double quote");
@@ -163,7 +163,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "\"1\'2\'3\'\"", 9);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 9)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("5. OK\n");
 	else printf("5. ERROR mix quotes (double quotes are external)");
@@ -172,7 +172,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "\'1\"2\'", 6);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 6)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("6. OK\n");
 	else printf("6. ERROR mix quotes (single quotes are external)");
@@ -181,7 +181,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "AB\'AB\nAB", 9);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 9)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("7. OK\n");
 	else printf("7. ERROR need next line single quotes (include next line character)");
@@ -190,7 +190,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "ABAB\"\nAB", 9);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 9)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("8. OK\n");
 	else printf("8. ERROR need next line double quotes (include next line character)");
@@ -199,7 +199,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "AB\'AB\nA\nB\'", 11);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 11)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("9. OK\n");
 	else printf("9. ERROR don't need next lint single quotes (include next line character)");
@@ -208,7 +208,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "\"ABAB\n\"A\nB", 11);
 	create_token(&new_token, TOKEN_WORD, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 11)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("10. OK\n");
 	else printf("10. ERROR don't need next lint double quotes (include next line character)");
@@ -219,7 +219,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "&&", 3);
 	create_token(&new_token, TOKEN_AND, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 3)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("11. OK\n");
 	else printf("11. ERROR last token is AND");
@@ -228,7 +228,7 @@ void	need_next_line_test()
 	ft_strlcpy(line, "||", 3);
 	create_token(&new_token, TOKEN_AND, line);
 	add_new_token(&token_head, new_token);
-	if (!strncmp(get_last_token(token_head)->value, line, 3)
+	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("12. OK\n");
 	else printf("12. ERROR last token is OR");
@@ -236,6 +236,7 @@ void	need_next_line_test()
 
 void	test_lexer(void)
 {
+	printf("\n===LEXER===\n");
 	line_lexer_test();
 	need_next_line_test();
 }

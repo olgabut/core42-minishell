@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 18:44:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 10:52:48 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/05 09:04:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,37 @@ int	add_new_memory_link_for_control(t_memory_info **head, void *new_link)
 	link_node->next = new_line_node;
 	return (1);
 }
+
+//test memory manager
+// check leaks using command on the MAC OS" >
+//> MallocStackLogging=1 leaks --atExit -- ./prog_name | grep leak
+// check leaks using command on the Linux OS >
+//> valgrind --leak-check=full ./prog_name
+// int	main(void)
+// {
+// 	char *str;
+// 	char *str2;
+// 	t_memory_info *memory_link_head;
+// 	int i;
+
+// 	memory_link_head = NULL;
+// 	str = NULL;
+// 	str = malloc(sizeof(char)* 5);
+// 	if (str == NULL)
+// 		return (1);
+// 	str[0] = 'w';
+// 	str[1] = 'q';
+// 	str[2] = '3';
+// 	str[3] = '2';
+// 	str[4] = '\0';
+// 	add_new_memory_link_for_control(&memory_link_head, str);
+// 	printf("str = %s\n", str);
+// 	str2 = malloc(sizeof(char)*10);
+// 	for (i=0; i<10;i++)
+// 		str2[i] = '4';
+// 	str2[9] = '\0';
+// 	printf("str2 = %s\n", str2);
+// 	add_new_memory_link_for_control(&memory_link_head, str2);
+// 	free_memory_links(memory_link_head);
+// 	return (0);
+// }

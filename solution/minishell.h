@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 18:00:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/05 12:03:17 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,27 @@ typedef struct s_token
 	struct s_token		*next;
 }	t_token;
 
-typedef struct s_heredoc
+enum e_redir_type
 {
-	char		*delimiter;
-	bool		expand;
-}	t_heredoc;
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND
+};
+
+typedef struct s_redir
+{
+	enum e_redir_type	type;
+	char				*delimiter;
+	bool				delimiter_has_quots;
+}	t_redir;
 
 typedef struct s_cmd
 {
-	char		**argv;
-	t_heredoc	*heredoc;
+	char			**argv;
+	t_redir			*redir;
+	int				*pipe_fd;
+	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_pipeline
@@ -95,6 +106,8 @@ bool	command_with_error(t_token *token_head);
 bool	need_next_line(t_token *token_head);
 // heredoc_handler
 int		heredoc_handler(t_memory_info **memory_head, t_cmd *cmd_head);
+// builtin
+int		echo_builtin(char **argv);
 // signals
 void	signals(void);
 

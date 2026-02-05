@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:04:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 10:16:42 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/05 12:01:44 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define TEST_H
 
 
-// lexer
 void	test_lexer(void);
+void	test_builtin(void);
 
 #endif

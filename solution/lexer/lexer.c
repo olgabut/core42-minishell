@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 18:35:08 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/05 09:01:45 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 	{
 		new_line = readline("> ");
 		if (!new_line || !add_new_line(memory_head, &line, new_line))
-			retrun (0);
+			return (0);
 		*token_head = NULL;
 		add_new_memory_link_for_control(memory_head, line);
 		if (!line_lexer(memory_head, token_head, line))
