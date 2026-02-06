@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/06 10:35:50 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 10:49:10 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ void	print_token_list(t_token *head)
 {
 	t_token	*token;
 
-	// token = get_last_token(head);
-	// printf("Print tokens from last to first:\n");
-	// while (token)
-	// {
-	// 	printf("token type=%d value='%s'\n",
-	// 		token->type, token->value);
-	// 	token = token->prev;
-	// }
+	token = head;
+	printf("Print tokens:\n");
+	while (token != NULL)
+	{
+		printf("token type=%d value='%s'\n",
+			token->type, token->value);
+		token = token->next;
+	}
 }

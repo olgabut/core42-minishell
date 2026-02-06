@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/06 10:27:18 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:13:42 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# include <unistd.h>//getcwd
 
 /*
 	0 word = TOKEN_WORD
@@ -109,6 +111,7 @@ bool	need_next_line(t_token *token_head);
 int		heredoc_handler(t_memory_info **memory_head, t_cmd *cmd_head);
 // builtin
 int		echo_builtin(char **argv);
+int		pwd_builtin(char **argv);
 // signals
 void	signals(void);
 

@@ -16,6 +16,7 @@ SRC_FILES = lexer/lexer.c \
 	lexer/lexical_errors.c \
 	lexer/need_next_line.c \
 	builtin/echo_builtin.c \
+	builtin/pwd_builtin.c \
 	signals/signals.c
 
 TEST_NAME = tests

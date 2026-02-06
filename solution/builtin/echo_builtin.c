@@ -6,13 +6,13 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/06 10:24:14 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:12:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	is_echo_options(char *word)
+bool	is_echo_flags(char *word)
 {
 	return (ft_strcmp(word, "-n") == 0
 		|| ft_strcmp(word, "-e") == 0
@@ -29,38 +29,45 @@ bool	print_word(char *word, bool printed_first_word)
 
 /*
 	echo command builtin
-	echo [option(s)] [string(s)]
+	The echo command is used to show a line of text or a variable's value
+		in the terminal.
 
-	options:
+	echo [flag(s)] [string(s)]
+
+	flags:
 	-n (SUPPORTED in minishell) Omits trailing newlines.
 	-e (IGNORED in minishell) Enables backslash escapes (like \n and \t).
 	-E: (IGNORED in minishell) Disables backslash escapes (default behavior).
+
+	return
+		0 - successful completion     or    it's not echo command
+		1 - error
  */
 int	echo_builtin(char **argv)
 {
-	bool	n_option;
-	bool	option;
+	bool	n_flag;
+	bool	flag;
 	bool	printed_first_word;
 	int		i;
 
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "echo") != 0)
 		return (0);
 	i = 1;
-	option = true;
-	n_option = false;
+	flag = true;
+	n_flag = false;
 	printed_first_word = false;
 	while (argv[i])
 	{
-		if (option)
+		if (flag)
 		{
-			option = is_echo_options(argv[i]);
-			n_option = n_option || ft_strcmp(argv[i], "-n") == 0;
+			flag = is_echo_flags(argv[i]);
+			n_flag = n_flag || ft_strcmp(argv[i], "-n") == 0;
 		}
-		if (!option)
+		if (!flag)
 			printed_first_word = print_word(argv[i], printed_first_word);
 		i++;
 	}
-	if (!n_option)
+	if (!n_flag)
 		printf("\n");
-	return (1);
+	return (0);
 }
