@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/05 09:07:26 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 10:35:50 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	create_token(
 }
 
 /*
-	Adds new_token to the list of tokens, where head is the first token
+	Adds new_token to the list of tokens to the last position,
+	where head is the first token
 */
 void	add_new_token(t_token **head, t_token *new_token)
 {
@@ -67,12 +68,14 @@ void	add_new_token(t_token **head, t_token *new_token)
 	if (*head == NULL)
 	{
 		*head = new_token;
+		new_token->prev = NULL;
 		return ;
 	}
 	token = *head;
 	while (token->next != NULL)
 		token = token->next;
 	token->next = new_token;
+	new_token->prev = token;
 }
 
 t_token	*get_last_token(t_token *head)
@@ -91,12 +94,12 @@ void	print_token_list(t_token *head)
 {
 	t_token	*token;
 
-	token = head;
-	printf("Print tokens:\n");
-	while (token != NULL)
-	{
-		printf("token type=%d value='%s'\n",
-			token->type, token->value);
-		token = token->next;
-	}
+	// token = get_last_token(head);
+	// printf("Print tokens from last to first:\n");
+	// while (token)
+	// {
+	// 	printf("token type=%d value='%s'\n",
+	// 		token->type, token->value);
+	// 	token = token->prev;
+	// }
 }

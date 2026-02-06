@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 16:40:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/05 11:35:12 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 10:36:35 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	heredoc_handler(t_memory_info **memory_head, t_cmd *cmd)
 		if (ft_strcmp(line, cmd->redir->delimiter) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);

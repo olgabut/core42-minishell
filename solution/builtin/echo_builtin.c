@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/06 10:20:36 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 10:24:14 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	print_word(char *word, bool printed_first_word)
 }
 
 /*
-	echo command
+	echo command builtin
 	echo [option(s)] [string(s)]
 
 	options:

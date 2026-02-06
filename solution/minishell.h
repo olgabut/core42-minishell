@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/05 12:03:17 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/06 10:27:18 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_token
 {
 	enum e_token_type	type;
 	char				*value;
+	struct s_token		*prev;
 	struct s_token		*next;
 }	t_token;
 
