@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/08 10:31:44 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/08 15:09:04 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,11 @@ bool					command_with_error(t_token *token_head);
 bool					need_next_line(t_token *token_head);
 
 void					signals(void);
+
+// parser
+t_cmd	*parser(t_token *tokens);
+bool	is_redirection(enum e_token_type type);
+void	add_arg(t_list **word_list, char *arg);
+void	add_io(t_cmd *cmd, t_token **token);
 
 #endif
