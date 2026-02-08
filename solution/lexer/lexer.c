@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/02 12:22:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/08 12:26:16 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int add_new_line(t_memory_info **memory_head, char **line, char *new_line)
 int	lexer(t_memory_info **memory_head, t_token **token_head)
 {
 	char	*line;
-	char	*new_line;
+	// char	*new_line;
 
 	line = NULL;
 	line = readline("Minishell> ");
