@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/21 14:32:08 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/03 13:12:07 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <stdbool.h>
-
-# include <unistd.h>//sleep
-
-# include <signal.h>
 # include <errno.h>
-# include <readline/readline.h>
+# include <stdio.h>
 # include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <unistd.h> //sleep
 
 /*
 	0 word = TOKEN_WORD
@@ -39,7 +37,7 @@
 	9 )    = TOKEN_RPAREN,
 	10 ;    = TOKEN_SEMICOLON
 */
-enum e_token_type
+enum					e_token_type
 {
 	TOKEN_WORD,
 	TOKEN_PIPE,
@@ -60,20 +58,55 @@ typedef struct s_token
 	enum e_token_type	type;
 	char				*value;
 	struct s_token		*next;
-}	t_token;
+}						t_token;
+
+typedef struct s_io
+{
+	enum e_token_type	type;
+	char				*path;
+	char				**exp_args;
+	struct s_io			*next;
+}						t_io;
+
+typedef struct s_cmd
+{
+	char				**args;
+	char				*path;
+	t_io				*io_list;
+	struct s_cmd		*next;
+}						t_cmd;
+
+typedef struct s_env
+{
+	char				*key;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
+
+typedef struct s_minishell
+{
+	t_env				*env_list;
+	t_cmd				*cmd_list;
+	t_token				*tokens;
+	int					exit_code;
+	int					stdin_backup;
+	int					stdout_backup;
+}						t_minishell;
 
 // lexer
-int		lexer(t_memory_info **memory_head, t_token **token_head);
-int		line_lexer(t_memory_info **memory_head,
-			t_token **token_head, char *line);
-int		create_token(t_token **token, enum e_token_type type, char *value);
-void	add_new_token(t_token **head, t_token *new_token);
-void	free_tokens(t_token *head);
-t_token	*get_last_token(t_token *head);
-void	print_token_list(t_token *head);
-bool	command_with_error(t_token *token_head);
-bool	need_next_line(t_token *token_head);
+int						lexer(t_memory_info **memory_head,
+							t_token **token_head);
+int						line_lexer(t_memory_info **memory_head,
+							t_token **token_head, char *line);
+int						create_token(t_token **token, enum e_token_type type,
+							char *value);
+void					add_new_token(t_token **head, t_token *new_token);
+void					free_tokens(t_token *head);
+t_token					*get_last_token(t_token *head);
+void					print_token_list(t_token *head);
+bool					command_with_error(t_token *token_head);
+bool					need_next_line(t_token *token_head);
 
-void	signals(void);
+void					signals(void);
 
 #endif
