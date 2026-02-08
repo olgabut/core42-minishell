@@ -18,6 +18,7 @@ SOURCES = ft_is_group.c \
 	ft_bonus_2.c \
 	get_next_line.c \
 	ft_compare.c \
+	ft_list_utils.c \
 	memory_manager/memory_manager.c
 
 OBJECTS = $(SOURCES:.c=.o)

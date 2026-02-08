@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:34:56 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 13:08:15 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/08 13:44:27 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ void						ft_lstiter(t_list *lst, void (*f)(void *));
 void						ft_lstclear(t_list **lst, void (*del)(void *));
 t_list						*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
+
+// ft_list_utils.c
+char **ft_strvec_from_word_list(t_list *list);
 
 // ft_compare.c
 int							ft_min_int(int a, int b);
