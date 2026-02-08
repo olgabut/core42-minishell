@@ -6,24 +6,24 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:51:58 by dprikhod          #+#    #+#             */
-/*   Updated: 2025/07/20 11:47:20 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/08 13:08:35 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	s_handle(char *s)
+int	s_handle(char *s, int fd)
 {
 	if (!s)
 	{
-		ft_putstr_fd("(null)", 1);
+		ft_putstr_fd("(null)", fd);
 		return (6);
 	}
-	ft_putstr_fd(s, 1);
+	ft_putstr_fd(s, fd);
 	return (ft_strlen(s));
 }
 
-int	u_handle(unsigned int u)
+int	u_handle(unsigned int u, int fd)
 {
 	char	buf[12];
 	int		i;
@@ -39,11 +39,11 @@ int	u_handle(unsigned int u)
 	}
 	temp = i;
 	while (i > 0)
-		write(1, &buf[--i], 1);
+		write(fd, &buf[--i], 1);
 	return (temp);
 }
 
-int	i_handle(int n)
+int	i_handle(int n, int fd)
 {
 	unsigned int	num;
 	int				sign;
@@ -52,17 +52,17 @@ int	i_handle(int n)
 	sign = 0;
 	if (n < 0)
 	{
-		write(1, "-", 1);
+		write(fd, "-", 1);
 		num = -(unsigned int)n;
 		sign = 1;
 	}
 	else
 		num = (unsigned int)n;
-	res = u_handle(num);
+	res = u_handle(num, fd);
 	return (res + sign);
 }
 
-int	x_handle(unsigned long x, char *base)
+int	x_handle(unsigned long x, char *base, int fd)
 {
 	char	hex[15];
 	int		i;
@@ -78,11 +78,11 @@ int	x_handle(unsigned long x, char *base)
 	}
 	temp = i;
 	while (i > 0)
-		write(1, &hex[--i], 1);
+		write(fd, &hex[--i], 1);
 	return (temp);
 }
 
-int	p_handle(void *p)
+int	p_handle(void *p, int fd)
 {
 	unsigned long	addr;
 	int				temp;
@@ -90,11 +90,11 @@ int	p_handle(void *p)
 	addr = (unsigned long)p;
 	if (addr == 0)
 	{
-		ft_putstr_fd("(nil)", 1);
+		ft_putstr_fd("(nil)", fd);
 		return (5);
 	}
-	ft_putstr_fd("0x", 1);
+	ft_putstr_fd("0x", fd);
 	temp = 2;
-	temp += x_handle(addr, "0123456789abcdef");
+	temp += x_handle(addr, "0123456789abcdef", fd);
 	return (temp);
 }

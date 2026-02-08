@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:34:56 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 12:21:56 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/08 13:08:15 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,14 @@ void						ft_putnbr_fd(int n, int fd);
 void						ft_print_string(char *str);
 
 // ft_printf_utils.c
-int							s_handle(char *s);
-int							u_handle(unsigned int u);
-int							i_handle(int n);
-int							x_handle(unsigned long x, char *base);
-int							p_handle(void *p);
+int							s_handle(char *s, int fd);
+int							u_handle(unsigned int u, int fd);
+int							i_handle(int n, int fd);
+int							x_handle(unsigned long x, char *base, int fd);
+int							p_handle(void *p, int fd);
 
 // ft_printf.c
+int							ft_fprintf(int fd, const char *format, ...);
 int							ft_printf(const char *format, ...);
 
 typedef struct s_list
