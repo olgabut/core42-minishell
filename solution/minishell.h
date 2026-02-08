@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/03 13:12:07 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/08 10:31:44 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_minishell
 {
 	t_env				*env_list;
 	t_cmd				*cmd_list;
-	t_token				*tokens;
 	int					exit_code;
 	int					stdin_backup;
 	int					stdout_backup;
