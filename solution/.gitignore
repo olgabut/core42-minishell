@@ -2,7 +2,7 @@
 minishell
 .vscode
 tests
-*/*.a
-compile_commands.json
 build/
+**/*a
 .cache/
+compile_commands.json

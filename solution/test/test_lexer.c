@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:13:01 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/01 19:13:12 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/02 09:02:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	line_lexer_test()
 	else
 		printf("2. ERROR one word\n");
 	free_memory_links(memory_head);
-	
+
 	// Ignore spaces
 	memory_head = NULL;
 	token = NULL;
@@ -58,7 +58,7 @@ void	line_lexer_test()
 		printf("3. OK\n");
 	else printf("3. ERROR we need ignore spacis between words\n");
 	free_memory_links(memory_head);
-	
+
 	// PIPE
 	memory_head = NULL;
 	token = NULL;
@@ -73,7 +73,7 @@ void	line_lexer_test()
 	else printf("4. ERROR we need ignore spacis between words\n");
 	free_memory_links(memory_head);
 
-	// combination
+	// combination "cat< in.txt>     out.txt"
 	memory_head = NULL;
 	token = NULL;
 	ft_strlcpy(line, "cat< in.txt>     out.txt", 25);
@@ -88,9 +88,35 @@ void	line_lexer_test()
 		printf("5. OK\n");
 	else printf("5. ERROR combintation redir_in and redir_out\n");
 	free_memory_links(memory_head);
-	
-	// all tokens
-	
+
+	// Parenthesis "(echo hi && echo ok) | cat >> out.txt"
+	memory_head = NULL;
+	token = NULL;
+	ft_strlcpy(line, "(echo hi && echo ok) | cat >> out.txt", 38);
+	line_lexer(&memory_head, &token, line);
+	if (token != NULL
+		&& token->type == TOKEN_LPAREN && !strncmp(token->value, "(", 2)
+		&& token->next->type == TOKEN_WORD && !strncmp(token->next->value, "echo", 5)
+		&& token->next->next->type == TOKEN_WORD && !strncmp(token->next->next->value, "hi", 3)
+		&& token->next->next->next->type == TOKEN_AND && !strncmp(token->next->next->next->value, "&&", 3)
+		&& !strncmp(token->next->next->next->next->value, "echo", 5)
+				 && token->next->next->next->next->type == TOKEN_WORD
+		&& !strncmp(token->next->next->next->next->next->value, "ok", 3)
+				 && token->next->next->next->next->next->type == TOKEN_WORD
+		&& !strncmp(token->next->next->next->next->next->next->value, ")", 2)
+				 && token->next->next->next->next->next->next->type == TOKEN_RPAREN
+		&& !strncmp(token->next->next->next->next->next->next->next->value, "|", 2)
+				 && token->next->next->next->next->next->next->next->type == TOKEN_PIPE
+		&& !strncmp(token->next->next->next->next->next->next->next->next->value, "cat", 4)
+				 && token->next->next->next->next->next->next->next->next->type == TOKEN_WORD
+		&& !strncmp(token->next->next->next->next->next->next->next->next->next->value, ">>", 3)
+				 && token->next->next->next->next->next->next->next->next->next->type == TOKEN_APPEND
+		&& !strncmp(token->next->next->next->next->next->next->next->next->next->next->value, "out.txt", 8)
+				 && token->next->next->next->next->next->next->next->next->next->next->type == TOKEN_WORD
+		&& token->next->next->next->next->next->next->next->next->next->next->next == NULL)
+		printf("6. OK\n");
+	else printf("6. ERROR parenthesis ()\n");
+	free_memory_links(memory_head);
 }
 
 void	test_lexer(void)
