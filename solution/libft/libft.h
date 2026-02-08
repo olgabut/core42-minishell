@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:34:56 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 13:44:27 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/08 16:38:44 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,7 @@ int							ft_max_int(int a, int b);
 char						*get_next_line(int fd);
 
 // memory_manager
-typedef struct s_memory_info
-{
-	char					*link;
-	struct s_memory_info	*next;
-}							t_memory_info;
+typedef t_list t_memory_info;
 
 int							add_new_memory_link_for_control(t_memory_info **head,
 								void *new_link);
