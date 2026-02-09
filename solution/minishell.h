@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 09:46:13 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 11:57:15 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,35 +68,6 @@ typedef struct s_token
 	struct s_token		*next;
 }	t_token;
 
-enum e_redir_type
-{
-	REDIR_IN,
-	REDIR_OUT,
-	HEREDOC,
-	APPEND
-};
-
-typedef struct s_redir
-{
-	enum e_redir_type	type;
-	char				*delimiter;
-	bool				delimiter_has_quots;
-}	t_redir;
-
-typedef struct s_cmd
-{
-	char			**argv;
-	t_redir			*redir;
-	int				*pipe_fd;
-	struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_pipeline
-{
-	t_cmd	*cmds;
-	int		count;
-}	t_pipeline;
-
 // lexer
 int		lexer(t_memory_info **memory_head, t_token **token_head);
 int		line_lexer(t_memory_info **memory_head,
@@ -108,12 +79,5 @@ t_token	*get_last_token(t_token *head);
 void	print_token_list(t_token *head);
 bool	command_with_error(t_token *token_head);
 bool	need_next_line(t_token *token_head);
-// heredoc_handler
-int		heredoc_handler(t_memory_info **memory_head, t_cmd *cmd_head);
-// builtin
-int		echo_builtin(char **argv);
-int		pwd_builtin(char **argv);
-// signals
-void	signals(void);
 
 #endif

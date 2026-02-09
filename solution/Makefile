@@ -14,16 +14,12 @@ SRC_FILES = lexer/lexer.c \
 	lexer/line_lexer.c \
 	lexer/token_list_manager.c \
 	lexer/lexical_errors.c \
-	lexer/need_next_line.c \
-	builtin/echo_builtin.c \
-	builtin/pwd_builtin.c \
-	signals/signals.c
+	lexer/need_next_line.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \
-	test/test.c \
-	test/test_lexer.c \
-	test/test_builtin.c
+	../test/test.c \
+	../test/test_lexer.c
 OBJS_TEST_FILES = $(TEST_FILES:%.c=%.o)
 
 OBJS_FILES = $(SRC_FILES_WITH_MAIN:%.c=%.o)

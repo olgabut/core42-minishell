@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:34:56 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/09 09:54:37 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 11:40:07 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ typedef struct s_memory_info
 	struct s_memory_info	*next;
 }							t_memory_info;
 
-int							add_new_memory_link_for_control(t_memory_info **head,
-								void *new_link);
+int							add_new_memory_link_for_control(
+								t_memory_info **head, void *new_link);
 void						free_memory_links(t_memory_info **head);
 
 #endif

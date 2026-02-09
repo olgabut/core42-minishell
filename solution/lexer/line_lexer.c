@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 14:51:52 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 11:37:59 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	search_for_single_token(t_token **token, char *line, int start_word_pos)
 }
 
 /*
-Search for a word
+Search for a word in the line from start_word_pos
 
 Return
 	0-error (could't create token, malloc error)
@@ -80,38 +80,29 @@ Return
 */
 int	search_for_word(t_token **token, char *line, int *start_word_pos)
 {
-	int		cur_char_pos;
+	int		pos;
 	bool	is_single_quote;
 	bool	is_double_quote;
 
-	cur_char_pos = 0;
+	pos = *start_word_pos;
 	is_single_quote = false;
 	is_double_quote = false;
-	while (line[*start_word_pos + cur_char_pos] != '\0'
-		&& (is_single_quote || is_double_quote
-			|| (line[*start_word_pos + cur_char_pos] != ' '
-				&& line[*start_word_pos + cur_char_pos] != '\n'
-				&& line[*start_word_pos + cur_char_pos] != '|'
-				&& line[*start_word_pos + cur_char_pos] != '<'
-				&& line[*start_word_pos + cur_char_pos] != '>'
-				&& line[*start_word_pos + cur_char_pos] != '&'
-				&& line[*start_word_pos + cur_char_pos] != '('
-				&& line[*start_word_pos + cur_char_pos] != ')'
-				&& line[*start_word_pos + cur_char_pos] != ';')))
+	while (line[pos] != '\0' && (is_single_quote || is_double_quote
+			|| (line[pos] != ' ' && line[pos] != '\n' && line[pos] != '|'
+				&& line[pos] != '<' && line[pos] != '>' && line[pos] != '&'
+				&& line[pos] != '(' && line[pos] != ')' && line[pos] != ';')))
 	{
-		if (!is_double_quote && line[*start_word_pos + cur_char_pos] == '\'')
+		if (!is_double_quote && line[pos] == '\'')
 			is_single_quote = !is_single_quote;
-		if (!is_single_quote && line[*start_word_pos + cur_char_pos] == '\"')
+		if (!is_single_quote && line[pos] == '\"')
 			is_double_quote = !is_double_quote;
-		cur_char_pos++;
+		pos++;
 	}
-	if (cur_char_pos > 0)
-	{
+	if (pos > *start_word_pos)
 		if (!create_token(token, TOKEN_WORD,
-				ft_substr(line, *start_word_pos, cur_char_pos)))
+				ft_substr(line, *start_word_pos, pos - *start_word_pos)))
 			return (0);
-		*start_word_pos = *start_word_pos + cur_char_pos;
-	}
+	*start_word_pos = pos;
 	return (1);
 }
 

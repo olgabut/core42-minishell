@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 10:43:47 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/03 12:10:18 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 11:38:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ bool	need_wait_for_continuation_of_command(t_token *token_head)
 		|| last_token->type == TOKEN_AND
 		|| last_token->type == TOKEN_OR);
 }
-
 
 bool	need_next_line(t_token *token_head)
 {
