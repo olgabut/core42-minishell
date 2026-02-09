@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 10:09:02 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 10:18:26 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	command_has_unsupported_tokens(t_token *token_head)
 			|| token->type == TOKEN_SEMICOLON
 			|| token->type == TOKEN_AMPERSAND)
 			return (print_lexical_error(
-					"shell> the command contains unsupported characters.\n",
+					"minishell: the command contains unsupported characters\n",
 					true));
 		token = token->next;
 	}
@@ -57,19 +57,19 @@ bool	command_error_wrong_token_sequence(t_token *token_head)
 		if (token->type == TOKEN_REDIR_IN
 			&& token->next->type != TOKEN_WORD)
 			return (print_lexical_error(
-					"shell> syntax error near token `<`.\n", true));
+					"minishell: syntax error near token `<`\n", true));
 		if (token->type == TOKEN_REDIR_OUT
 			&& token->next->type != TOKEN_WORD)
 			return (print_lexical_error(
-					"shell> syntax error near token `>`.\n", true));
+					"minishell: syntax error near token `>`\n", true));
 		if (token->type == TOKEN_HEREDOC
 			&& token->next->type != TOKEN_WORD)
 			return (print_lexical_error(
-					"shell> syntax error near token `<<`.\n", true));
+					"minishell: syntax error near token `<<`\n", true));
 		if (token->type == TOKEN_APPEND
 			&& token->next->type != TOKEN_WORD)
 			return (print_lexical_error(
-					"shell> syntax error near token `>>`.\n", true));
+					"minishell: syntax error near token `>>`\n", true));
 		token = token->next;
 	}
 	return (false);
@@ -91,15 +91,15 @@ bool	command_with_error(t_token *token_head)
 	last_token = get_last_token(token_head);
 	if (token_head->type == TOKEN_PIPE)
 		return (print_lexical_error(
-				"shell> syntax error near unexpected token `|`.\n", true));
-	if (command_error_wrong_token_sequence(token_head))
-		return (true);
+				"minishell: syntax error near unexpected token `|`\n", true));
 	if (last_token->type == TOKEN_REDIR_IN
 		|| last_token->type == TOKEN_REDIR_OUT
 		|| last_token->type == TOKEN_HEREDOC
 		|| last_token->type == TOKEN_APPEND)
 		return (print_lexical_error(
-				"shell> syntax error near unexpected token `newline`.\n",
+				"minishell: syntax error near unexpected token `newline`\n",
 				true));
+	if (command_error_wrong_token_sequence(token_head))
+		return (true);
 	return (false);
 }
