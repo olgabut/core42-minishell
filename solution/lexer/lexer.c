@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 09:26:01 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:44:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*	Function add_new_line rewrites
 	line = line + '\n' + new_line
-	Return 1 - ok
+	Return
+		1 - ok
 		0 - malloc errors
 */
 int add_new_line(t_memory_info **memory_head, char **line, char *new_line)
@@ -76,7 +77,6 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 		*token_head = NULL;
 		return (1);
 	}
-	print_token_list(*token_head);
 	add_history(line);
 	return (1);
 }

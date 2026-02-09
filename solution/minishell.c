@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/05 15:55:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 10:04:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ int	main(void)
 		memory_head = NULL;
 		token_head = NULL;
 		if (!lexer(&memory_head, &token_head))
-		{
-			printf("ctrl+D\n");
 			break ;
-		}
+		print_token_list(token_head);
 		if (token_head)
 		{
 			// cmd_head = NULL;

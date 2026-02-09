@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:34:56 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/09 09:33:59 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:54:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void						ft_putchar_fd(char c, int fd);
 void						ft_putstr_fd(char *s, int fd);
 void						ft_putendl_fd(char *s, int fd);
 void						ft_putnbr_fd(int n, int fd);
-void						ft_print_string(char *str);
 
 // ft_printf_utils.c
 int							s_handle(char *s, int fd);

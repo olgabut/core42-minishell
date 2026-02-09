@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_put_group.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niel <niel@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:30:24 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 12:11:24 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:54:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,4 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	while (i > 0)
 		write(fd, &buf[--i], 1);
-}
-
-void	ft_print_string(char *str)
-{
-	if (!str)
-		ft_putstr_fd("(null)", 1);
-	ft_putstr_fd(str, 1);
 }

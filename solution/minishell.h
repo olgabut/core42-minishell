@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/06 15:13:42 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:46:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 	3 >    = TOKEN_REDIR_OUT
 	4 <<   = TOKEN_HEREDOC,
 	5 >>   = TOKEN_APPEND
-	Not supported
+
+	Unsupported
 	6 &&   = TOKEN_AND,
 	7 ||   = TOKEN_OR,
 	8 (    = TOKEN_LPAREN,

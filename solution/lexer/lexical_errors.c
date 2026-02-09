@@ -6,15 +6,15 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/04 14:57:44 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 10:09:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	print_lexical_error(char *print_string, bool result)
+bool	print_lexical_error(char *message, bool result)
 {
-	ft_print_string(print_string);
+	ft_putstr_fd(message, 2);
 	return (result);
 }
 
