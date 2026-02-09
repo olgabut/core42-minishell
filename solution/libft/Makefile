@@ -1,34 +1,54 @@
 NAME = libft.a
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
 
-SRC = ft_substr.c \
-	ft_strlen.c \
-	ft_strcmp.c \
-	ft_strncmp.c \
-	ft_strlcpy.c \
-	ft_strjoin.c \
-	ft_straddchar.c \
-	ft_strtoint.c \
-	ft_print_string.c \
+SOURCES = ft_is_group.c \
+	ft_is_2.c \
+	ft_malloc_group.c \
+	ft_mem_group.c \
+	ft_put_group.c \
+	ft_split_group.c \
+	ft_split2.c \
+	ft_atoi_group.c \
+	ft_str_adv.c \
+	ft_str_basic.c \
+	ft_str_finder.c \
+	ft_str_utils.c \
+	ft_printf.c \
+	ft_printf_utils.c \
+	ft_bonus.c \
+	ft_bonus_2.c \
+	get_next_line.c \
+	ft_compare.c \
 	memory_manager/memory_manager.c
 
-OBJS = $(SRC:%.c=%.o)
+OBJECTS = $(SOURCES:.c=.o)
 
-all: $(NAME)
+BONUS = ft_bonus.c ft_bonus_2.c
+BONUS_OBJECTS = $(BONUS:.c=.o)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -I. -c $< -o $@
+HEADERS = libft.h
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+CFLAGS = -Wall -Wextra -Werror -fPIC
+
+CUR_DIR = $(shell pwd)
+
+CC = cc
+
+all: $(NAME) bonus
+
+$(NAME): $(OBJECTS)
+	@ar rc $(NAME) $(OBJECTS)
+	@ranlib $(NAME)
+
+bonus: $(NAME) $(BONUS_OBJECTS)
+	@ar rc $(NAME) $(BONUS_OBJECTS)
+
+%.o: %.c $(HEADERS)
+	@$(CC) $(CFLAGS) -I $(CUR_DIR) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJECTS) $(BONUS_OBJECTS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re bonus
