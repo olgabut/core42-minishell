@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 10:18:26 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 12:19:09 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ bool	command_with_error(t_token *token_head)
 		return (true);
 	if (command_has_unsupported_tokens(token_head))
 		return (true);
-	last_token = get_last_token(token_head);
 	if (token_head->type == TOKEN_PIPE)
 		return (print_lexical_error(
 				"minishell: syntax error near unexpected token `|`\n", true));
+	last_token = get_last_token(token_head);
 	if (last_token->type == TOKEN_REDIR_IN
 		|| last_token->type == TOKEN_REDIR_OUT
 		|| last_token->type == TOKEN_HEREDOC

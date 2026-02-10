@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 12:06:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/09 12:17:16 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ int	add_new_line(t_memory_info **memory_head, char **line, char *new_line)
 
 	if (new_line == NULL)
 		return (0);
-	add_new_memory_link_for_control(memory_head, new_line);
+	if (!add_new_memory_link_for_control(memory_head, new_line))
+		return (0);
 	new_long_line = ft_straddchar(*line, '\n');
 	if (new_long_line == NULL)
 		return (0);
-	add_new_memory_link_for_control(memory_head, new_long_line);
+	if (!add_new_memory_link_for_control(memory_head, new_long_line))
+		return (0);
 	new_long_line = ft_strjoin(new_long_line, new_line);
 	if (new_long_line == NULL)
 		return (0);
