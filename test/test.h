@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:04:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 10:25:58 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/10 09:43:27 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 
 void	test_lexer(void);
+void	test_built_in(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:13:01 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/05 12:10:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/10 09:13:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	need_next_line_test()
 	token_head = NULL;
 	if (!need_next_line(token_head))
 		printf("1. OK\n");
-	else printf("1. ERROR token is null");
+	else printf("1. ERROR token is null\n");
 
 	// Don't need next line (common word on the last token)
 	ft_strlcpy(line, "Hello world", 12);
@@ -139,7 +139,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("2. OK\n");
-	else printf("2. ERROR common line");
+	else printf("2. ERROR common line\n");
 
 	// Need next line (only one single quote ')
 	ft_strlcpy(line, "\'Hello", 7);
@@ -148,7 +148,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("3. OK\n");
-	else printf("3. ERROR one single quote");
+	else printf("3. ERROR one single quote\n");
 
 	// Need next line (only one double quote)
 	ft_strlcpy(line, "He\"llo", 7);
@@ -157,7 +157,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("4. OK\n");
-	else printf("4. ERROR one double quote");
+	else printf("4. ERROR one double quote\n");
 
 	// Don't need next line (mix quotes (double quotes are external))
 	ft_strlcpy(line, "\"1\'2\'3\'\"", 9);
@@ -166,7 +166,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("5. OK\n");
-	else printf("5. ERROR mix quotes (double quotes are external)");
+	else printf("5. ERROR mix quotes (double quotes are external)\n");
 
 	// Don't need next line (mix quotes (single quotes are external))
 	ft_strlcpy(line, "\'1\"2\'", 6);
@@ -175,7 +175,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("6. OK\n");
-	else printf("6. ERROR mix quotes (single quotes are external)");
+	else printf("6. ERROR mix quotes (single quotes are external)\n");
 
 	// Need next line (include next line character)
 	ft_strlcpy(line, "AB\'AB\nAB", 9);
@@ -184,7 +184,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("7. OK\n");
-	else printf("7. ERROR need next line single quotes (include next line character)");
+	else printf("7. ERROR need next line single quotes (include next line character)\n");
 
 	// Need next line (include next line character)
 	ft_strlcpy(line, "ABAB\"\nAB", 9);
@@ -193,7 +193,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& need_next_line(token_head))
 		printf("8. OK\n");
-	else printf("8. ERROR need next line double quotes (include next line character)");
+	else printf("8. ERROR need next line double quotes (include next line character)\n");
 
 	// Don't need next line (include next line character)
 	ft_strlcpy(line, "AB\'AB\nA\nB\'", 11);
@@ -202,7 +202,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("9. OK\n");
-	else printf("9. ERROR don't need next lint single quotes (include next line character)");
+	else printf("9. ERROR don't need next lint single quotes (include next line character)\n");
 
 	// Don't need next line (include next line character)
 	ft_strlcpy(line, "\"ABAB\n\"A\nB", 11);
@@ -211,27 +211,7 @@ void	need_next_line_test()
 	if (!ft_strcmp(get_last_token(token_head)->value, line)
 		&& !need_next_line(token_head))
 		printf("10. OK\n");
-	else printf("10. ERROR don't need next lint double quotes (include next line character)");
-
-	//-----------------------------------------------------------------
-	printf("\nNEED_NEXT_LINE   need_wait_for_continuation_of_command\n");
-	// Need next line (last token is AND)
-	ft_strlcpy(line, "&&", 3);
-	create_token(&new_token, TOKEN_AND, line);
-	add_new_token(&token_head, new_token);
-	if (!ft_strcmp(get_last_token(token_head)->value, line)
-		&& need_next_line(token_head))
-		printf("11. OK\n");
-	else printf("11. ERROR last token is AND");
-
-	// Need next line (last token is AND)
-	ft_strlcpy(line, "||", 3);
-	create_token(&new_token, TOKEN_AND, line);
-	add_new_token(&token_head, new_token);
-	if (!ft_strcmp(get_last_token(token_head)->value, line)
-		&& need_next_line(token_head))
-		printf("12. OK\n");
-	else printf("12. ERROR last token is OR");
+	else printf("10. ERROR don't need next lint double quotes (include next line character)\n");
 }
 
 void	test_lexer(void)

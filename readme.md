@@ -3,13 +3,13 @@
 ## Plan
 
 
-## lexer (tokens)
-## parser
-## heredoc_handler
-## executor
-## builtins
-## env
-## signals
+* lexer (tokens)
+* parser
+* heredoc_handler
+* executor
+* builtins
+* env
+* signals
 
 
 Redirections

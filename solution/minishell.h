@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 11:57:15 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:56:01 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <string.h>
 
 # include <unistd.h>//sleep
 
@@ -26,6 +27,11 @@
 # include <readline/history.h>
 
 # include <unistd.h>//getcwd
+
+# define SUCCESS 0
+# define FAILURE 1
+
+extern int	g_last_exit_code;
 
 /*
 	0 word = TOKEN_WORD
@@ -79,5 +85,8 @@ t_token	*get_last_token(t_token *head);
 void	print_token_list(t_token *head);
 bool	command_with_error(t_token *token_head);
 bool	need_next_line(t_token *token_head);
+// built_in
+int		built_in_echo(char **argv);
+int		built_in_pwd(char **argv);
 
 #endif
