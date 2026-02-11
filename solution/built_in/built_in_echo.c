@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 09:56:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:32:12 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ bool	is_echo(char **argv)
 		(-1) - error (it's not exit status, the command wasn't completed)
 		(0) - success exit status
 		(1..255) - error exit status
+
+	FEATURE (NOT IMPLEMENTED in minishell yet!)
+	'echo [flags] *' == ls
+	'echo [flags] **' == ls (files with folder)
  */
 int	built_in_echo(char **argv)
 {
@@ -83,6 +87,6 @@ int	built_in_echo(char **argv)
 		i++;
 	}
 	if (!n_flag)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:53:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 09:04:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:01:29 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,17 @@
 int	built_in_pwd(char **argv)
 {
 	char	*cwd;
-	int		fd;
 
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "pwd") != 0)
 		return (-1);
-	fd = 1;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		fd = 2;
-		ft_putstr_fd("error: pwd", fd);
+		ft_putstr_fd("minishell: pwd: error", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	ft_putstr_fd(cwd, fd);
-	ft_putchar_fd('\n', fd);
+	ft_putstr_fd(cwd, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	free(cwd);
 	return (EXIT_SUCCESS);
 }

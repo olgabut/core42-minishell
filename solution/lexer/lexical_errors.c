@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 12:19:09 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:01:45 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	print_lexical_error(char *message, bool result)
 {
-	ft_putstr_fd(message, 2);
+	ft_putstr_fd(message, STDERR_FILENO);
 	return (result);
 }
 

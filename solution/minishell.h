@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 08:57:35 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:09:36 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
+# define EXIT_CMD_NOT FOUND 127
 
 extern int	g_last_exit_code;
 
@@ -72,7 +73,14 @@ typedef struct s_token
 	char				*value;
 	struct s_token		*prev;
 	struct s_token		*next;
-}	t_token;
+}						t_token;
+
+typedef struct s_env
+{
+	char				*key;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
 // lexer
 int		lexer(t_memory_info **memory_head, t_token **token_head);
@@ -89,5 +97,6 @@ bool	need_next_line(t_token *token_head);
 int		built_in_echo(char **argv);
 int		built_in_pwd(char **argv);
 int		built_in_exit(char **argv);
+int		built_in_env(char **argv, t_env *env);
 
 #endif
