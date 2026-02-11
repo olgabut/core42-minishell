@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/10 11:25:35 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:56:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,18 @@
 
 bool	is_echo_flags(char *word)
 {
-	return (ft_strcmp(word, "-n") == 0
-		|| ft_strcmp(word, "-e") == 0
-		|| ft_strcmp(word, "-E") == 0);
+	int	i;
+
+	if (word[0] != '-' || word[1] == '\0')
+		return (false);
+	i = 1;
+	while (word[i])
+	{
+		if (word[i] != 'n' && word[i] != 'e' && word[i] != 'E')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 bool	print_word(char *word, int fd, bool printed_first_word)
@@ -42,11 +51,12 @@ bool	is_echo(char **argv)
 	flags:
 	-n (SUPPORTED in minishell) Omits trailing newlines.
 	-e (IGNORED in minishell) Enables backslash escapes (like \n and \t).
-	-E: (IGNORED in minishell) Disables backslash escapes (default behavior).
+	-E (IGNORED in minishell) Disables backslash escapes (default behavior).
 
-	return status
-		0 - successful completion     or    it's not echo command
-		1 - error
+	return:
+		(-1) - error (it's not exit status, the command wasn't completed)
+		(0) - success exit status
+		(1..255) - error exit status
  */
 int	built_in_echo(char **argv)
 {
@@ -55,6 +65,8 @@ int	built_in_echo(char **argv)
 	bool	printed_first_word;
 	int		i;
 
+	if (!argv || !argv[0] || ft_strcmp(argv[0], "echo") != 0)
+		return (-1);
 	i = 1;
 	flag = true;
 	n_flag = false;
@@ -64,7 +76,7 @@ int	built_in_echo(char **argv)
 		if (flag)
 		{
 			flag = is_echo_flags(argv[i]);
-			n_flag = n_flag || ft_strcmp(argv[i], "-n") == 0;
+			n_flag = n_flag || (flag && ft_strchr(argv[i], 'n') != NULL);
 		}
 		if (!flag)
 			printed_first_word = print_word(argv[i], 1, printed_first_word);
@@ -72,5 +84,5 @@ int	built_in_echo(char **argv)
 	}
 	if (!n_flag)
 		ft_putchar_fd('\n', 1);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

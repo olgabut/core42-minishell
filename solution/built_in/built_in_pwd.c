@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:53:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/10 11:27:48 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:04:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 	-L (IGNORED in minishell) Display the logical current working directory.
 	-P: (IGNORED in minishell) Display the physical current working directory.
 
-	return status
-		0 - successful completion     or    it's not pwd command
-		1 - error
+	return:
+		(-1) - error (it's not exit status, the command wasn't completed)
+		(0) - success exit status
+		(1..255) - error exit status
  */
 int	built_in_pwd(char **argv)
 {
@@ -32,17 +33,17 @@ int	built_in_pwd(char **argv)
 	int		fd;
 
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "pwd") != 0)
-		return (0);
+		return (-1);
 	fd = 1;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
 		fd = 2;
 		ft_putstr_fd("error: pwd", fd);
-		return (FAILURE);
+		return (EXIT_FAILURE);
 	}
 	ft_putstr_fd(cwd, fd);
 	ft_putchar_fd('\n', fd);
 	free(cwd);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

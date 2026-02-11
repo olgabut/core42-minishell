@@ -6,11 +6,16 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/10 11:53:19 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:23:56 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	get_last_exit_code(void)
+{
+	return (1);
+}
 
 /*
 	built in EXIT command
@@ -23,28 +28,33 @@
 		If no parameter is provided, the command returns the exit status
 	of the last executed command.
 
-	return status
-		n % 256 or status of last executed command
+	return:
+		(-1) - error (it's not exit status, the command wasn't completed)
+		(0..255) - n % 256 or exit status of the last executed command
 */
-// int	built_in_exit(char **argv)
-// {
-// 	// ft_putstr_fd("exit\n", 1);
-// 	// if (!argv[1])
-// 	// 	exit(g_last_exit_code);
+int	built_in_exit(char **argv)
+{
+	int	n;
 
-// 	// if (!is_numeric(argv[1]))
-// 	// {
-// 	// 	error("numeric argument required");
-// 	// 	exit(255);
-// 	// }
+	if (!argv || !argv[0] || ft_strcmp(argv[0], "exit") != 0)
+		return (-1);
+	ft_putstr_fd("exit\n", 1);
+	if (!argv[1])
+		exit(get_last_exit_code()); //todo
 
-// 	// if (args[2])
-//     // {
-//     //     error("too many arguments");
-//     //     return 1;
-//     // }
+	if (!ft_strtoint(&n, argv[1]))
+	{
+		ft_putstr_fd("error: exit command. numeric argument required", 2);
+		exit(255);
+	}
 
-//     // exit(ft_atoi(args[1]) % 256);
+	// if (args[2])
+    // {
+    //     error("too many arguments");
+    //     return 1;
+    // }
 
-// 	return (0);
-// }
+    // exit(ft_atoi(args[1]) % 256);
+
+	return (0);
+}

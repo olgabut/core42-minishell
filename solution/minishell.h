@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/10 12:56:01 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 08:57:35 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 # include <unistd.h>//getcwd
 
-# define SUCCESS 0
-# define FAILURE 1
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
 
 extern int	g_last_exit_code;
 
@@ -88,5 +88,6 @@ bool	need_next_line(t_token *token_head);
 // built_in
 int		built_in_echo(char **argv);
 int		built_in_pwd(char **argv);
+int		built_in_exit(char **argv);
 
 #endif

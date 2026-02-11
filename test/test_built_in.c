@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/10 09:57:51 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:57:18 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ void	built_in_echo_test()
 	char **argv;
 
 	printf("\nECHO BUILTIN\n");
-	// argv == NULL.  Return 0;
+	// argv == NULL.  Return -1;
 	argv = NULL;
-	if (built_in_echo(argv) == 0)
+	if (built_in_echo(argv) == -1)
 		printf("1. OK\n");
 	else printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] = NULL.  Return 0;
+	// First argv[0] = NULL.  Return -1;
 	argv = malloc(sizeof(char *) * 6);
-	if (built_in_echo(argv) == 0)
+	if (built_in_echo(argv) == -1)
 		printf("2. OK\n");
 	else printf("2. ERROR argv[0] == NULL\n");
 
-	// First argv[0] != "echo". Command "bubu". Return 0;
+	// First argv[0] != "echo". Command "bubu". Return -1;
 	argv[0] = malloc(sizeof(char) * 5);
 	ft_strlcpy(argv[0], "bubu", 5);
-	if (built_in_echo(argv) == 0)
+	if (built_in_echo(argv) == -1)
 		printf("3. OK\n");
 	else printf("3. ERROR argv[0] != 'echo'\n");
 
@@ -127,9 +127,9 @@ void	built_in_echo_test()
 		printf("13. OK\n");
 	else printf("13. ERROR command 'echo -e -n -n word'\n");
 
-	// Command "echo -e -n -n -nnn". Print "word"
+	// Command "echo -e -n -n -nnn". Print ""
 	ft_strlcpy(argv[4], "-nnn", 5);
-	if (ft_strcmp(run_cmd_and_capture(argv, built_in_echo), "-nnn") == 0)
+	if (ft_strcmp(run_cmd_and_capture(argv, built_in_echo), "") == 0)
 		printf("14. OK\n");
 	else printf("14. ERROR command 'echo -e -n -n -nnn'\n");
 
@@ -153,6 +153,29 @@ void	built_in_echo_test()
 	if (ft_strcmp(run_cmd_and_capture(argv, built_in_echo), "wo ow hi w\nrd\n") == 0)
 		printf("17. OK\n");
 	else printf("17. ERROR command 'echo wo ow hi w\nrd'\n");
+
+	// Command "echo -e -E -e -nnn 1234". Print "1234"
+	argv[5] = malloc(sizeof(char) * 5);
+	ft_strlcpy(argv[1], "-e", 3);
+	ft_strlcpy(argv[2], "-E", 3);
+	ft_strlcpy(argv[3], "-e", 3);
+	ft_strlcpy(argv[4], "-nnn", 5);
+	ft_strlcpy(argv[5], "1234", 5);
+	if (ft_strcmp(run_cmd_and_capture(argv, built_in_echo), "1234") == 0)
+		printf("18. OK\n");
+	else printf("18. ERROR command 'echo -e -E -e -nnn 1234");
+
+	// Command "echo -e -E -e -nnf 1234". Print "-nnf 1234\n"
+	ft_strlcpy(argv[4], "-nnf", 5);
+	if (ft_strcmp(run_cmd_and_capture(argv, built_in_echo), "-nnf 1234\n") == 0)
+		printf("19. OK\n");
+	else printf("19. ERROR command 'echo -e -E -e -nnf 1234");
+
+	// Command "echo -e -E -e -n-E 1234". Print "-n-E 1234\n"
+	ft_strlcpy(argv[4], "-n-E", 5);
+	if (ft_strcmp(run_cmd_and_capture(argv, built_in_echo), "-n-E 1234\n") == 0)
+		printf("19. OK\n");
+	else printf("19. ERROR command 'echo -e -E -e -n-E 1234");
 }
 
 void	built_in_pwd_test()
@@ -161,22 +184,22 @@ void	built_in_pwd_test()
 	char	*cwd;
 
 	printf("\nPWD BUILTIN\n");
-	// argv == NULL.  Return 0;
+	// argv == NULL.  Return -1;
 	argv = NULL;
-	if (built_in_pwd(argv) == 0)
+	if (built_in_pwd(argv) == -1)
 		printf("1. OK\n");
 	else printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] = NULL.  Return 0;
+	// First argv[0] = NULL.  Return -1;
 	argv = malloc(sizeof(char *) * 3);
-	if (built_in_pwd(argv) == 0)
+	if (built_in_pwd(argv) == -1)
 		printf("2. OK\n");
 	else printf("2. ERROR argv[0] == NULL\n");
 
-	// First argv[0] != "pwd". Command "mmm". Return 0;
+	// First argv[0] != "pwd". Command "mmm". Return -1;
 	argv[0] = malloc(sizeof(char) * 4);
 	ft_strlcpy(argv[0], "mmm", 4);
-	if (built_in_pwd(argv) == 0)
+	if (built_in_pwd(argv) == -1)
 		printf("3. OK\n");
 	else printf("3. ERROR argv[0] != 'pwd'\n");
 
@@ -195,9 +218,21 @@ void	built_in_pwd_test()
 	free(cwd);
 }
 
+void	built_in_exit_test(void)
+{
+	char	**argv;
+
+	printf("\nEXIT BUILTIN\n");
+	argv = NULL;
+	if (built_in_exit(argv) == 0)
+		printf("1. OK\n");
+	else printf("1. ERROR argv == NULL\n");
+}
+
 void	test_built_in(void)
 {
 	printf("\n===BUILTIN===\n");
 	built_in_echo_test();
 	built_in_pwd_test();
+	built_in_exit_test();
 }
