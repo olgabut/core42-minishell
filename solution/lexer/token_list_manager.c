@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 10:05:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/12 18:01:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 	Free all tokens
 */
-void	free_tokens(t_token *head)
+void	free_token_list(t_token *head)
 {
 	t_token	*token;
 	t_token	*next_token;
@@ -45,7 +45,7 @@ int	create_token(
 {
 	t_token	*new_token;
 
-	new_token = malloc(sizeof(t_token));
+	new_token = ft_calloc(1, sizeof(t_token));
 	if (!new_token)
 		return (0);
 	new_token->type = type;

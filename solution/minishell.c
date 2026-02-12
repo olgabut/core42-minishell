@@ -6,17 +6,22 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 11:56:13 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/12 17:52:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_memory_info	*memory_head;
 	t_token			*token_head;
 
+	if (init_env(envp))
+	{
+		ft_putstr_fd("Could not initialize environment", 1);
+		return (0);
+	}
 	while (1)
 	{
 		memory_head = NULL;

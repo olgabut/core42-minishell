@@ -1,0 +1,1111 @@
+10:56:03 obutolin@c1r2s7 solution ±|builtins ✗|→ env hi=hello | echo $hi
+
+10:56:26 obutolin@c1r2s7 solution ±|builtins ✗|→ env hi=hello | echo ${hi}
+
+10:56:38 obutolin@c1r2s7 solution ±|builtins ✗|→ env
+SHELL=/bin/zsh
+LSCOLORS=Gxfxcxdxdxegedabagacad
+SESSION_MANAGER=local/c1r2s7.42prague.com:@/tmp/.ICE-unix/37123,unix/c1r2s7.42prague.com:/tmp/.ICE-unix/37123
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+PYENV_SHELL=bash
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+SSH_AGENT_LAUNCHER=gnome-keyring
+LESS=-R
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session1
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.108.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GTK_IM_MODULE=ibus
+HISTSIZE=2147450879
+LANGUAGE=en
+SSH_AUTH_SOCK=/run/user/102319/keyring/ssh
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+OSH=/home/obutolin/.oh-my-bash
+FT_HOOK_NAME=login-user
+GTK_MODULES=gail:atk-bridge
+DBUS_STARTER_BUS_TYPE=session
+FT_HOOK_PATHNAME=login-user.d
+PWD=/home/obutolin/Documents/github/core42-minishell/solution
+KRB5CCNAME=FILE:/tmp/krb5cc_102319_HJQFTe
+PYENV_VIRTUALENV_INIT=1
+XDG_SESSION_DESKTOP=ubuntu
+LOGNAME=obutolin
+XDG_SESSION_TYPE=x11
+GPG_AGENT_INFO=/run/user/102319/gnupg/S.gpg-agent:0:1
+SYSTEMD_EXEC_PID=37123
+XAUTHORITY=/home/obutolin/.Xauthority
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/obutolin
+GDM_LANG=en
+HOME=/home/obutolin
+LANG=en_US.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+VTE_VERSION=6800
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/cac35df2_33e6_4527_9e81_7b17653e8a14
+CHROME_DESKTOP=code.desktop
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+LIBVIRT_DEFAULT_URI=qemu:///system
+USER=obutolin
+VSCODE_GIT_IPC_HANDLE=/run/user/102319/vscode-git-c65840ed91.sock
+GNOME_TERMINAL_SERVICE=:1.89
+DISPLAY=:0
+SHLVL=2
+PAGER=less
+QT_IM_MODULE=ibus
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102319/bus,guid=4fbcf60eb37b6862a1d2ea2b698c2d64
+FC_FONTATIONS=1
+LC_CTYPE=en_US.UTF-8
+XDG_RUNTIME_DIR=/run/user/102319
+PYENV_ROOT=/home/obutolin/.pyenv
+DOCKER_HOST=unix:///run/user/102319/docker.sock
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/obutolin/bin:/opt/pyenv/plugins/pyenv-virtualenv/shims:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+GDMSESSION=ubuntu
+HISTFILESIZE=2147450879
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102319/bus,guid=4fbcf60eb37b6862a1d2ea2b698c2d64
+OLDPWD=/home/obutolin/Documents/github/core42-minishell
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+11:49:45 obutolin@c1r2s7 solution ±|builtins ✗|→ env USER
+env: ‘USER’: No such file or directory
+11:50:27 obutolin@c1r2s7 solution ±|builtins ✗|→ env USER=o
+SHELL=/bin/zsh
+LSCOLORS=Gxfxcxdxdxegedabagacad
+SESSION_MANAGER=local/c1r2s7.42prague.com:@/tmp/.ICE-unix/37123,unix/c1r2s7.42prague.com:/tmp/.ICE-unix/37123
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+PYENV_SHELL=bash
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+SSH_AGENT_LAUNCHER=gnome-keyring
+LESS=-R
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session1
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.108.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GTK_IM_MODULE=ibus
+HISTSIZE=2147450879
+LANGUAGE=en
+SSH_AUTH_SOCK=/run/user/102319/keyring/ssh
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+OSH=/home/obutolin/.oh-my-bash
+FT_HOOK_NAME=login-user
+GTK_MODULES=gail:atk-bridge
+DBUS_STARTER_BUS_TYPE=session
+FT_HOOK_PATHNAME=login-user.d
+PWD=/home/obutolin/Documents/github/core42-minishell/solution
+KRB5CCNAME=FILE:/tmp/krb5cc_102319_HJQFTe
+PYENV_VIRTUALENV_INIT=1
+XDG_SESSION_DESKTOP=ubuntu
+LOGNAME=obutolin
+XDG_SESSION_TYPE=x11
+GPG_AGENT_INFO=/run/user/102319/gnupg/S.gpg-agent:0:1
+SYSTEMD_EXEC_PID=37123
+XAUTHORITY=/home/obutolin/.Xauthority
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/obutolin
+GDM_LANG=en
+HOME=/home/obutolin
+LANG=en_US.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+VTE_VERSION=6800
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/cac35df2_33e6_4527_9e81_7b17653e8a14
+CHROME_DESKTOP=code.desktop
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+LIBVIRT_DEFAULT_URI=qemu:///system
+USER=o
+VSCODE_GIT_IPC_HANDLE=/run/user/102319/vscode-git-c65840ed91.sock
+GNOME_TERMINAL_SERVICE=:1.89
+DISPLAY=:0
+SHLVL=2
+PAGER=less
+QT_IM_MODULE=ibus
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102319/bus,guid=4fbcf60eb37b6862a1d2ea2b698c2d64
+FC_FONTATIONS=1
+LC_CTYPE=en_US.UTF-8
+XDG_RUNTIME_DIR=/run/user/102319
+PYENV_ROOT=/home/obutolin/.pyenv
+DOCKER_HOST=unix:///run/user/102319/docker.sock
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/obutolin/bin:/opt/pyenv/plugins/pyenv-virtualenv/shims:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+GDMSESSION=ubuntu
+HISTFILESIZE=2147450879
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102319/bus,guid=4fbcf60eb37b6862a1d2ea2b698c2d64
+OLDPWD=/home/obutolin/Documents/github/core42-minishell
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+11:50:35 obutolin@c1r2s7 solution ±|builtins ✗|→ env USER obu
+tolin
+env: ‘USER’: No such file or directory
+11:52:34 obutolin@c1r2s7 solution ±|builtins ✗|→ env USER=obu
+tolin
+SHELL=/bin/zsh
+LSCOLORS=Gxfxcxdxdxegedabagacad
+SESSION_MANAGER=local/c1r2s7.42prague.com:@/tmp/.ICE-unix/37123,unix/c1r2s7.42prague.com:/tmp/.ICE-unix/37123
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+PYENV_SHELL=bash
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+SSH_AGENT_LAUNCHER=gnome-keyring
+LESS=-R
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session1
+XDG_MENU_PREFIX=gnome-
+TERM_PROGRAM_VERSION=1.108.0
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GTK_IM_MODULE=ibus
+HISTSIZE=2147450879
+LANGUAGE=en
+SSH_AUTH_SOCK=/run/user/102319/keyring/ssh
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+OSH=/home/obutolin/.oh-my-bash
+FT_HOOK_NAME=login-user
+GTK_MODULES=gail:atk-bridge
+DBUS_STARTER_BUS_TYPE=session
+FT_HOOK_PATHNAME=login-user.d
+PWD=/home/obutolin/Documents/github/core42-minishell/solution
+KRB5CCNAME=FILE:/tmp/krb5cc_102319_HJQFTe
+PYENV_VIRTUALENV_INIT=1
+XDG_SESSION_DESKTOP=ubuntu
+LOGNAME=obutolin
+XDG_SESSION_TYPE=x11
+GPG_AGENT_INFO=/run/user/102319/gnupg/S.gpg-agent:0:1
+SYSTEMD_EXEC_PID=37123
+XAUTHORITY=/home/obutolin/.Xauthority
+VSCODE_GIT_ASKPASS_NODE=/usr/share/code/code
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/obutolin
+GDM_LANG=en
+HOME=/home/obutolin
+LANG=en_US.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+VTE_VERSION=6800
+GIT_ASKPASS=/usr/share/code/resources/app/extensions/git/dist/askpass.sh
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/cac35df2_33e6_4527_9e81_7b17653e8a14
+CHROME_DESKTOP=code.desktop
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+LIBVIRT_DEFAULT_URI=qemu:///system
+USER=obutolin
+VSCODE_GIT_IPC_HANDLE=/run/user/102319/vscode-git-c65840ed91.sock
+GNOME_TERMINAL_SERVICE=:1.89
+DISPLAY=:0
+SHLVL=2
+PAGER=less
+QT_IM_MODULE=ibus
+DBUS_STARTER_ADDRESS=unix:path=/run/user/102319/bus,guid=4fbcf60eb37b6862a1d2ea2b698c2d64
+FC_FONTATIONS=1
+LC_CTYPE=en_US.UTF-8
+XDG_RUNTIME_DIR=/run/user/102319
+PYENV_ROOT=/home/obutolin/.pyenv
+DOCKER_HOST=unix:///run/user/102319/docker.sock
+VSCODE_GIT_ASKPASS_MAIN=/usr/share/code/resources/app/extensions/git/dist/askpass-main.js
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+GDK_BACKEND=x11
+PATH=/home/obutolin/bin:/opt/pyenv/plugins/pyenv-virtualenv/shims:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+GDMSESSION=ubuntu
+HISTFILESIZE=2147450879
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102319/bus,guid=4fbcf60eb37b6862a1d2ea2b698c2d64
+OLDPWD=/home/obutolin/Documents/github/core42-minishell
+TERM_PROGRAM=vscode
+_=/usr/bin/env
+11:52:39 obutolin@c1r2s7 solution ±|builtins ✗|→ norminette 
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.13.1/bin/norminette", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/__main__.py", line 139, in main
+    registry.run(context)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/registry.py", line 54, in run
+    ret, jump = self.run_rules(context, rule)
+                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/registry.py", line 30, in run_rules
+    self.run_rules(context, rule)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/registry.py", line 22, in run_rules
+    result = rule.run(context)
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/rules/check_comment_line_len.py", line 27, in run
+    context.new_error("LINE_TOO_LONG", (lineno, 1))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/context.py", line 247, in new_error
+    error = Error.from_name(errno, highlights=[Highlight.from_token(tkn)])
+                                               ~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/errors.py", line 42, in from_token
+    return cls(token.lineno, token.column, token.unsafe_length, hint)
+               ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'lineno'
+
+
+
+
+
+ECHO BUILTIN
+1. OK
+2. ERROR argv[0] == NULL
+3. OK
+
+4. OK
+5. OK
+6. ERROR command 'echo -n'
+7. OK
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. OK
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:41:22 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c ../test/test_built_in.c -o ../test/test_built_in.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+6. ERROR command 'echo -n'
+7. OK
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. OK
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:43:01 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+6. ERROR command 'echo -n'
+7. OK
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. OK
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:43:46 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+6. ERROR command 'echo -n'
+7. OK
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. OK
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:44:53 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c ../test/test_built_in.c -o ../test/test_built_in.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+argv = -n, flag = 0, n_flag = 0
+-n
+6. ERROR command 'echo -n'
+7. ERROR command 'echo ok'
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. ERROR command 'echo wo ow hi w
+rd'
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:47:19 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+built_in/built_in_echo.c:79:65: error: format specifies type 'int' but the argument has type 'char *' [-Werror,-Wformat]
+                        printf("argv = %s, flag = %d, n_flag = %d\n", argv[i], flag, ft_strchr(argv[i], 'n'));
+                                                               ~~                    ^~~~~~~~~~~~~~~~~~~~~~~
+                                                               %s
+1 error generated.
+make: *** [Makefile:34: built_in/built_in_echo.o] Error 1
+09:47:56 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+argv = -n, flag = 0, n_flag = 1
+-n
+6. ERROR command 'echo -n'
+7. ERROR command 'echo ok'
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. ERROR command 'echo wo ow hi w
+rd'
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:48:06 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+argv = -n, flag = 0, n_flag = 0
+-n
+6. ERROR command 'echo -n'
+7. ERROR command 'echo ok'
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. ERROR command 'echo wo ow hi w
+rd'
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:50:47 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+argv = -n, flag = 0, n_flag = 0
+-n
+6. ERROR command 'echo -n'
+7. ERROR command 'echo ok'
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. ERROR command 'echo wo ow hi w
+rd'
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+Segmentation fault (core dumped)
+09:54:08 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+^C
+09:54:55 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+make: 'tests' is up to date.
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+^C
+09:55:03 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+argv = -n, flag = 1, n_flag = 1
+6. ERROR command 'echo -n'
+7. ERROR command 'echo ok'
+8. ERROR command 'echo -e'
+9. ERROR command 'echo -e hi'
+10. ERROR command 'echo -e -n'
+11. ERROR command 'echo -e -n to'
+12. ERROR command 'echo -e -n -E'
+13. ERROR command 'echo -e -n -n word'
+14. ERROR command 'echo -e -n -n -nnn'
+15. ERROR command 'echo -e -n hi good'
+16. ERROR command 'echo -e ow hi word'
+17. ERROR command 'echo wo ow hi w
+rd'
+19. ERROR command 'echo -e -E -e -n-E 1234
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:55:38 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c built_in/built_in_echo.c -o built_in/built_in_echo.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+11. OK
+12. OK
+13. OK
+14. ERROR command 'echo -e -n -n -nnn'
+15. OK
+16. OK
+17. OK
+18. OK
+19. OK
+19. OK
+
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:55:55 obutolin@c1r2s7 solution ±|builtins ✗|→ make tests && ./tests
+cc -g -O0 -Wall -Wextra -Werror   -I. -Ilibft -I/opt/homebrew/opt/readline/include -c ../test/test_built_in.c -o ../test/test_built_in.o
+make[1]: Entering directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+make[1]: Leaving directory '/home/obutolin/Documents/github/core42-minishell/solution/libft'
+cc -g -O0 -Wall -Wextra -Werror   lexer/lexer.o lexer/line_lexer.o lexer/token_list_manager.o lexer/lexical_errors.o lexer/need_next_line.o built_in/built_in_echo.o built_in/built_in_pwd.o built_in/built_in_exit.o ../test/test.o ../test/test_lexer.o ../test/test_built_in.o -Llibft -lft -lreadline -o tests
+
+===LEXER===
+
+LINE_LEXER.c
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+
+NEED_NEXT_LINE   need_wait_for_closing_quote
+1. OK
+2. OK
+3. OK
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+
+===BUILTIN===
+
+ECHO BUILTIN
+1. OK
+2. OK
+3. OK
+
+4. OK
+5. OK
+6. OK
+7. OK
+8. OK
+9. OK
+10. OK
+11. OK
+12. OK
+13. OK
+14. OK
+15. OK
+16. OK
+17. OK
+18. OK
+19. OK
+19. OK
+
+PWD BUILTIN
+1. OK
+2. OK
+3. OK
+/home/obutolin/Documents/github/core42-minishell/solution
+4. OK
+5. OK
+
+EXIT BUILTIN
+1. ERROR argv == NULL
+09:56:20 obutolin@c1r2s7 solution ±|builtins ✗|→ cd ..
+09:57:30 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ git add *
+09:57:32 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ git commit -m "fix built in echo command"
+[builtins 204067d] fix built in echo command
+ Committer: Olga Butolina <obutolin@c1r2s7.42prague.com>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 5 files changed, 119 insertions(+), 60 deletions(-)
+09:57:53 obutolin@c1r2s7 core42-minishell ±|builtins✔|→ git push
+Enumerating objects: 19, done.
+Counting objects: 100% (19/19), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (10/10), 1.99 KiB | 1.99 MiB/s, done.
+Total 10 (delta 8), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (8/8), completed with 8 local objects.
+To github.com:olgabut/core42-minishell.git
+   ff4eaf9..204067d  builtins -> builtins
+09:57:56 obutolin@c1r2s7 core42-minishell ±|builtins✔|→ norminette 
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.13.1/bin/norminette", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/__main__.py", line 139, in main
+    registry.run(context)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/registry.py", line 54, in run
+    ret, jump = self.run_rules(context, rule)
+                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/registry.py", line 30, in run_rules
+    self.run_rules(context, rule)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/registry.py", line 22, in run_rules
+    result = rule.run(context)
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/rules/check_comment_line_len.py", line 27, in run
+    context.new_error("LINE_TOO_LONG", (lineno, 1))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/context.py", line 247, in new_error
+    error = Error.from_name(errno, highlights=[Highlight.from_token(tkn)])
+                                               ~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/norminette/errors.py", line 42, in from_token
+    return cls(token.lineno, token.column, token.unsafe_length, hint)
+               ^^^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'lineno'
+12:11:10 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ ^C
+12:11:31 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ 
+12:12:30 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ 
+12:12:31 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ 
+12:12:31 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ python --version
+Python 3.13.1
+12:12:38 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ ^C
+12:12:48 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ pyenv --version
+pyenv 2.6.18
+12:13:49 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ ^M
+: command not found
+12:14:35 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ 
+12:14:35 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ pip uninstall norminette -y
+Found existing installation: norminette 3.3.57
+Uninstalling norminette-3.3.57:
+ERROR: Exception:
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/shutil.py", line 856, in move
+    os.rename(src, real_dst)
+    ~~~~~~~~~^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/opt/pyenv/versions/3.13.1/bin/norminette' -> '/tmp/pip-uninstall-vzpo6l9y/norminette'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/cli/base_command.py", line 107, in _run_wrapper
+    status = _inner_run()
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/cli/base_command.py", line 98, in _inner_run
+    return self.run(options, args)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/commands/uninstall.py", line 105, in run
+    uninstall_pathset = req.uninstall(
+        auto_confirm=options.yes,
+        verbose=self.verbosity > 0,
+    )
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/req/req_install.py", line 675, in uninstall
+    uninstalled_pathset.remove(auto_confirm, verbose)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/req/req_uninstall.py", line 373, in remove
+    moved.stash(path)
+    ~~~~~~~~~~~^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/req/req_uninstall.py", line 264, in stash
+    renames(path, new_path)
+    ~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/site-packages/pip/_internal/utils/misc.py", line 342, in renames
+    shutil.move(old, new)
+    ~~~~~~~~~~~^^^^^^^^^^
+  File "/opt/pyenv/versions/3.13.1/lib/python3.13/shutil.py", line 877, in move
+    os.unlink(src)
+    ~~~~~~~~~^^^^^
+PermissionError: [Errno 13] Permission denied: '/opt/pyenv/versions/3.13.1/bin/norminette'
+12:14:39 obutolin@c1r2s7 core42-minishell ±|builtins ✗|→ pip install norminette
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: norminette in /opt/pyenv/versions/3.13.1/lib/python3.13/site-packages (3.3.57)
+Collecting argparse<2.0.0,>=1.4.0 (from norminette)
+  Downloading argparse-1.4.0-py2.py3-none-any.whl.metadata (2.8 kB)
+Downloading argparse-1.4.0-py2.py3-none-any.whl (23 kB)
+Installing collected packages: argparse
+Successfully installed argparse-1.4.0
+
+[notice] A new release of pip is available: 25.3 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+pyenv: cannot rehash: /opt/pyenv/shims isn't writable
