@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/12 17:33:34 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/14 20:16:29 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	create_env(t_env **env, char *key, char *value)
 {
 	t_env	*new_env;
 
-	new_env = malloc(sizeof(t_env));
+	new_env = ft_calloc(1, sizeof(t_env));
 	if (!new_env)
 		return (0);
 	new_env->key = key;
@@ -76,15 +76,34 @@ void	add_new_env(t_env **head, t_env *new_env)
 	env->next = new_env;
 }
 
-char *get_env(t_env *head, char *key)
+char	*get_env(t_env *head, char *key)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = head;
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
 			return (env->value);
+		env = env->next;
+	}
+	return (NULL);
+}
+
+void	print_env_list(t_env *head)
+{
+	t_env	*env;
+	int		fd;
+
+	fd = 1;
+	env = head;
+	ft_putstr_fd("Print envs:\n", fd);
+	while (env != NULL)
+	{
+		ft_putstr_fd("env key=", fd);
+		ft_putstr_fd(env->key, fd);
+		ft_putstr_fd(" value=", fd);
+		ft_putendl_fd(env->value, fd);
 		env = env->next;
 	}
 }

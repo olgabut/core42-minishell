@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 12:17:16 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/13 17:05:15 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 		1 - ok
 		0 - malloc errors
 */
-int	add_new_line(t_memory_info **memory_head, char **line, char *new_line)
+static int	add_new_line(t_memory_info **memory_head,
+	char **line, char *new_line)
 {
 	char	*new_long_line;
 
@@ -39,7 +40,7 @@ int	add_new_line(t_memory_info **memory_head, char **line, char *new_line)
 	return (1);
 }
 
-int	wait_next_line(t_memory_info **memory_head, t_token **token_head,
+static int	wait_next_line(t_memory_info **memory_head, t_token **token_head,
 	char **line)
 {
 	char	*new_line;
@@ -57,7 +58,7 @@ int	wait_next_line(t_memory_info **memory_head, t_token **token_head,
 	return (1);
 }
 
-int	wrong_comman(t_memory_info **memory_head, t_token **token_head)
+static int	wrong_comman(t_memory_info **memory_head, t_token **token_head)
 {
 	free_memory_links(memory_head);
 	*token_head = NULL;

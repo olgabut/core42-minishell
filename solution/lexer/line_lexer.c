@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 11:37:59 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/13 17:06:34 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ Return
 	0-error (could't create token, malloc error)
 	1-ok
 */
-int	search_for_double_token(t_token **token, char *line, int start_word_pos)
+static int	search_for_double_token(t_token **token,
+	char *line, int start_word_pos)
 {
 	if (line[start_word_pos] == '<' && line[start_word_pos + 1] == '<')
 		return (create_token(token, TOKEN_HEREDOC,
@@ -45,7 +46,8 @@ Return
 	0-error (could't create token, malloc error)
 	1-ok
 */
-int	search_for_single_token(t_token **token, char *line, int start_word_pos)
+static int	search_for_single_token(t_token **token,
+	char *line, int start_word_pos)
 {
 	if (line[start_word_pos] == '<')
 		return (create_token(token, TOKEN_REDIR_IN,
@@ -78,7 +80,7 @@ Return
 	0-error (could't create token, malloc error)
 	1-ok
 */
-int	search_for_word(t_token **token, char *line, int *start_word_pos)
+static int	search_for_word(t_token **token, char *line, int *start_word_pos)
 {
 	int		pos;
 	bool	is_single_quote;
@@ -113,7 +115,7 @@ int	search_for_word(t_token **token, char *line, int *start_word_pos)
 	Change start_word_pos to the next token position
 	Return 0-error, 1-ok
 */
-int	search_for_token(t_token **token, char *line, int *start_word_pos)
+static int	search_for_token(t_token **token, char *line, int *start_word_pos)
 {
 	if (!search_for_double_token(token, line, *start_word_pos))
 		return (0);

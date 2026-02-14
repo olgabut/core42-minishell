@@ -6,13 +6,13 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 12:01:45 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/13 17:05:40 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	print_lexical_error(char *message, bool result)
+static bool	print_lexical_error(char *message, bool result)
 {
 	ft_putstr_fd(message, STDERR_FILENO);
 	return (result);
@@ -26,7 +26,7 @@ bool	print_lexical_error(char *message, bool result)
 	10 ;    = TOKEN_SEMICOLON
 	11 &    = TOKEN_AMPERSAND
 */
-bool	command_has_unsupported_tokens(t_token *token_head)
+static bool	command_has_unsupported_tokens(t_token *token_head)
 {
 	t_token	*token;
 
@@ -47,7 +47,7 @@ bool	command_has_unsupported_tokens(t_token *token_head)
 	return (false);
 }
 
-bool	command_error_wrong_token_sequence(t_token *token_head)
+static bool	command_error_wrong_token_sequence(t_token *token_head)
 {
 	t_token	*token;
 

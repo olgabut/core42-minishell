@@ -6,13 +6,13 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 10:43:47 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/09 12:22:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/13 17:06:51 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	need_wait_for_closing_quote(t_token *token_head)
+static bool	need_wait_for_closing_quote(t_token *token_head)
 {
 	t_token	*last_token;
 	char	*line;
@@ -38,7 +38,7 @@ bool	need_wait_for_closing_quote(t_token *token_head)
 	return (is_single_quote || is_double_quote);
 }
 
-bool	need_wait_for_continuation_of_command(t_token *token_head)
+static bool	need_wait_for_continuation_of_command(t_token *token_head)
 {
 	t_token	*last_token;
 

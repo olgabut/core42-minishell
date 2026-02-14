@@ -15,6 +15,8 @@ SRC_FILES = lexer/lexer.c \
 	lexer/token_list_manager.c \
 	lexer/lexical_errors.c \
 	lexer/need_next_line.c \
+	env/env_list_manager.c \
+	env/init_env.c \
 	built_in/built_in_echo.c \
 	built_in/built_in_pwd.c \
 	built_in/built_in_exit.c \
