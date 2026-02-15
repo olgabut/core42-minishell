@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/13 17:05:15 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:20:09 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	wait_next_line(t_memory_info **memory_head, t_token **token_head,
 	return (1);
 }
 
-static int	wrong_comman(t_memory_info **memory_head, t_token **token_head)
+static int	wrong_command(t_memory_info **memory_head, t_token **token_head)
 {
 	free_memory_links(memory_head);
 	*token_head = NULL;
@@ -78,16 +78,15 @@ int	lexer(t_memory_info **memory_head, t_token **token_head)
 	line = readline("Minishell> ");
 	if (!line || !add_new_memory_link_for_control(memory_head, line))
 		return (0);
-	if (line[0] == '\0')
-		return (1);
-	if (!line_lexer(memory_head, token_head, line))
+	if (line[0] == '\0'
+		|| !line_lexer(memory_head, token_head, line))
 		return (1);
 	if (command_with_error(*token_head))
-		return (wrong_comman(memory_head, token_head));
+		return (wrong_command(memory_head, token_head));
 	if (!wait_next_line(memory_head, token_head, &line))
 		return (0);
 	if (command_with_error(*token_head))
-		return (wrong_comman(memory_head, token_head));
+		return (wrong_command(memory_head, token_head));
 	add_history(line);
 	return (1);
 }

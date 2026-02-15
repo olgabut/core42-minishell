@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:54:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/14 20:29:50 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:13:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	init_env(t_memory_info **memory_head,
 	t_env **env_head, char **input)
 {
 	int		i;
-	char *key;
-	char *value;
-	t_env *new_env;
+	char	*key;
+	char	*value;
+	t_env	*new_env;
 
 	(void)memory_head;
 	(void)env_head;
@@ -62,7 +62,6 @@ int	init_env(t_memory_info **memory_head,
 	{
 		key = NULL;
 		value = NULL;
-		printf("input[%d] = '%s'\n", i, input[i]);
 		if (!pars_input_env(&key, &value, input[i])
 			|| !create_env(&new_env, key, value))
 			return (0);
@@ -73,6 +72,5 @@ int	init_env(t_memory_info **memory_head,
 			return (0);
 		i++;
 	}
-	print_env_list(*env_head);
 	return (1);
 }
