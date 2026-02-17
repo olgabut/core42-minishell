@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:54:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/15 16:13:21 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:58:36 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	init_env(t_memory_info **memory_head,
 		if (!pars_input_env(&key, &value, input[i])
 			|| !create_env(&new_env, key, value))
 			return (0);
-		add_new_env(env_head, new_env);
+		update_env_sorted(env_head, new_env);
 		if (!add_new_memory_link_for_control(memory_head, key)
 			|| !add_new_memory_link_for_control(memory_head, value)
 			|| !add_new_memory_link_for_control(memory_head, new_env))

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/14 20:16:29 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:57:34 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,15 @@ int	create_env(t_env **env, char *key, char *value)
 }
 
 /*
-	Adds new_env to the list to the last position,
+	Adds new_env or modifies an existing node with such a key
+	in the list to the position,
+	that the list is sorted by key
 	where head is the first env
 */
-void	add_new_env(t_env **head, t_env *new_env)
+void	update_env_sorted(t_env **head, t_env *new_env)
 {
 	t_env	*env;
+	t_env	*prev;
 
 	if (new_env == NULL)
 		return ;
@@ -71,9 +74,27 @@ void	add_new_env(t_env **head, t_env *new_env)
 		return ;
 	}
 	env = *head;
-	while (env->next != NULL)
+	prev = NULL;
+	while (env != NULL)
+	{
+		if (ft_strcmp(new_env->key, env->key) < 0)
+		{
+			new_env->next = env;
+			if (!prev)
+				*head = new_env;
+			else
+				prev->next = new_env;
+			return ;
+		}
+		// if (ft_strcmp(new_env->key, env->key) == 0)
+		// {
+		// 	prev->next = new_env;
+		// 	new_env->next = env->next;
+		// }
+		prev = env;
 		env = env->next;
-	env->next = new_env;
+	}
+	prev->next = new_env;
 }
 
 char	*get_env(t_env *head, char *key)
@@ -100,7 +121,7 @@ void	print_env_list(t_env *head)
 	ft_putstr_fd("Print envs:\n", fd);
 	while (env != NULL)
 	{
-		ft_putstr_fd("env key=", fd);
+		ft_putstr_fd("key=", fd);
 		ft_putstr_fd(env->key, fd);
 		ft_putstr_fd(" value=", fd);
 		ft_putendl_fd(env->value, fd);
