@@ -22,7 +22,9 @@ SRC_FILES = lexer/lexer.c \
 	parser/expand_variables.c \
 	parser/handle_dollar.c \
 	parser/env_utils.c \
-	parser/print_parsed_commands.c
+	parser/print_parsed_commands.c \
+	env/init_env.c \
+	env/env_list_manager.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \

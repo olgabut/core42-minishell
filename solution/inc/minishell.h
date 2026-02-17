@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 15:22:17 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:51:35 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
-# include <unistd.h> 
+# include <unistd.h>
 
 /*
 	0 word = TOKEN_WORD
@@ -92,7 +92,8 @@ typedef struct s_minishell
 	int					stdout_backup;
 }						t_minishell;
 
-// lexer
+void					signals(void);
+
 int						lexer(t_memory_info **memory_head,
 							t_token **token_head);
 int						line_lexer(t_memory_info **memory_head,
@@ -100,15 +101,25 @@ int						line_lexer(t_memory_info **memory_head,
 int						create_token(t_token **token, enum e_token_type type,
 							char *value);
 void					add_new_token(t_token **head, t_token *new_token);
-void					free_tokens(t_token *head);
+void					free_token_list(t_token *head);
 t_token					*get_last_token(t_token *head);
 void					print_token_list(t_token *head);
 bool					command_with_error(t_token *token_head);
 bool					need_next_line(t_token *token_head);
+// env
+int						create_env(t_env **env, char *key, char *value);
+void					update_env_sorted(t_env **head, t_env *new_env);
+char					*get_env(t_env *head, char *key);
+void					print_env_list(t_env *head);
+int						init_env(t_memory_info **memory_head, t_env **env_head,
+							char **input);
 
-void					signals(void);
+t_cmd					*parser(t_minishell *mshell, t_token *tokens);
 
-// parser
-t_cmd	*parser(t_minishell *mshell, t_token *tokens);
+// built_in
+int						built_in_echo(char **argv);
+int						built_in_pwd(char **argv);
+int						built_in_exit(char **argv);
+int						built_in_env(char **argv, t_env *env);
 
 #endif
