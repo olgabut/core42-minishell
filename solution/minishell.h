@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/08 15:09:04 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/18 09:45:45 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,32 @@ enum					e_token_type
 
 typedef struct s_token
 {
+	struct s_token		*next;
 	enum e_token_type	type;
 	char				*value;
-	struct s_token		*next;
 }						t_token;
 
 typedef struct s_io
 {
+	struct s_io			*next;
 	enum e_token_type	type;
 	char				*path;
 	char				**exp_args;
-	struct s_io			*next;
 }						t_io;
 
 typedef struct s_cmd
 {
+	struct s_cmd		*next;
 	char				**args;
 	char				*path;
 	t_io				*io_list;
-	struct s_cmd		*next;
 }						t_cmd;
 
 typedef struct s_env
 {
+	struct s_env		*next;
 	char				*key;
 	char				*value;
-	struct s_env		*next;
 }						t_env;
 
 typedef struct s_minishell
@@ -107,6 +107,13 @@ bool					command_with_error(t_token *token_head);
 bool					need_next_line(t_token *token_head);
 
 void					signals(void);
+
+enum e_quote 
+{
+SINGLE = 39,
+DOUBLE = 34,
+NONE,
+} ;
 
 // parser
 t_cmd	*parser(t_token *tokens);
