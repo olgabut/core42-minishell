@@ -7,7 +7,6 @@ READLINE_INC = /opt/homebrew/opt/readline/include
 READLINE_LIB = /opt/homebrew/opt/readline/lib
 
 LIBFT_DIR = libft
-SRC_DIR = src
 BUILD = build
 
 SRC_FILES_WITH_MAIN = minishell.c $(SRC_FILES)
@@ -17,7 +16,9 @@ SRC_FILES = lexer/lexer.c \
 	lexer/lexical_errors.c \
 	lexer/need_next_line.c \
 	signals/signals.c \
-	parser/parse.c
+	parser/parse.c \
+	parser/parser_cases.c \
+	parser/parser_env_vars.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \
