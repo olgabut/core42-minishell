@@ -1,4 +1,3 @@
-
 NAME = minishell
 CC = cc
 CFLAGS = -g -O0 -Wall -Wextra -Werror  #-fsanitize=address
@@ -7,6 +6,7 @@ READLINE_INC = /opt/homebrew/opt/readline/include
 READLINE_LIB = /opt/homebrew/opt/readline/lib
 
 LIBFT_DIR = libft
+INC_DIR = inc
 BUILD = build
 
 SRC_FILES_WITH_MAIN = minishell.c $(SRC_FILES)
@@ -18,7 +18,10 @@ SRC_FILES = lexer/lexer.c \
 	signals/signals.c \
 	parser/parse.c \
 	parser/parser_cases.c \
-	parser/parser_env_vars.c
+	# parser/check_word.c \
+	parser/expand_variables.c \
+	parser/handle_dollar.c \
+	parser/env_utils.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \
@@ -32,11 +35,11 @@ all: $(NAME)
 
 $(BUILD)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -I. -I$(LIBFT_DIR) -I$(READLINE_INC) -c $< -o $@
+	$(CC) $(CFLAGS) -I. -I$(LIBFT_DIR) -I$(READLINE_INC) -I$(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJS_FILES)
 	@$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS_FILES) -L$(LIBFT_DIR) -L$(READLINE_LIB) -lft -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS_FILES) -L$(LIBFT_DIR) -L$(READLINE_LIB) -L$(INC_DIR) -lft -lreadline -o $(NAME)
 
 tests: $(OBJS_TEST_FILES)
 	@$(MAKE) -C $(LIBFT_DIR)
