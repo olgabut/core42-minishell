@@ -26,7 +26,7 @@ OBJECTS = $(SOURCES:.c=.o)
 BONUS = ft_bonus.c ft_bonus_2.c
 BONUS_OBJECTS = $(BONUS:.c=.o)
 
-HEADERS = libft.h
+HEADERS = libft.h ft_split_by_chars.h
 
 CFLAGS = -Wall -Wextra -Werror -fPIC
 
