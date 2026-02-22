@@ -6,11 +6,12 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 16:49:44 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:21:18 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parse_cases.h"
 
 static t_cmd	*init_cmd(void)
 {
@@ -22,7 +23,7 @@ static t_cmd	*init_cmd(void)
 	return (cmd);
 }
 
-t_cmd	*parser(t_token *tokens)
+t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 {
 	t_cmd	*cmd;
 	t_cmd	*head;
@@ -41,9 +42,9 @@ t_cmd	*parser(t_token *tokens)
 			cmd = cmd->next;
 		}
 		else if (is_redirection(tokens->type))
-			add_io(cmd, &tokens);
+			add_io(mshell, cmd, &tokens);
 		else
-			add_arg(&temp_args, tokens->value);
+			add_arg(mshell, &temp_args, tokens->value);
 		if (tokens)
 			tokens = tokens->next;
 	}
