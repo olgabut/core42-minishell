@@ -18,10 +18,11 @@ SRC_FILES = lexer/lexer.c \
 	signals/signals.c \
 	parser/parse.c \
 	parser/parser_cases.c \
-	# parser/check_word.c \
+	parser/check_word.c \
 	parser/expand_variables.c \
 	parser/handle_dollar.c \
-	parser/env_utils.c
+	parser/env_utils.c \
+	parser/print_parsed_commands.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \
