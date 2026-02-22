@@ -6,11 +6,11 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 15:07:19 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/22 16:06:17 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "check_word.h"
 
 bool	is_redirection(enum e_token_type type)
 {
@@ -21,17 +21,15 @@ bool	is_redirection(enum e_token_type type)
 		return (false);
 }
 
-void	add_arg(t_list **word_list, char *arg)
+void	add_arg(t_minishell *mshell, t_list **word_list, char *arg)
 {
 	t_list	*node;
 	char	*str;
 
-	str = ft_strdup(arg);
+	str = check_word(mshell, arg);
 	if (!str)
 		return ;
-	node = ft_lstnew(str);
-	if (!node)
-		return ;
+	node = apply_ifs(mshell, str);
 	ft_lstadd_back(word_list, node);
 }
 
@@ -52,17 +50,22 @@ static void	io_add_back(t_cmd *cmd, t_io *node)
 	last->next = node;
 }
 
-void	add_io(t_cmd *cmd, t_token **token)
+void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 {
 	t_io	*node;
+	char	*path;
+	t_list	*word_list;
 
 	node = malloc(sizeof(t_io));
 	if (!node)
 		return ;
 	node->type = (*token)->type;
 	*token = (*token)->next;
-	node->path = ft_strdup((*token)->value);
-	if (!node->path)
-		return ;
+	path = (*token)->value;
+	word_list = apply_ifs(mshell, check_word(mshell, path));
+	if (ft_lstsize(word_list) != 1)
+		return (perror("Ambigious redirect\n"));
+	node->path = word_list->content;
+	free(word_list);
 	io_add_back(cmd, node);
 }
