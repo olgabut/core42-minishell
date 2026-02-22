@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/01/22 09:25:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:15:25 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 bool	print_lexical_error(char *print_string, bool result)
 {

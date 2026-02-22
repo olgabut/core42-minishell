@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/08 12:26:16 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:15:09 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*	Function add_new_line rewrites
 	line = line + '\n' + new_line

@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/01 18:59:41 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:16:13 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 // volatile sig_atomic_t	g_sig_type = 0;
 
