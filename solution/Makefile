@@ -17,10 +17,12 @@ SRC_FILES = lexer/lexer.c \
 	lexer/need_next_line.c \
 	env/env_list_manager.c \
 	env/init_env.c \
+	env/env_checks.c \
 	built_in/built_in_echo.c \
 	built_in/built_in_pwd.c \
 	built_in/built_in_exit.c \
-	built_in/built_in_env.c
+	built_in/built_in_env.c \
+	built_in/built_in_export.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \
