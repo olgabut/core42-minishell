@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 09:00:02 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 12:11:19 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,51 @@ void	update_env_sorted(t_env **head, t_env *new_env)
 	prev->next = new_env;
 }
 
-char	*get_env(t_env *head, char *key)
+/*
+	Updates exising env with the same key or
+	adds new_env to the list to the last position,
+	where head is the first env
+*/
+void	update_env(t_env **head, t_env *new_env)
+{
+	t_env	*env;
+	t_env	*prev;
+
+	if (new_env == NULL)
+		return ;
+	if (*head == NULL)
+	{
+		*head = new_env;
+		return ;
+	}
+	env = *head;
+	prev = NULL;
+	while (env != NULL)
+	{
+		if (ft_strcmp(new_env->key, env->key) == 0)
+		{
+			if (new_env->value)
+			{
+				new_env->next = env->next;
+				if (!prev)
+					*head = new_env;
+				else
+					prev->next = new_env;
+			}
+			return ;
+		}
+		prev = env;
+		env = env->next;
+	}
+	prev->next = new_env;
+}
+
+/*
+	if env with key exists - return true, value has the found value of interest
+	else return false
+	The value can be NULL
+*/
+bool	get_env_exist(t_env *head, char *key, char **value)
 {
 	t_env	*env;
 
@@ -126,10 +170,13 @@ char	*get_env(t_env *head, char *key)
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
-			return (env->value);
+		{
+			*value = env->value;
+			return (true);
+		}
 		env = env->next;
 	}
-	return (NULL);
+	return (false);
 }
 
 int	count_env(t_env *env)

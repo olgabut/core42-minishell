@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 11:35:55 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 12:13:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,6 @@ void	built_in_export_test(void)
 	char			**argv_only_export;
 	t_memory_info	*memory_list;
 	t_env			*env;
-	
 
 	printf("\nEXPORT BUILTIN\n");
 	argv = NULL;
@@ -452,8 +451,8 @@ void	built_in_export_test(void)
 	else
 		printf("19. ERROR command 'export 1Var=Bob'\n");
 
-	// Command "export _Var=TED AVar2=Meg" wrang key
-	ft_strlcpy(argv[1], "_Var=TED", 9);
+	// Command "export MyVAR=7 AVar2=Meg" wrang key
+	ft_strlcpy(argv[1], "MyVAR=7", 9);
 	argv[2] = calloc(50, sizeof(char));
 	ft_strlcpy(argv[2], "AVar2=Meg", 10);
 	if (ft_strlen(run_env_cmd_and_capture(
@@ -461,17 +460,16 @@ void	built_in_export_test(void)
 			&& count_env(env) == 5)
 		printf("20. OK\n");
 	else
-		printf("20. ERROR command 'export _Var=TED AVar2=Meg'\n");
+		printf("20. ERROR command 'export MyVAR=7 AVar2=Meg'\n");
 	
 	// command "export"
 	if (ft_strcmp(run_env_cmd_and_capture(
 				&memory_list, argv_only_export, &env, built_in_export),
-				"declare -x AVar2=\"Meg\"\ndeclare -x MyVAR=\"new\"\ndeclare -x USER=\"Bob\"\ndeclare -x WMVAR=\"MyVal\"\ndeclare -x _Var=\"TED\"\n") == 0)
+				"declare -x AVar2=\"Meg\"\ndeclare -x MyVAR=\"7\"\ndeclare -x USER=\"Bob\"\ndeclare -x WMVAR=\"MyVal\"\ndeclare -x _Var\n") == 0)
 		printf("21. OK\n");
 	else
 		printf("21. ERROR command 'export' with env USER, WMVAR, MyVAR, _Var\n");
 
-	
 	free_memory_links(&memory_list);
 }
 
