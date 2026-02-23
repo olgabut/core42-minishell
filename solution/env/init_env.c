@@ -6,36 +6,43 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:54:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/17 12:58:36 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 11:01:30 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /*
-	The function gets one env (str == "key=value")
+	The function gets one env (str == "key[=value]")
 	and writes the key and value from str
 	Return
 	0 - malloc error
 	1 - ok
 */
-static int	pars_input_env(char **key, char **value, char *str)
+int	pars_env_structure(char **key, char **value, char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str && str[i] && str[i] != '=')
+	*key = NULL;
+	*value = NULL;
+	if (!str)
+		return (1);
+	while (str[i] && str[i] != '=')
 		i++;
-	if (str && str[i] && i > 0)
+	if (i > 0)
 	{
 		*key = ft_substr(str, 0, i);
 		if (!key)
 			return (0);
-		*value = ft_substr(str, i + 1, ft_strlen(str) - i);
-		if (!value)
+		if (str[i])
 		{
-			free(key);
-			return (0);
+			*value = ft_substr(str, i + 1, ft_strlen(str) - i);
+			if (!value)
+			{
+				free(key);
+				return (0);
+			}
 		}
 	}
 	return (1);
@@ -62,7 +69,7 @@ int	init_env(t_memory_info **memory_head,
 	{
 		key = NULL;
 		value = NULL;
-		if (!pars_input_env(&key, &value, input[i])
+		if (!pars_env_structure(&key, &value, input[i])
 			|| !create_env(&new_env, key, value))
 			return (0);
 		update_env_sorted(env_head, new_env);

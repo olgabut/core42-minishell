@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 09:43:58 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 11:35:55 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,9 +340,7 @@ void	built_in_export_test(void)
 		printf("6. ERROR command 'export' with env USER=null\n");
 
 	// Command "export WMVAR=MyVal"
-	ft_strlcpy(argv[1], "WMVAR", 6);
-	argv[2] = calloc(50, sizeof(char));
-	ft_strlcpy(argv[2], "MyVal", 6);
+	ft_strlcpy(argv[1], "WMVAR=MyVal", 12);
 	if (ft_strlen(run_env_cmd_and_capture(
 				&memory_list, argv, &env, built_in_export)) == 0
 			&& count_env(env) == 2)
@@ -359,8 +357,7 @@ void	built_in_export_test(void)
 		printf("8. ERROR command 'export' with env USER and WMVAR\n");
 
 	// Command "export MyVAR=999"
-	ft_strlcpy(argv[1], "MyVAR", 6);
-	ft_strlcpy(argv[2], "999", 4);
+	ft_strlcpy(argv[1], "MyVAR=999", 10);
 	if (ft_strlen(run_env_cmd_and_capture(
 				&memory_list, argv, &env, built_in_export)) == 0
 			&& count_env(env) == 3)
@@ -377,7 +374,7 @@ void	built_in_export_test(void)
 		printf("10. ERROR command 'export' with env USER, WMVAR, MyVAR\n");
 
 	// Command "export MyVAR=new"  Change the value to new value
-	ft_strlcpy(argv[2], "new", 4);
+	ft_strlcpy(argv[1], "MyVAR=new", 10);
 	if (ft_strlen(run_env_cmd_and_capture(
 				&memory_list, argv, &env, built_in_export)) == 0
 			&& count_env(env) == 3)
@@ -412,9 +409,7 @@ void	built_in_export_test(void)
 		printf("14. ERROR command 'export' with env USER, WMVAR, MyVAR\n");
 	
 	// Command "export USER=Bob"
-	ft_strlcpy(argv[1], "USER", 5);
-	argv[2] = calloc(50, sizeof(char));
-	ft_strlcpy(argv[2], "Bob", 4);
+	ft_strlcpy(argv[1], "USER=Bob", 9);
 	if (ft_strlen(run_env_cmd_and_capture(
 				&memory_list, argv, &env, built_in_export)) == 0
 			&& count_env(env) == 3)
@@ -429,8 +424,8 @@ void	built_in_export_test(void)
 		printf("16. OK\n");
 	else
 		printf("16. ERROR command 'export' with env USER, WMVAR, MyVAR\n");
-	
-	// Command "export _Var=Bob"
+
+	// Command "export _Var"
 	ft_strlcpy(argv[1], "_Var", 5);
 	if (ft_strlen(run_env_cmd_and_capture(
 				&memory_list, argv, &env, built_in_export)) == 0
@@ -439,15 +434,15 @@ void	built_in_export_test(void)
 	else
 		printf("17. ERROR command 'export _Var=Bob'\n");
 
-	// Command "export" (env has "_Var=Bob, USER=Bob, WMVAR=MyVal, MyVAR=new ")
+	// Command "export" (env has "_Var, USER=Bob, WMVAR=MyVal, MyVAR=new ")
 	if (ft_strcmp(run_env_cmd_and_capture(
 				&memory_list, argv_only_export, &env, built_in_export),
-				"declare -x MyVAR=\"new\"\ndeclare -x USER=\"Bob\"\ndeclare -x WMVAR=\"MyVal\"\ndeclare -x _Var=\"Bob\"\n") == 0)
+				"declare -x MyVAR=\"new\"\ndeclare -x USER=\"Bob\"\ndeclare -x WMVAR=\"MyVal\"\ndeclare -x _Var\n") == 0)
 		printf("18. OK\n");
 	else
 		printf("18. ERROR command 'export' with env USER, WMVAR, MyVAR, _Var\n");
 
-	// Command "export 1var=Bob" wrang key
+	// Command "export 1var" wrang key
 	ft_strlcpy(argv[1], "1var", 5);
 	if (ft_strcmp(run_env_cmd_and_capture(
 				&memory_list, argv, &env, built_in_export),
@@ -457,6 +452,26 @@ void	built_in_export_test(void)
 	else
 		printf("19. ERROR command 'export 1Var=Bob'\n");
 
+	// Command "export _Var=TED AVar2=Meg" wrang key
+	ft_strlcpy(argv[1], "_Var=TED", 9);
+	argv[2] = calloc(50, sizeof(char));
+	ft_strlcpy(argv[2], "AVar2=Meg", 10);
+	if (ft_strlen(run_env_cmd_and_capture(
+				&memory_list, argv, &env, built_in_export)) == 0
+			&& count_env(env) == 5)
+		printf("20. OK\n");
+	else
+		printf("20. ERROR command 'export _Var=TED AVar2=Meg'\n");
+	
+	// command "export"
+	if (ft_strcmp(run_env_cmd_and_capture(
+				&memory_list, argv_only_export, &env, built_in_export),
+				"declare -x AVar2=\"Meg\"\ndeclare -x MyVAR=\"new\"\ndeclare -x USER=\"Bob\"\ndeclare -x WMVAR=\"MyVal\"\ndeclare -x _Var=\"TED\"\n") == 0)
+		printf("21. OK\n");
+	else
+		printf("21. ERROR command 'export' with env USER, WMVAR, MyVAR, _Var\n");
+
+	
 	free_memory_links(&memory_list);
 }
 

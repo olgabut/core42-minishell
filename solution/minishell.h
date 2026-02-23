@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 16:28:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 10:47:49 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	print_token_list(t_token *head);
 bool	command_with_error(t_token *token_head);
 bool	need_next_line(t_token *token_head);
 // env
+int		pars_env_structure(char **key, char **value, char *str);
 int		create_env(t_env **new_env, char *key, char *value);
 void	update_env_sorted(t_env **head, t_env *new_env);
 char	*get_env(t_env *head, char *key);

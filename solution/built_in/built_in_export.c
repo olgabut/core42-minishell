@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 09:28:00 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 11:29:30 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	print_env_export_format(t_env *env)
 	name[=value] assign value before exporting
 	-n Named variables (or functions, with -f) will no longer be exported.
 
+	argv[0] = "export"
+	argv[1..n] = can be null or string format: keyName[=value]
 	return:
 		(-1) - error (it's not exit status, the command wasn't completed)
 		(0) - success exit status
@@ -53,30 +55,43 @@ static void	print_env_export_format(t_env *env)
  */
 int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 {
+	int		i;
 	t_env	*new_env;
+	char	*key;
+	char	*value;
 
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "export") != 0)
 		return (-1);
-	if (argv[1])
+	i = 1;
+	if (!argv[1])
 	{
-		if (!is_env_key_valid(argv[1]))
+		print_env_export_format(*env);
+		return (EXIT_SUCCESS);
+	}
+	while (argv[i])
+	{
+		if (!pars_env_structure(&key, &value, argv[i]))
+			return (EXIT_FAILURE);
+		if (!is_env_key_valid(key))
 		{
-			ft_printf("minishell: export: `%s`: not a valid identifier\n", argv[1]);
+			ft_printf("minishell: export: `%s`: not a valid identifier\n",
+				argv[i]);
 			return (EXIT_FAILURE);
 		}
 		new_env = NULL;
-		if (!create_env(&new_env, argv[1], argv[2]))
+		if (!create_env(&new_env, key, value))
 		{
 			ft_putstr_fd("minishell: export: malloc error\n", 2);
 			return (EXIT_FAILURE);
 		}
+		free(key);
+		free(value);
 		update_env_sorted(env, new_env);
 		if (!add_new_memory_link_for_control(memory_long, new_env->key)
 			|| !add_new_memory_link_for_control(memory_long, new_env->value)
 			|| !add_new_memory_link_for_control(memory_long, new_env))
 			return (EXIT_FAILURE);
-		return (0);//
+		i++;
 	}
-	print_env_export_format(*env);
 	return (EXIT_SUCCESS);
 }
