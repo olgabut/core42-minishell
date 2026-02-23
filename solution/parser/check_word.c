@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/22 17:17:36 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:51:52 by dprikhod         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include "env_utils.h"
@@ -81,14 +81,5 @@ char	*check_word(t_minishell *mshell, char *word)
 		if (!expanded)
 			return (NULL);
 	}
-	// if (is_redir)
-	// {
-	// 	size = ft_lstsize(fields);
-	// 	if (size != 1 || !fields || !*((char *)fields->content))
-	// 	{
-	// 		ft_lstclear(&fields, free);
-	// 		mshell->exit_code = 1;
-	// 	}
-	// }
 	return (expanded);
 }

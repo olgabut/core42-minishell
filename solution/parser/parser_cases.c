@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/22 16:06:17 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:50:05 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 		return (perror("Ambigious redirect\n"));
 	node->path = word_list->content;
 	free(word_list);
+	node->next = NULL;
 	io_add_back(cmd, node);
 }
