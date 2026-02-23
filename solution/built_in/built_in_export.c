@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 17:31:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:28:00 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 	{
 		if (!is_env_key_valid(argv[1]))
 		{
-			ft_printf("minishell: export: `%s`: not a valid idenfitier\n", argv[1]);
+			ft_printf("minishell: export: `%s`: not a valid identifier\n", argv[1]);
 			return (EXIT_FAILURE);
 		}
 		new_env = NULL;

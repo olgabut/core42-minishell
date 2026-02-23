@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 17:48:50 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:00:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	update_env_sorted(t_env **head, t_env *new_env)
 		}
 		if (ft_strcmp(new_env->key, env->key) == 0)
 		{
-			printf("");
 			if (new_env->value)
 			{
 				new_env->next = env->next;

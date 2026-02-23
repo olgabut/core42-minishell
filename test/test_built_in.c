@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 17:55:40 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/23 09:43:58 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,6 +430,33 @@ void	built_in_export_test(void)
 	else
 		printf("16. ERROR command 'export' with env USER, WMVAR, MyVAR\n");
 	
+	// Command "export _Var=Bob"
+	ft_strlcpy(argv[1], "_Var", 5);
+	if (ft_strlen(run_env_cmd_and_capture(
+				&memory_list, argv, &env, built_in_export)) == 0
+			&& count_env(env) == 4)
+		printf("17. OK\n");
+	else
+		printf("17. ERROR command 'export _Var=Bob'\n");
+
+	// Command "export" (env has "_Var=Bob, USER=Bob, WMVAR=MyVal, MyVAR=new ")
+	if (ft_strcmp(run_env_cmd_and_capture(
+				&memory_list, argv_only_export, &env, built_in_export),
+				"declare -x MyVAR=\"new\"\ndeclare -x USER=\"Bob\"\ndeclare -x WMVAR=\"MyVal\"\ndeclare -x _Var=\"Bob\"\n") == 0)
+		printf("18. OK\n");
+	else
+		printf("18. ERROR command 'export' with env USER, WMVAR, MyVAR, _Var\n");
+
+	// Command "export 1var=Bob" wrang key
+	ft_strlcpy(argv[1], "1var", 5);
+	if (ft_strcmp(run_env_cmd_and_capture(
+				&memory_list, argv, &env, built_in_export),
+				"minishell: export: `1var`: not a valid identifier\n") == 0
+			&& count_env(env) == 4)
+		printf("19. OK\n");
+	else
+		printf("19. ERROR command 'export 1Var=Bob'\n");
+
 	free_memory_links(&memory_list);
 }
 
