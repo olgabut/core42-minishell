@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:34:56 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/22 17:56:28 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/23 10:13:02 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,6 @@ typedef t_list		t_memory_info;
 
 int					add_new_memory_link_for_control(t_memory_info **head,
 						void *new_link);
-void				free_memory_links(t_memory_info *head);
+void				free_memory_links(t_memory_info **head);
 
 #endif

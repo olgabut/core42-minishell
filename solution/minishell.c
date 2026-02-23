@@ -6,52 +6,56 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 18:00:24 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/23 10:14:57 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "print_parsed_commands.h"
+
+static void	init_shell(t_minishell *sh, char **envp)
+{
+	sh->cmd_list = NULL;
+	sh->exit_code = 0;
+	sh->cmd_list = NULL;
+	sh->stdin_backup = STDIN_FILENO;
+	sh->stdout_backup = STDOUT_FILENO;
+	sh->memory_head = NULL;
+	sh->memory_long = NULL;
+	if (!init_env(&sh->memory_long, &(sh->env_list), envp))
+		ft_putstr_fd("Could not initialize environment", 1);
+	signals();
+}
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_memory_info	*memory_head;
 	t_token			*token_head;
-	t_memory_info	*memory_long;
-	t_memory_info	*memory_line;
-	t_env			*env_head;
+	t_minishell		sh;
 
-	signals();
 	(void)argc;
 	(void)**argv;
-	memory_long = NULL;
-	memory_line = NULL;
-	(void)memory_line;
-	env_head = NULL;
-	if (!init_env(&memory_long, &env_head, envp))
-	{
-		ft_putstr_fd("Could not initialize environment", 1);
-		return (0);
-	}
+	init_shell(&sh, envp);
+	sh.env_list = NULL;
 	while (1)
 	{
-		memory_head = NULL;
 		token_head = NULL;
-		if (!lexer(&memory_head, &token_head))
+		if (!lexer(&sh.memory_head, &token_head))
 		{
 			printf("ctrl+D\n");
 			break ;
 		}
 		if (token_head)
 			printf("Next step PARSING\n");
-
+		sh.cmd_list = parser(&sh, token_head);
+		print_parsed_commands(sh.cmd_list);
 		// if (pid == 0)
 		// {
 		// 	signal(SIGINT, SIG_DFL);
 		// 	signal(SIGQUIT, SIG_DFL);
 		// 	execve(...);
 		// }
-		free_memory_links(memory_head);
+		free_memory_links(&sh.memory_head);
 	}
-	free_memory_links(memory_head);
+	free_memory_links(&sh.memory_head);
 	return (0);
 }
