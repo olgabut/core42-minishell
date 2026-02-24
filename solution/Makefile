@@ -1,6 +1,12 @@
 NAME = minishell
 CC = cc
-CFLAGS = -g -O0 -Wall -Wextra -Werror  #-fsanitize=address
+MODE ?= debug
+CFLAGS = -Wall -Wextra -Werror  
+DFLAGS = -g -O0 -fsanitize=address,undefined
+ifeq ($(MODE),debug)
+	CFLAGS += $(DFLAGS)
+endif
+
 
 READLINE_INC = /opt/homebrew/opt/readline/include
 READLINE_LIB = /opt/homebrew/opt/readline/lib
@@ -8,6 +14,7 @@ READLINE_LIB = /opt/homebrew/opt/readline/lib
 LIBFT_DIR = libft
 INC_DIR = inc
 BUILD = build
+
 
 SRC_FILES_WITH_MAIN = minishell.c $(SRC_FILES)
 SRC_FILES = lexer/lexer.c \
@@ -41,7 +48,7 @@ $(BUILD)/%.o: %.c
 	$(CC) $(CFLAGS) -I. -I$(LIBFT_DIR) -I$(READLINE_INC) -I$(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJS_FILES)
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) MODE=$(MODE)
 	$(CC) $(CFLAGS) $(OBJS_FILES) -L$(LIBFT_DIR) -L$(READLINE_LIB) -L$(INC_DIR) -lft -lreadline -o $(NAME)
 
 tests: $(OBJS_TEST_FILES)

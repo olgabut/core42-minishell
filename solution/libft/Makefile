@@ -1,4 +1,5 @@
 NAME = libft.a
+MODE ?= release
 
 SOURCES = ft_is_group.c \
 	ft_is_2.c \
@@ -30,6 +31,10 @@ BONUS_OBJECTS = $(BONUS:.c=.o)
 HEADERS = libft.h ft_split_by_chars.h
 
 CFLAGS = -Wall -Wextra -Werror -fPIC
+DFLAGS = -g -O0 
+ifeq ($(MODE),debug)
+	CFLAGS += $(DFLAGS)
+endif
 
 CUR_DIR = $(shell pwd)
 
