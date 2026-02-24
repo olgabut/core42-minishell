@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 22:45:53 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:39:10 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_io
 	struct s_io			*next;
 	enum e_token_type	type;
 	char				*path;
-	char				**exp_args;
 }						t_io;
 
 typedef struct s_cmd

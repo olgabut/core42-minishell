@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:50:30 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/22 17:05:50 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:39:20 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	print_one_io(t_io *io)
 {
 	printf("    Type: %s\n", redir_type_to_str(io->type));
 	printf("    Path: %s\n", io->path ? io->path : "(null)");
-	print_string_array(io->exp_args, "    exp_args");
 }
 
 static void	print_io_list(t_io *io_list)
