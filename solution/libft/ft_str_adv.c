@@ -6,7 +6,7 @@
 /*   By: niel <niel@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:54:09 by marvin            #+#    #+#             */
-/*   Updated: 2026/02/22 17:57:52 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/24 15:07:49 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
+	if (!s1 || !s2)
+		return (1);
 	while (n > 0 && *s1 && (*s1 == *s2))
 	{
 		s1++;
