@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 10:07:01 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 11:40:31 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	clone_env_sorted(t_env *env, t_env **env_sorted_head)
 {
-	t_env *new_node;
+	t_env	*new_node;
 
 	*env_sorted_head = NULL;
 	while (env)
@@ -30,10 +30,8 @@ static int	clone_env_sorted(t_env *env, t_env **env_sorted_head)
 
 static int	print_env_export_format(t_env *env)
 {
-	int		fd;
 	t_env	*env_sorted;
 
-	fd = 1;
 	env_sorted = NULL;
 	if (!clone_env_sorted(env, &env_sorted))
 	{
@@ -42,15 +40,15 @@ static int	print_env_export_format(t_env *env)
 	}
 	while (env_sorted)
 	{
-		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(env_sorted->key, fd);
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(env_sorted->key, STDOUT_FILENO);
 		if (env_sorted->value)
 		{
-			ft_putstr_fd("=\"", fd);
-			ft_putstr_fd(env_sorted->value, fd);
-			ft_putchar_fd('\"', fd);
+			ft_putstr_fd("=\"", STDOUT_FILENO);
+			ft_putstr_fd(env_sorted->value, STDOUT_FILENO);
+			ft_putchar_fd('\"', STDOUT_FILENO);
 		}
-		ft_putchar_fd('\n', fd);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		env_sorted = env_sorted->next;
 	}
 	free_env_list(env_sorted);
@@ -84,6 +82,7 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 	t_env	*new_env;
 	char	*key;
 	char	*value;
+	int		result;
 
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "export") != 0)
 		return (-1);
@@ -93,6 +92,7 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 		print_env_export_format(*env);
 		return (EXIT_SUCCESS);
 	}
+	result = EXIT_SUCCESS;
 	while (argv[i])
 	{
 		if (!pars_env_structure(&key, &value, argv[i]))
@@ -101,7 +101,9 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 		{
 			ft_printf("minishell: export: `%s`: not a valid identifier\n",
 				argv[i]);
-			return (EXIT_FAILURE);
+			result = EXIT_FAILURE;
+			i++;
+			continue ;
 		}
 		new_env = NULL;
 		if (!create_env_node(&new_env, key, value))
@@ -118,5 +120,5 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 			return (EXIT_FAILURE);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (result);
 }

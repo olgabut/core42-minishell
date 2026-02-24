@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 12:13:57 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:31:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,6 +473,97 @@ void	built_in_export_test(void)
 	free_memory_links(&memory_list);
 }
 
+void	built_in_unset_test(void)
+{
+	t_env	*env;
+	t_env	*env_node;
+	char	**argv;
+
+	printf("\nUNSET BUILTIN\n");
+	env = NULL;
+	create_env_node(&env_node, "VAR", "1");
+	update_env(&env, env_node);
+	create_env_node(&env_node, "AVAR", NULL);
+	update_env(&env, env_node);
+	create_env_node(&env_node, "XVAR", "X");
+	update_env(&env, env_node);
+	create_env_node(&env_node, "DVAR", "D");
+	update_env(&env, env_node);
+
+	// argv == NULL.  Return -1;
+	argv = NULL;
+	if (built_in_unset(argv, &env) == -1)
+		printf("1. OK\n");
+	else
+		printf("1. ERROR argv == NULL\n");
+
+	// First argv[0] = NULL.  Return -1;
+	argv = calloc(6, sizeof(char *));
+	if (built_in_unset(argv, &env) == -1)
+		printf("2. OK\n");
+	else
+		printf("2. ERROR argv[0] == NULL\n");
+
+	// First argv[0] != "unset". Command "bubub". Return -1;
+	argv[0] = calloc(5, sizeof(char));
+	ft_strlcpy(argv[0], "bubub", 5);
+	if (built_in_unset(argv, &env) == -1)
+		printf("3. OK\n");
+	else
+		printf("3. ERROR argv[0] != 'unset'\n");
+
+	// Command "unset". Return 0;
+	ft_strlcpy(argv[0], "unset", 6);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 4)
+		printf("4. OK\n");
+	else
+		printf("4. ERROR argv[0] == 'unset'\n");
+
+	// Command "unset AAAA" Not exist
+	argv[1] = calloc(5, sizeof(char));
+	ft_strlcpy(argv[1], "AAAA", 5);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 4)
+		printf("5. OK\n");
+	else
+		printf("5. ERROR command `unset AAAA`\n");
+
+	// Command "unset 1VAR" Wrong key name
+	ft_strlcpy(argv[1], "1VAR", 5);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 4)
+		printf("6. OK\n");
+	else
+		printf("6. ERROR command `unset 1VAR`\n");
+
+	// Command "unset XVAR" Middl position
+	ft_strlcpy(argv[1], "XVAR", 5);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 3)
+		printf("7. OK\n");
+	else
+		printf("7. ERROR command `unset XVAR`\n");
+
+	// Command "unset VAR" First position
+	ft_strlcpy(argv[1], "VAR", 4);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 2)
+		printf("8. OK\n");
+	else
+		printf("8. ERROR command `unset VAR`\n");
+
+	// Command "unset VAR" Last position
+	ft_strlcpy(argv[1], "AVAR", 5);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 1)
+		printf("9. OK\n");
+	else
+		printf("9. ERROR command `unset AVAR`\n");
+
+	// Command "unset VAR" Last element. Env will be empty
+	ft_strlcpy(argv[1], "DVAR", 5);
+	if (built_in_unset(argv, &env) == 0 && count_env(env) == 0)
+		printf("10. OK\n");
+	else
+		printf("10. ERROR command `unset DVAR`\n");
+	// print_env_list(env);
+}
+
 void	test_built_in(void)
 {
 	printf("\n===BUILTIN===\n");
@@ -480,4 +571,5 @@ void	test_built_in(void)
 	built_in_pwd_test();
 	built_in_exit_test();
 	built_in_export_test();
+	built_in_unset_test();
 }

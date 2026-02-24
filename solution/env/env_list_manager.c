@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 09:28:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 11:14:29 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,34 @@ bool	get_env_exist(t_env *head, char *key, char **value)
 		if (ft_strcmp(env->key, key) == 0)
 		{
 			*value = env->value;
+			return (true);
+		}
+		env = env->next;
+	}
+	return (false);
+}
+/*
+	return
+		true - if node was find and remuved
+		false - node doesn't exist
+*/
+bool	remove_env_node(t_env **head, char *key)
+{
+	t_env *env;
+
+	if (!head || !*head)
+		return (false);
+	env = *head;
+	if (ft_strcmp(env->key, key) == 0)
+	{
+		*head = env->next;
+		return (true);
+	}
+	while (env->next)
+	{
+		if (ft_strcmp(env->next->key, key) == 0)
+		{
+			env->next = env->next->next;
 			return (true);
 		}
 		env = env->next;

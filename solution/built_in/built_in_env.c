@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:28:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/12 17:26:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:33:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 		'-i' or '--ignore-environment' or '-' Runs a command with an empty environment
 		'-u' or '--unset' Remove variable from the environment
 		'-0' or '--null' End each output line with NULL, not newline
-		'-C' or '--chdir=DIR' Change 
+		'-C' or '--chdir=DIR' Change
 		'--version' Display version information and exit.
 		'--help' Display a help message and exit.
 		-C, --chdir=КАТ Изменить рабочий каталог на КАТ
@@ -54,11 +54,9 @@ int	built_in_env(char **argv, t_env *env)
 		return (-1);
 	if (argv[1])
 	{
-		ft_putstr_fd("minishell: env: too many arguments", STDERR_FILENO);
-		return (126); //todo
-	}
-	if (!env)
+		ft_putstr_fd("minishell: env: too many arguments\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
+	}
 	while (env)
 	{
 		if (env->value)

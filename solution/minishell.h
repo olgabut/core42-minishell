@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 09:44:10 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 11:57:40 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int		pars_env_structure(char **key, char **value, char *str);
 int		create_env_node(t_env **new_env, char *key, char *value);
 void	update_env(t_env **head, t_env *new_env);
 void	update_env_sorted(t_env **head, t_env *new_env);
+bool	remove_env_node(t_env **head, char *key);
 bool	get_env_exist(t_env *head, char *key, char **value);
 int		count_env(t_env *env);
 void	print_env_list(t_env *head);
@@ -113,5 +114,6 @@ int		built_in_exit(char **argv);
 int		built_in_env(char **argv, t_env *env);
 int		built_in_export(t_memory_info **memory_long,
 			char **argv, t_env **env_head);
+int		built_in_unset(char **argv, t_env **env);
 
 #endif
