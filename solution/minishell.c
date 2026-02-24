@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 10:14:57 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:51:56 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)**argv;
 	init_shell(&sh, envp);
-	sh.env_list = NULL;
 	while (1)
 	{
 		token_head = NULL;
 		if (!lexer(&sh.memory_head, &token_head))
 		{
 			printf("ctrl+D\n");
+			free_memory_links(&sh.memory_long);
 			break ;
 		}
-		if (token_head)
-			printf("Next step PARSING\n");
 		sh.cmd_list = parser(&sh, token_head);
 		print_parsed_commands(sh.cmd_list);
-		// if (pid == 0)
-		// {
-		// 	signal(SIGINT, SIG_DFL);
-		// 	signal(SIGQUIT, SIG_DFL);
-		// 	execve(...);
-		// }
 		free_memory_links(&sh.memory_head);
 	}
 	free_memory_links(&sh.memory_head);
