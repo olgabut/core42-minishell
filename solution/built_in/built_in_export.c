@@ -6,30 +6,55 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 11:29:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 10:07:01 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	print_env_export_format(t_env *env)
+static int	clone_env_sorted(t_env *env, t_env **env_sorted_head)
 {
-	int		fd;
+	t_env *new_node;
 
-	fd = 1;
+	*env_sorted_head = NULL;
 	while (env)
 	{
+		new_node = NULL;
+		if (!create_env_node(&new_node, env->key, env->value))
+			return (0);
+		update_env_sorted(env_sorted_head, new_node);
+		env = env->next;
+	}
+	return (1);
+}
+
+static int	print_env_export_format(t_env *env)
+{
+	int		fd;
+	t_env	*env_sorted;
+
+	fd = 1;
+	env_sorted = NULL;
+	if (!clone_env_sorted(env, &env_sorted))
+	{
+		free_env_list(env_sorted);
+		return (0);
+	}
+	while (env_sorted)
+	{
 		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(env->key, fd);
-		if (env->value)
+		ft_putstr_fd(env_sorted->key, fd);
+		if (env_sorted->value)
 		{
 			ft_putstr_fd("=\"", fd);
-			ft_putstr_fd(env->value, fd);
+			ft_putstr_fd(env_sorted->value, fd);
 			ft_putchar_fd('\"', fd);
 		}
 		ft_putchar_fd('\n', fd);
-		env = env->next;
+		env_sorted = env_sorted->next;
 	}
+	free_env_list(env_sorted);
+	return (1);
 }
 
 /*
@@ -47,7 +72,7 @@ static void	print_env_export_format(t_env *env)
 	-n Named variables (or functions, with -f) will no longer be exported.
 
 	argv[0] = "export"
-	argv[1..n] = can be null or string format: keyName[=value]
+	argv[1..n] = can be null or string format: "keyName[=value]"
 	return:
 		(-1) - error (it's not exit status, the command wasn't completed)
 		(0) - success exit status
@@ -79,14 +104,14 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 			return (EXIT_FAILURE);
 		}
 		new_env = NULL;
-		if (!create_env(&new_env, key, value))
+		if (!create_env_node(&new_env, key, value))
 		{
 			ft_putstr_fd("minishell: export: malloc error\n", 2);
 			return (EXIT_FAILURE);
 		}
 		free(key);
 		free(value);
-		update_env_sorted(env, new_env);
+		update_env(env, new_env);
 		if (!add_new_memory_link_for_control(memory_long, new_env->key)
 			|| !add_new_memory_link_for_control(memory_long, new_env->value)
 			|| !add_new_memory_link_for_control(memory_long, new_env))

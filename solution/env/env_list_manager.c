@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/23 12:11:19 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 09:28:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_env_list(t_env *head)
 		1 - ok
 		0 - malloc error
 */
-int	create_env(t_env **new_env, char *key, char *value)
+int	create_env_node(t_env **new_env, char *key, char *value)
 {
 	t_env	*env;
 	char	*new_key;
@@ -202,9 +202,8 @@ void	print_env_list(t_env *head)
 	ft_putstr_fd("Print envs:\n", fd);
 	while (env != NULL)
 	{
-		ft_putstr_fd("key=", fd);
 		ft_putstr_fd(env->key, fd);
-		ft_putstr_fd(" value=", fd);
+		ft_putstr_fd(" = ", fd);
 		if (env->value)
 			ft_putstr_fd(env->value, fd);
 		else
