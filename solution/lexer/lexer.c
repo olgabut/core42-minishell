@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 17:15:09 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/24 10:38:54 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int add_new_line(t_memory_info **memory_head, char **line, char *new_line)
 	new_long_line = ft_strjoin(new_long_line, new_line);
 	if (new_long_line == NULL)
 		return (0);
-	free_memory_links(*memory_head);
+	free_memory_links(memory_head);
 	*line = new_long_line;
 	return (1);
 }
