@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/23 09:51:52 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/02/24 14:19:30 by dprikhod         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include "env_utils.h"
@@ -28,14 +28,12 @@ static char	*trim_quotes(char *word, enum e_quote flag)
 	if (trim_set)
 	{
 		trimmed = ft_strtrim(word, trim_set);
-		free(word);
 		if (!trimmed)
 			return (NULL);
 	}
 	else
 	{
 		trimmed = ft_strdup(word);
-		free(word);
 		if (!trimmed)
 			return (NULL);
 	}
