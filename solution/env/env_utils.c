@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_checks.c                                       :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:44:08 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/17 13:51:53 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/25 09:16:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,60 @@ bool	is_env_key_valid(char *key)
 		i++;
 	}
 	return (true);
+}
+
+/*
+	if env with key exists - return true, value has the found value of interest
+	else return false
+	The value can be NULL
+*/
+bool	get_env_exist(t_env *head, char *key, char **value)
+{
+	t_env	*env;
+
+	env = head;
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+		{
+			*value = env->value;
+			return (true);
+		}
+		env = env->next;
+	}
+	return (false);
+}
+
+int	count_env(t_env *env)
+{
+	int		i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
+void	print_env_list(t_env *head)
+{
+	t_env	*env;
+	int		fd;
+
+	fd = 1;
+	env = head;
+	ft_putstr_fd("Print envs:\n", fd);
+	while (env != NULL)
+	{
+		ft_putstr_fd(env->key, fd);
+		ft_putstr_fd(" = ", fd);
+		if (env->value)
+			ft_putstr_fd(env->value, fd);
+		else
+			ft_putstr_fd("null", fd);
+		ft_putchar_fd('\n', fd);
+		env = env->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/17 12:57:57 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/25 10:15:03 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_memory_info	*memory_long;
 	t_memory_info	*memory_line;
 	t_token			*token_head;
-	t_env			*env_head;
+	t_env			*env_list;
 
 	(void)argc;
 	(void)**argv;
-	memory_long = NULL;
 	memory_line = NULL;
-	env_head = NULL;
-	if (!init_env(&memory_long, &env_head, envp))
+	env_list = NULL;
+	if (!init_env(&env_list, envp))
 	{
 		ft_putstr_fd("Could not initialize environment", 1);
 		return (0);
 	}
-	print_env_list(env_head);
+	print_env_list(env_list);
 	while (1)
 	{
 		token_head = NULL;
@@ -43,6 +41,6 @@ int	main(int argc, char **argv, char **envp)
 		free_memory_links(&memory_line);
 	}
 	free_memory_links(&memory_line);
-	free_memory_links(&memory_long);
+	free_env_list(&env_list);
 	return (0);
 }

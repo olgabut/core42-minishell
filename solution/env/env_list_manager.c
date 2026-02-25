@@ -6,34 +6,44 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 11:14:29 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/25 12:15:19 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /*
+	Free one env node
+*/
+void	free_env_node(t_env **env)
+{
+	free((*env)->key);
+	(*env)->key = NULL;
+	if ((*env)->value)
+	{
+		free((*env)->value);
+		(*env)->value = NULL;
+	}
+	free(*env);
+	*env = NULL;
+}
+
+/*
 	Free all envs
 */
-void	free_env_list(t_env *head)
+void	free_env_list(t_env **head)
 {
 	t_env	*env;
 	t_env	*next_env;
 
-	env = head;
+	env = *head;
 	while (env != NULL)
 	{
 		next_env = env->next;
-		if (env->value)
-		{
-			free(env->key);
-			if (env->value)
-				free(env->value);
-			env->value = NULL;
-		}
-		free(env);
+		free_env_node(&env);
 		env = next_env;
 	}
+	*head = NULL;
 }
 
 /*
@@ -49,18 +59,27 @@ int	create_env_node(t_env **new_env, char *key, char *value)
 	char	*new_value;
 
 	env = ft_calloc(1, sizeof(t_env));
+	if (!env)
+		return (0);
 	new_key = NULL;
 	new_value = NULL;
 	new_key = ft_calloc(ft_strlen(key) + 1, sizeof(char));
-	if (!new_env || !new_key)
+	if (!new_key)
+	{
+		free(env);
 		return (0);
+	}
 	ft_strlcpy(new_key, key, ft_strlen(key) + 1);
 	env->key = new_key;
 	if (value)
 	{
 		new_value = ft_calloc(ft_strlen(value) + 1, sizeof(char));
 		if (!new_value)
+		{
+			free(env);
+			free(new_key);
 			return (0);
+		}
 		ft_strlcpy(new_value, value, ft_strlen(value) + 1);
 	}
 	env->value = new_value;
@@ -109,7 +128,10 @@ void	update_env_sorted(t_env **head, t_env *new_env)
 					*head = new_env;
 				else
 					prev->next = new_env;
+				free_env_node(&env);
 			}
+			else
+				free_env_node(&new_env);
 			return ;
 		}
 		prev = env;
@@ -148,7 +170,10 @@ void	update_env(t_env **head, t_env *new_env)
 					*head = new_env;
 				else
 					prev->next = new_env;
+				free_env_node(&env);
 			}
+			else
+				free_env_node(&new_env);
 			return ;
 		}
 		prev = env;
@@ -157,27 +182,7 @@ void	update_env(t_env **head, t_env *new_env)
 	prev->next = new_env;
 }
 
-/*
-	if env with key exists - return true, value has the found value of interest
-	else return false
-	The value can be NULL
-*/
-bool	get_env_exist(t_env *head, char *key, char **value)
-{
-	t_env	*env;
 
-	env = head;
-	while (env)
-	{
-		if (ft_strcmp(env->key, key) == 0)
-		{
-			*value = env->value;
-			return (true);
-		}
-		env = env->next;
-	}
-	return (false);
-}
 /*
 	return
 		true - if node was find and remuved
@@ -185,58 +190,29 @@ bool	get_env_exist(t_env *head, char *key, char **value)
 */
 bool	remove_env_node(t_env **head, char *key)
 {
-	t_env *env;
+	t_env	*env;
+	t_env	*tmp;
 
 	if (!head || !*head)
 		return (false);
 	env = *head;
 	if (ft_strcmp(env->key, key) == 0)
 	{
-		*head = env->next;
+		tmp = env->next;
+		free_env_node(&env);
+		*head = tmp;
 		return (true);
 	}
 	while (env->next)
 	{
 		if (ft_strcmp(env->next->key, key) == 0)
 		{
-			env->next = env->next->next;
+			tmp = env->next->next;
+			free_env_node(&(env->next));
+			env->next = tmp;
 			return (true);
 		}
 		env = env->next;
 	}
 	return (false);
-}
-
-int	count_env(t_env *env)
-{
-	int		i;
-
-	i = 0;
-	while (env)
-	{
-		i++;
-		env = env->next;
-	}
-	return (i);
-}
-
-void	print_env_list(t_env *head)
-{
-	t_env	*env;
-	int		fd;
-
-	fd = 1;
-	env = head;
-	ft_putstr_fd("Print envs:\n", fd);
-	while (env != NULL)
-	{
-		ft_putstr_fd(env->key, fd);
-		ft_putstr_fd(" = ", fd);
-		if (env->value)
-			ft_putstr_fd(env->value, fd);
-		else
-			ft_putstr_fd("null", fd);
-		ft_putchar_fd('\n', fd);
-		env = env->next;
-	}
 }

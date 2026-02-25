@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:54:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 09:48:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/25 10:59:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ int	pars_env_structure(char **key, char **value, char *str)
 	if (i > 0)
 	{
 		*key = ft_substr(str, 0, i);
-		if (!key)
+		if (!(*key))
 			return (0);
 		if (str[i])
 		{
 			*value = ft_substr(str, i + 1, ft_strlen(str) - i);
-			if (!value)
+			if (!*value)
 			{
-				free(key);
+				free(*key);
+				*key = NULL;
 				return (0);
 			}
 		}
@@ -54,16 +55,13 @@ int	pars_env_structure(char **key, char **value, char *str)
 		0 - malloc error
 		1 - ok
 */
-int	init_env(t_memory_info **memory_head,
-	t_env **env_head, char **input)
+int	init_env(t_env **env_head, char **input)
 {
 	int		i;
 	char	*key;
 	char	*value;
 	t_env	*new_env;
 
-	(void)memory_head;
-	(void)env_head;
 	i = 0;
 	while (input[i])
 	{
@@ -73,10 +71,6 @@ int	init_env(t_memory_info **memory_head,
 			|| !create_env_node(&new_env, key, value))
 			return (0);
 		update_env(env_head, new_env);
-		if (!add_new_memory_link_for_control(memory_head, key)
-			|| !add_new_memory_link_for_control(memory_head, value)
-			|| !add_new_memory_link_for_control(memory_head, new_env))
-			return (0);
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 12:32:12 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:42:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ bool	is_echo(char **argv)
 
 /*
 	built in ECHO command
+	minishell: echo with option -n
+
 	The echo command is used to show a line of text or a variable's value
 		in the terminal.
 

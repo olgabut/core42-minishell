@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 11:40:31 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/25 11:01:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ static int	clone_env_sorted(t_env *env, t_env **env_sorted_head)
 static int	print_env_export_format(t_env *env)
 {
 	t_env	*env_sorted;
+	t_env	*head;
 
 	env_sorted = NULL;
 	if (!clone_env_sorted(env, &env_sorted))
 	{
-		free_env_list(env_sorted);
+		free_env_list(&env_sorted);
 		return (0);
 	}
+	head = env_sorted;
 	while (env_sorted)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
@@ -51,7 +53,7 @@ static int	print_env_export_format(t_env *env)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		env_sorted = env_sorted->next;
 	}
-	free_env_list(env_sorted);
+	free_env_list(&head);
 	return (1);
 }
 
@@ -76,7 +78,7 @@ static int	print_env_export_format(t_env *env)
 		(0) - success exit status
 		(1..255) - error exit status
  */
-int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
+int	built_in_export(char **argv, t_env **env)
 {
 	int		i;
 	t_env	*new_env;
@@ -103,6 +105,8 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 				argv[i]);
 			result = EXIT_FAILURE;
 			i++;
+			free(key);
+			free(value);
 			continue ;
 		}
 		new_env = NULL;
@@ -114,10 +118,6 @@ int	built_in_export(t_memory_info **memory_long, char **argv, t_env **env)
 		free(key);
 		free(value);
 		update_env(env, new_env);
-		if (!add_new_memory_link_for_control(memory_long, new_env->key)
-			|| !add_new_memory_link_for_control(memory_long, new_env->value)
-			|| !add_new_memory_link_for_control(memory_long, new_env))
-			return (EXIT_FAILURE);
 		i++;
 	}
 	return (result);
