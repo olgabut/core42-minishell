@@ -23,7 +23,8 @@ SRC_FILES = lexer/lexer.c \
 	built_in/built_in_exit.c \
 	built_in/built_in_env.c \
 	built_in/built_in_export.c \
-	built_in/built_in_unset.c
+	built_in/built_in_unset.c \
+	built_in/built_in_cd.c
 
 TEST_NAME = tests
 TEST_FILES = $(SRC_FILES) \

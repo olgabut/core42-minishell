@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/25 12:15:19 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/02/26 11:37:01 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 	Free one env node
 */
-void	free_env_node(t_env **env)
+static void	free_env_node(t_env **env)
 {
 	free((*env)->key);
 	(*env)->key = NULL;
@@ -52,7 +52,7 @@ void	free_env_list(t_env **head)
 		1 - ok
 		0 - malloc error
 */
-int	create_env_node(t_env **new_env, char *key, char *value)
+static int	create_env_node(t_env **new_env, char *key, char *value)
 {
 	t_env	*env;
 	char	*new_key;
@@ -93,18 +93,24 @@ int	create_env_node(t_env **new_env, char *key, char *value)
 	in the list to the position,
 	that the list is sorted by key
 	where head is the first env
+
+	Return
+		1 - ok
+		0 - malloc error
 */
-void	update_env_sorted(t_env **head, t_env *new_env)
+int	update_env_sorted(t_env **head, char *key, char *value)
 {
 	t_env	*env;
 	t_env	*prev;
+	t_env	*new_env;
 
-	if (new_env == NULL)
-		return ;
+	new_env = NULL;
+	if (!create_env_node(&new_env, key, value) || new_env == NULL)
+		return (0);
 	if (*head == NULL)
 	{
 		*head = new_env;
-		return ;
+		return (1);
 	}
 	env = *head;
 	prev = NULL;
@@ -117,7 +123,7 @@ void	update_env_sorted(t_env **head, t_env *new_env)
 				*head = new_env;
 			else
 				prev->next = new_env;
-			return ;
+			return (1);
 		}
 		if (ft_strcmp(new_env->key, env->key) == 0)
 		{
@@ -132,30 +138,37 @@ void	update_env_sorted(t_env **head, t_env *new_env)
 			}
 			else
 				free_env_node(&new_env);
-			return ;
+			return (1);
 		}
 		prev = env;
 		env = env->next;
 	}
 	prev->next = new_env;
+	return (1);
 }
 
 /*
 	Updates exising env with the same key or
 	adds new_env to the list to the last position,
 	where head is the first env
+
+	Return
+		1 - ok
+		0 - malloc error
 */
-void	update_env(t_env **head, t_env *new_env)
+int	update_env(t_env **head, char *key, char *value)
 {
 	t_env	*env;
 	t_env	*prev;
+	t_env	*new_env;
 
-	if (new_env == NULL)
-		return ;
+	new_env = NULL;
+	if (!create_env_node(&new_env, key, value) || new_env == NULL)
+		return (0);
 	if (*head == NULL)
 	{
 		*head = new_env;
-		return ;
+		return (1);
 	}
 	env = *head;
 	prev = NULL;
@@ -174,12 +187,13 @@ void	update_env(t_env **head, t_env *new_env)
 			}
 			else
 				free_env_node(&new_env);
-			return ;
+			return (1);
 		}
 		prev = env;
 		env = env->next;
 	}
 	prev->next = new_env;
+	return (1);
 }
 
 

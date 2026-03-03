@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/25 11:01:21 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/03 12:42:16 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 static int	clone_env_sorted(t_env *env, t_env **env_sorted_head)
 {
-	t_env	*new_node;
-
 	*env_sorted_head = NULL;
 	while (env)
 	{
-		new_node = NULL;
-		if (!create_env_node(&new_node, env->key, env->value))
+		if (!update_env_sorted(env_sorted_head, env->key, env->value))
 			return (0);
-		update_env_sorted(env_sorted_head, new_node);
 		env = env->next;
 	}
 	return (1);
@@ -81,7 +77,6 @@ static int	print_env_export_format(t_env *env)
 int	built_in_export(char **argv, t_env **env)
 {
 	int		i;
-	t_env	*new_env;
 	char	*key;
 	char	*value;
 	int		result;
@@ -109,15 +104,13 @@ int	built_in_export(char **argv, t_env **env)
 			free(value);
 			continue ;
 		}
-		new_env = NULL;
-		if (!create_env_node(&new_env, key, value))
+		if (!update_env(env, key, value))
 		{
 			ft_putstr_fd("minishell: export: malloc error\n", 2);
 			return (EXIT_FAILURE);
 		}
 		free(key);
 		free(value);
-		update_env(env, new_env);
 		i++;
 	}
 	return (result);

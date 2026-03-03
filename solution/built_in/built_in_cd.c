@@ -6,11 +6,73 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/25 08:44:09 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:22:48 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	change_directory(t_env **env, char *new_dir, bool print_dir)
+{
+	char	*cwd;
+	char	*error;
+
+	error = NULL;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		ft_putstr_fd("minishell: cd: error\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if (chdir(new_dir) != 0)
+	{
+		
+		ft_fprintf(STDERR_FILENO,
+			"minishell: cd: %s: ", new_dir);
+		perror(error);
+		free(cwd);
+		return (EXIT_FAILURE);
+	}
+	if (print_dir)
+	{
+		ft_putstr_fd(new_dir, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	}
+	if (!update_env(env, "OLDPWD", cwd) || !update_env(env, "PWD", new_dir))
+	{
+		ft_putstr_fd("minishell: cd: error", STDERR_FILENO);
+		free(cwd);
+		return (EXIT_FAILURE);
+	}
+	free(cwd);
+	return (EXIT_SUCCESS);
+}
+
+static int	change_to_home_directory(t_env **env)
+{
+	char	*home_dir;
+
+	home_dir = NULL;
+	if (!get_env_exist(*env, "HOME", &home_dir) || !home_dir)
+	{
+		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	return (change_directory(env, home_dir, false));
+}
+
+static int	change_to_old_directory(t_env **env)
+{
+	char	*old_dir;
+
+	old_dir = NULL;
+	if (!get_env_exist(*env, "OLDPWD", &old_dir) || !old_dir)
+	{
+		ft_putstr_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	return (change_directory(env, old_dir, true));
+}
 
 /*
 	built in CD command
@@ -27,15 +89,19 @@
 		(0) - success exit status
 		(1..255) - error exit status
 */
-int	built_in_cd(char **argv)
+int	built_in_cd(char **argv, t_env **env)
 {
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "cd") != 0)
 		return (-1);
 	if (argv[2])
 	{
-		ft_putstr_fd("minishell: cd: too many arguments", STDOUT_FILENO);
+		ft_putstr_fd("minishell: cd: too many arguments\n", STDOUT_FILENO);
 		return (EXIT_FAILURE);
 	}
-	
+	if (!argv[1])
+		return (change_to_home_directory(env));
+	if (ft_strcmp(argv[1], "-") == 0)
+		return (change_to_old_directory(env));
+	change_directory(env, argv[1], false);
 	return (EXIT_SUCCESS);
 }

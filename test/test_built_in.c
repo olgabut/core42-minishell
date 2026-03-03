@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/25 12:34:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:25:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void	built_in_echo_test()
 	ft_strlcpy(argv[1], "-n", 3);
 	str = NULL;
 	str = run_cmd_and_capture(argv, built_in_echo);
-	if (strlen(run_cmd_and_capture(argv, built_in_echo)) == 0)
+	if (strlen(str) == 0)
 		printf("6. OK\n");
 	else
 		printf("6. ERROR command 'echo -n'\n");
@@ -350,6 +350,8 @@ void	built_in_pwd_test()
 {
 	char	**argv;
 	char	*cwd;
+	char	*str;
+	char	*str_expected;
 
 	printf("\nPWD BUILTIN\n");
 	// argv == NULL.  Return -1;
@@ -379,9 +381,14 @@ void	built_in_pwd_test()
 
 	// Command "pwd"
 	cwd = getcwd(NULL, 0);
-	if (ft_strcmp(run_cmd_and_capture(argv, built_in_pwd), ft_straddchar(cwd, '\n')) == 0)
+	str = NULL;
+	str = run_cmd_and_capture(argv, built_in_pwd);
+	str_expected = ft_straddchar(cwd, '\n');
+	if (ft_strcmp(str, str_expected) == 0)
 		printf("5. OK\n");
 	else printf("5. ERROR command 'pwd'\n");
+	free(str);
+	free(str_expected);
 
 	free(cwd);
 }
@@ -626,7 +633,6 @@ void	built_in_export_test(void)
 		printf("21. ERROR command 'export' with env USER, WMVAR, MyVAR, _Var\n");
 	free(str);
 
-	
 	free(argv_only_export[0]);
 	free(argv_only_export);
 	free(argv[2]);
@@ -639,19 +645,14 @@ void	built_in_export_test(void)
 void	built_in_unset_test(void)
 {
 	t_env	*env;
-	t_env	*env_node;
 	char	**argv;
 
 	printf("\nUNSET BUILTIN\n");
 	env = NULL;
-	create_env_node(&env_node, "VAR", "1");
-	update_env(&env, env_node);
-	create_env_node(&env_node, "AVAR", NULL);
-	update_env(&env, env_node);
-	create_env_node(&env_node, "XVAR", "X");
-	update_env(&env, env_node);
-	create_env_node(&env_node, "DVAR", "D");
-	update_env(&env, env_node);
+	update_env(&env, "VAR", "1");
+	update_env(&env, "AVAR", NULL);
+	update_env(&env, "XVAR", "X");
+	update_env(&env, "DVAR", "D");
 
 	// argv == NULL.  Return -1;
 	argv = NULL;
@@ -731,12 +732,56 @@ void	built_in_unset_test(void)
 	free(argv);
 }
 
+void	built_in_cd_test(void)
+{
+	t_env	*env;
+	char	**argv;
+	char	*str;
+
+	printf("\nCD BUILTIN\n");
+	env = NULL;
+
+	// argv == NULL.  Return -1;
+	argv = calloc(3, sizeof(char *));
+	if (built_in_cd(argv, &env) == -1)
+		printf("1. OK\n");
+	else
+		printf("1. ERROR argv == NULL\n");
+
+	// First argv[0] != "cd". Command "bu". Return -1;
+	argv[0] = calloc(3, sizeof(char));
+	ft_strlcpy(argv[0], "bu", 3);
+	if (built_in_cd(argv, &env) == -1)
+		printf("2. OK\n");
+	else
+		printf("2. ERROR argv[0] != 'cd'\n");
+
+	// Command "cd". There isn't HOME env. Return 1;
+	ft_strlcpy(argv[0], "cd", 3);
+	if (built_in_cd(argv, &env) == 1)
+		printf("3. OK\n");
+	else
+		printf("3. ERROR command 'cd' but there isn't HOME env\n");
+
+	// Command "cd". There is wrong HOME=C:/MyPath env. Return 0;
+	update_env(&env, "HOME", "C:/MyPath");
+	str = NULL;
+	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	if (ft_strcmp(str, "minishell: cd: C:/MyPath: No such file or directory\n") == 0
+		&& count_env(env) == 1)
+		printf("4. OK\n");
+	else
+		printf("4. ERROR command `cd` There is wrong HOME env\n");
+	free(str);
+}
+
 void	test_built_in(void)
 {
 	printf("\n===BUILTIN===\n");
 	built_in_echo_test();
-	// built_in_pwd_test();
+	built_in_pwd_test();
 	// built_in_exit_test();
 	built_in_export_test();
 	built_in_unset_test();
+	built_in_cd_test();
 }
