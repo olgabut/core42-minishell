@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:28:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 13:33:08 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/04 11:33:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,10 @@
 
 	env [OPTION]... [-][NAME=VALUE]... [COMMAND [ARG]...]
 
-	FLAGS (IGNORED in minishell):
-		Flags to modify the behavior of the 'env' command.
-		'-i' or '--ignore-environment' or '-' Runs a command with an empty environment
-		'-u' or '--unset' Remove variable from the environment
-		'-0' or '--null' End each output line with NULL, not newline
-		'-C' or '--chdir=DIR' Change
-		'--version' Display version information and exit.
-		'--help' Display a help message and exit.
-		-C, --chdir=КАТ Изменить рабочий каталог на КАТ
-		-S, --split-string=S
-		Обработать и разделить S на отдельные аргументы; используется для указания нескольких аргументов в строках с #!
-		--block-signal[=SIG]
-		Блокировать доставку сигнала(ов) SIG
-		--default-signal[=SIG]
-		Сбросить обработку сигнала(ов) SIG в значение по умолчанию
-		--ignore-signal[=SIG]
-		Назначить обработке сигнала(ов) SIG пустое значение
-		--list-signal-handling
-		Выдать обработчики сигнала, отличные от значений по умолчанию, в stderr
-		-v, --debug
-		Выводить подробную информацию на каждом шаге обработки
-	NAME=VALUE (IGNORED in minishell): Defines environment variables and their values.
-	COMMAND [ARG] (IGNORED in minishell): Specifies the command to be executed with the modified environment.
+	NAME=VALUE (IGNORED in minishell):
+		Defines environment variables and their values.
+	COMMAND [ARG] (IGNORED in minishell):
+		Specifies the command to be executed with the modified environment.
 
 	return:
 		(-1) - error (it's not exit status, the command wasn't completed)
@@ -53,18 +34,11 @@ int	built_in_env(char **argv, t_env *env)
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "env") != 0)
 		return (-1);
 	if (argv[1])
-	{
-		ft_putstr_fd("minishell: env: too many arguments\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (print_cmd_error("env", "too many arguments", EXIT_FAILURE));
 	while (env)
 	{
 		if (env->value)
-		{
-			ft_putstr_fd(env->key, STDOUT_FILENO);
-			ft_putchar_fd('=', STDOUT_FILENO);
-			ft_putstr_fd(env->value, STDOUT_FILENO);
-		}
+			ft_fprintf(STDOUT_FILENO, "%s=%s", env->key, env->value);
 		env = env->next;
 	}
 	return (EXIT_SUCCESS);

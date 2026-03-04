@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 12:33:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/04 11:38:26 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,24 @@ int	get_last_exit_code(void)
 		(-1) - error (it's not exit status, the command wasn't completed)
 		(0..255) - n % 256 or exit status of the last executed command
 */
-int	built_in_exit(char **argv) //TODO NOT FINISH AND TESTED
+int	built_in_exit(char **argv, int last_cmd_exit, int *need_exit)
 {
-	int	n;
+	int	num_argv;
 
+	*need_exit = false;
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "exit") != 0)
 		return (-1);
-	ft_putstr_fd("exit\n", 1);
+	*need_exit = true;
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (!argv[1])
-		exit(get_last_exit_code()); //todo
-	if (!ft_strtoint(&n, argv[1]))
-	{
-		ft_putstr_fd("minishell: exit: numeric argument required",
-			STDERR_FILENO);
-		exit(255);
-	}
+		return (last_cmd_exit);
+	if (!ft_strtoint(&num_argv, argv[1]))
+		return (print_cmd_error("exit", "numeric argument required",
+				EXIT_INVALID_ARG));
 	if (argv[2])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		*need_exit = false;
+		return (print_cmd_error("exit", "too many arguments", EXIT_FAILURE));
 	}
-	exit(n % 256);
-	return (EXIT_SUCCESS);
+	return (num_argv % 256);
 }

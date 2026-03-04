@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/25 10:15:03 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/04 10:38:38 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Could not initialize environment", 1);
 		return (0);
 	}
-	print_env_list(env_list);
 	while (1)
 	{
 		token_head = NULL;

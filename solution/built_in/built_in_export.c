@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/03 12:42:16 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:14:09 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	print_env_export_format(t_env *env)
 	if (!clone_env_sorted(env, &env_sorted))
 	{
 		free_env_list(&env_sorted);
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	head = env_sorted;
 	while (env_sorted)
@@ -50,7 +50,58 @@ static int	print_env_export_format(t_env *env)
 		env_sorted = env_sorted->next;
 	}
 	free_env_list(&head);
-	return (1);
+	return (EXIT_SUCCESS);
+}
+
+statuc int	update_env_by_argv(char *argv, t_env **env,
+	char **key, char **value)
+{
+	if (!pars_env_structure(&key, &value, argv[i]))
+		return (print_cmd_error("export", "malloc error", EXIT_FAILURE));
+	if (!is_env_key_valid(key))
+	{
+		ft_fprintf(STDERR_FILENO,
+			"minishell: export: `%s`: not a valid identifier\n", argv[i]);
+		return (EXIT_FAILURE);
+	}
+	if (!update_env(env, key, value))
+		return (print_cmd_error("export", "malloc error", EXIT_FAILURE));
+	return (EXIT_SUCCESS);
+}
+
+static int	update_env_by_mult_argv(char **argv, t_env **env)
+{
+	int		i;
+	char	*key;
+	char	*value;
+	int		exit_code;
+
+	i = 1;
+	exit_code = EXIT_SUCCESS;
+	while (argv[i])
+	{
+		if (!pars_env_structure(&key, &value, argv[i]))
+			return (print_cmd_error("export", "malloc error", EXIT_FAILURE));
+		if (!is_env_key_valid(key))
+		{
+			ft_fprintf(STDERR_FILENO,
+				"minishell: export: `%s`: not a valid identifier\n", argv[i]);
+			exit_code = EXIT_FAILURE;
+		}
+		else
+		{
+			if (!update_env(env, key, value))
+			{
+				free(key);
+				free(value);
+				return (print_cmd_error("export", "malloc error", EXIT_FAILURE));
+			}
+		}
+		free(key);
+		free(value);
+		i++;
+	}
+	return (exit_code);
 }
 
 /*
@@ -77,41 +128,10 @@ static int	print_env_export_format(t_env *env)
 int	built_in_export(char **argv, t_env **env)
 {
 	int		i;
-	char	*key;
-	char	*value;
-	int		result;
 
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "export") != 0)
 		return (-1);
-	i = 1;
 	if (!argv[1])
-	{
-		print_env_export_format(*env);
-		return (EXIT_SUCCESS);
-	}
-	result = EXIT_SUCCESS;
-	while (argv[i])
-	{
-		if (!pars_env_structure(&key, &value, argv[i]))
-			return (EXIT_FAILURE);
-		if (!is_env_key_valid(key))
-		{
-			ft_printf("minishell: export: `%s`: not a valid identifier\n",
-				argv[i]);
-			result = EXIT_FAILURE;
-			i++;
-			free(key);
-			free(value);
-			continue ;
-		}
-		if (!update_env(env, key, value))
-		{
-			ft_putstr_fd("minishell: export: malloc error\n", 2);
-			return (EXIT_FAILURE);
-		}
-		free(key);
-		free(value);
-		i++;
-	}
-	return (result);
+		return (print_env_export_format(*env));
+	return (update_env_by_mult_argv(argv, env));
 }

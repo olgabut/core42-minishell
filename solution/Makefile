@@ -18,6 +18,7 @@ SRC_FILES = lexer/lexer.c \
 	env/env_list_manager.c \
 	env/init_env.c \
 	env/env_utils.c \
+	built_in/built_in.c \
 	built_in/built_in_echo.c \
 	built_in/built_in_pwd.c \
 	built_in/built_in_exit.c \

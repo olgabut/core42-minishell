@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/03 12:42:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/04 11:24:59 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-# define EXIT_CMD_NOT FOUND 127
-
-extern int	g_last_exit_code;
+# define EXIT_CMD_NOT_FOUND 127
+# define EXIT_CTRL_C 130
+# define EXIT_INVALID_ARG 255
 
 /*
 	0 word = TOKEN_WORD
@@ -104,9 +104,10 @@ int		init_env(t_env **env_head, char **input);
 bool	is_env_key_valid(char *key);
 
 // built_in
+int		print_cmd_error(char *cmd_name, char *message, int exit_code);
 int		built_in_echo(char **argv);
 int		built_in_pwd(char **argv);
-int		built_in_exit(char **argv);
+int		built_in_exit(char **argv, int last_cmd_exit, int *need_exit);
 int		built_in_env(char **argv, t_env *env);
 int		built_in_export(char **argv, t_env **env);
 int		built_in_unset(char **argv, t_env **env);
