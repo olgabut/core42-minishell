@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/03 13:25:43 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 09:23:41 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,10 +396,11 @@ void	built_in_pwd_test()
 void	built_in_exit_test(void)
 {
 	char	**argv;
+	int		need_exit;
 
 	printf("\nEXIT BUILTIN\n");
 	argv = NULL;
-	if (built_in_exit(argv) == -1)
+	if (built_in_exit(argv, 0, &need_exit) == -1)
 		printf("1. OK\n");
 	else printf("1. ERROR argv == NULL\n");
 }

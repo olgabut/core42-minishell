@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/04 21:14:09 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 09:21:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,6 @@ static int	print_env_export_format(t_env *env)
 		env_sorted = env_sorted->next;
 	}
 	free_env_list(&head);
-	return (EXIT_SUCCESS);
-}
-
-statuc int	update_env_by_argv(char *argv, t_env **env,
-	char **key, char **value)
-{
-	if (!pars_env_structure(&key, &value, argv[i]))
-		return (print_cmd_error("export", "malloc error", EXIT_FAILURE));
-	if (!is_env_key_valid(key))
-	{
-		ft_fprintf(STDERR_FILENO,
-			"minishell: export: `%s`: not a valid identifier\n", argv[i]);
-		return (EXIT_FAILURE);
-	}
-	if (!update_env(env, key, value))
-		return (print_cmd_error("export", "malloc error", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -127,8 +111,6 @@ static int	update_env_by_mult_argv(char **argv, t_env **env)
  */
 int	built_in_export(char **argv, t_env **env)
 {
-	int		i;
-
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "export") != 0)
 		return (-1);
 	if (!argv[1])
