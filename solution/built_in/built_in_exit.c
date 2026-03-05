@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/04 11:38:26 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:31:35 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_last_exit_code(void)
 		(-1) - error (it's not exit status, the command wasn't completed)
 		(0..255) - n % 256 or exit status of the last executed command
 */
-int	built_in_exit(char **argv, int last_cmd_exit, int *need_exit)
+int	built_in_exit(char **argv, int last_cmd_exit, bool *need_exit)
 {
 	int	num_argv;
 
@@ -44,12 +44,12 @@ int	built_in_exit(char **argv, int last_cmd_exit, int *need_exit)
 	if (!argv[1])
 		return (last_cmd_exit);
 	if (!ft_strtoint(&num_argv, argv[1]))
-		return (print_cmd_error("exit", "numeric argument required",
-				EXIT_INVALID_ARG));
+		return (print_cmd_error("exit", "numeric argument required"),
+			EXIT_INVALID_ARG);
 	if (argv[2])
 	{
 		*need_exit = false;
-		return (print_cmd_error("exit", "too many arguments", EXIT_FAILURE));
+		return (print_cmd_error("exit", "too many arguments"), EXIT_FAILURE);
 	}
 	return (num_argv % 256);
 }

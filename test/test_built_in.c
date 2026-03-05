@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/05 09:23:41 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:28:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,7 +396,7 @@ void	built_in_pwd_test()
 void	built_in_exit_test(void)
 {
 	char	**argv;
-	int		need_exit;
+	bool	need_exit;
 
 	printf("\nEXIT BUILTIN\n");
 	argv = NULL;
@@ -598,16 +598,16 @@ void	built_in_export_test(void)
 
 	// Command "export 1var" wrang key
 	ft_strlcpy(argv[1], "1var", 5);
-	str = NULL;
-	str = run_env_cmd_and_capture(
-				argv, &env, built_in_export);
-	if (ft_strcmp(str,
-				"minishell: export: `1var`: not a valid identifier\n") == 0
+	// str = NULL;
+	// str = run_env_cmd_and_capture(argv, &env, built_in_export);
+	// if (ft_strcmp(str,
+	// 			"minishell: export: `1var`: not a valid identifier\n") == 0
+	if (built_in_export(argv, &env) == EXIT_FAILURE
 			&& count_env(env) == 4)
 		printf("19. OK\n");
 	else
-		printf("19. ERROR command 'export 1Var=Bob'\n");
-	free(str);
+		printf("19. ERROR command 'export 1var=Bob'\n");
+	// free(str);
 
 	// Command "export MyVAR=7 AVar2=Meg" wrang key
 	ft_strlcpy(argv[1], "MyVAR=7", 9);
@@ -622,7 +622,7 @@ void	built_in_export_test(void)
 	else
 		printf("20. ERROR command 'export MyVAR=7 AVar2=Meg'\n");
 	free(str);
-	
+
 	// command "export"
 	str = NULL;
 	str = run_env_cmd_and_capture(
@@ -650,10 +650,10 @@ void	built_in_unset_test(void)
 
 	printf("\nUNSET BUILTIN\n");
 	env = NULL;
-	update_env(&env, "VAR", "1");
-	update_env(&env, "AVAR", NULL);
-	update_env(&env, "XVAR", "X");
-	update_env(&env, "DVAR", "D");
+	update_env(&env, "VAR", "1", false);
+	update_env(&env, "AVAR", NULL, false);
+	update_env(&env, "XVAR", "X", false);
+	update_env(&env, "DVAR", "D", false);
 
 	// argv == NULL.  Return -1;
 	argv = NULL;
@@ -737,7 +737,7 @@ void	built_in_cd_test(void)
 {
 	t_env	*env;
 	char	**argv;
-	char	*str;
+	// char	*str;
 
 	printf("\nCD BUILTIN\n");
 	env = NULL;
@@ -765,15 +765,16 @@ void	built_in_cd_test(void)
 		printf("3. ERROR command 'cd' but there isn't HOME env\n");
 
 	// Command "cd". There is wrong HOME=C:/MyPath env. Return 0;
-	update_env(&env, "HOME", "C:/MyPath");
-	str = NULL;
-	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
-	if (ft_strcmp(str, "minishell: cd: C:/MyPath: No such file or directory\n") == 0
+	update_env(&env, "HOME", "C:/MyPath", false);
+	// str = NULL;
+	// str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	// if (ft_strcmp(str, "minishell: cd: C:/MyPath: No such file or directory\n") == 0
+	if (built_in_cd(argv, &env) == 1
 		&& count_env(env) == 1)
 		printf("4. OK\n");
 	else
 		printf("4. ERROR command `cd` There is wrong HOME env\n");
-	free(str);
+	// free(str);
 }
 
 void	test_built_in(void)

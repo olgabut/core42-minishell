@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:28:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/04 11:33:21 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:06:00 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	built_in_env(char **argv, t_env *env)
 	if (!argv || !argv[0] || ft_strcmp(argv[0], "env") != 0)
 		return (-1);
 	if (argv[1])
-		return (print_cmd_error("env", "too many arguments", EXIT_FAILURE));
+		return (print_cmd_error("env", "too many arguments"), EXIT_FAILURE);
 	while (env)
 	{
 		if (env->value)

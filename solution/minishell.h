@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/04 11:24:59 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 12:07:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	print_token_list(t_token *head);
 bool	command_with_error(t_token *token_head);
 bool	need_next_line(t_token *token_head);
 // env
+void	free_env_node(t_env **env);
 void	free_env_list(t_env **head);
 int		pars_env_structure(char **key, char **value, char *str);
-int		update_env(t_env **head, char *key, char *value);
-int		update_env_sorted(t_env **head, char *key, char *value);
+int		update_env(t_env **head, char *key, char *value, bool sorted);
 bool	remove_env_node(t_env **head, char *key);
 bool	get_env_exist(t_env *head, char *key, char **value);
 int		count_env(t_env *env);
@@ -104,10 +104,10 @@ int		init_env(t_env **env_head, char **input);
 bool	is_env_key_valid(char *key);
 
 // built_in
-int		print_cmd_error(char *cmd_name, char *message, int exit_code);
+void	print_cmd_error(char *cmd_name, char *message);
 int		built_in_echo(char **argv);
 int		built_in_pwd(char **argv);
-int		built_in_exit(char **argv, int last_cmd_exit, int *need_exit);
+int		built_in_exit(char **argv, int last_cmd_exit, bool *need_exit);
 int		built_in_env(char **argv, t_env *env);
 int		built_in_export(char **argv, t_env **env);
 int		built_in_unset(char **argv, t_env **env);

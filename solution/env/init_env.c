@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:54:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/26 11:34:49 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/05 11:43:56 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,26 @@
 */
 int	pars_env_structure(char **key, char **value, char *str)
 {
-	int	i;
+	char	*eq;
 
-	i = 0;
 	*key = NULL;
 	*value = NULL;
 	if (!str)
 		return (1);
-	while (str[i] && str[i] != '=')
-		i++;
-	if (i > 0)
+	eq = ft_strchr(str, '=');
+	if (!eq)
+		*key = ft_strdup(str);
+	else
+		*key = ft_substr(str, 0, eq - str);
+	if (!*key)
+		return (0);
+	if (eq)
+		*value = ft_strdup(eq + 1);
+	if (eq && !*value)
 	{
-		*key = ft_substr(str, 0, i);
-		if (!(*key))
-			return (0);
-		if (str[i])
-		{
-			*value = ft_substr(str, i + 1, ft_strlen(str) - i);
-			if (!*value)
-			{
-				free(*key);
-				*key = NULL;
-				return (0);
-			}
-		}
+		free(*key);
+		*key = NULL;
+		return (0);
 	}
 	return (1);
 }
@@ -67,7 +63,7 @@ int	init_env(t_env **env_head, char **input)
 		key = NULL;
 		value = NULL;
 		if (!pars_env_structure(&key, &value, input[i])
-			|| !update_env(env_head, key, value))
+			|| !update_env(env_head, key, value, false))
 			return (0);
 		i++;
 	}
