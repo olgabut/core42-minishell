@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:44:08 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/25 09:16:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/06 10:47:03 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	is_env_key_valid(char *key)
 	else return false
 	The value can be NULL
 */
-bool	get_env_exist(t_env *head, char *key, char **value)
+char	*get_env_value(t_env *head, char *key)
 {
 	t_env	*env;
 
@@ -46,13 +46,10 @@ bool	get_env_exist(t_env *head, char *key, char **value)
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
-		{
-			*value = env->value;
-			return (true);
-		}
+			return (env->value);
 		env = env->next;
 	}
-	return (false);
+	return (NULL);
 }
 
 int	count_env(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/05 12:28:39 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/06 12:39:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,6 +390,8 @@ void	built_in_pwd_test()
 	free(str);
 	free(str_expected);
 
+	free(argv[0]);
+	free(argv);
 	free(cwd);
 }
 
@@ -737,13 +739,13 @@ void	built_in_cd_test(void)
 {
 	t_env	*env;
 	char	**argv;
-	// char	*str;
+	char	*str;
 
 	printf("\nCD BUILTIN\n");
 	env = NULL;
 
 	// argv == NULL.  Return -1;
-	argv = calloc(3, sizeof(char *));
+	argv = calloc(4, sizeof(char *));
 	if (built_in_cd(argv, &env) == -1)
 		printf("1. OK\n");
 	else
@@ -775,6 +777,76 @@ void	built_in_cd_test(void)
 	else
 		printf("4. ERROR command `cd` There is wrong HOME env\n");
 	// free(str);
+
+	// Command "cd". There is HOME=`/Users`. Return 1;
+	update_env(&env, "HOME", "/Users", false);
+	str = NULL;
+	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	if (ft_strlen(str) == 0
+		&& ft_strcmp(get_env_value(env, "PWD"), "/Users") == 0
+		&& count_env(env) == 3)
+		printf("5. OK\n");
+	else
+		printf("5. ERROR command `cd` There is HOME=/Users env\n");
+	free(str);
+
+	// Command "cd ~". There is HOME=`/Users/olgabutolina`. Return 1;
+	update_env(&env, "HOME", "/Users/olgabutolina", false);
+	argv[1] = calloc(12, sizeof(char));
+	ft_strlcpy(argv[1], "~", 2);
+	str = NULL;
+	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	if (ft_strlen(str) == 0
+		&& ft_strcmp(get_env_value(env, "PWD"), "/Users/olgabutolina") == 0
+		&& ft_strcmp(get_env_value(env, "OLDPWD"), "/Users") == 0
+		&& count_env(env) == 3)
+		printf("6. OK\n");
+	else
+		printf("6. ERROR command `cd` There is HOME=/Users/olgabutolina env\n");
+	free(str);
+
+
+	// Command "cd ./Documents". Return 1;
+	ft_strlcpy(argv[1], "./Documents", 12);
+	str = NULL;
+	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	if (ft_strlen(str) == 0
+		&& ft_strcmp(get_env_value(env, "PWD"), "/Users/olgabutolina/Documents") == 0
+		&& ft_strcmp(get_env_value(env, "OLDPWD"), "/Users/olgabutolina") == 0
+		&& count_env(env) == 3)
+		printf("7. OK\n");
+	else
+		printf("7. ERROR command `cd ./Documents`\n");
+	free(str);
+
+	// Command "cd ../..". Return 1;
+	ft_strlcpy(argv[1], "../..", 6);
+	str = NULL;
+	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	if (ft_strlen(str) == 0
+		&& ft_strcmp(get_env_value(env, "PWD"), "/Users") == 0
+		&& ft_strcmp(get_env_value(env, "OLDPWD"), "/Users/olgabutolina/Documents") == 0
+		&& count_env(env) == 3)
+		printf("8. OK\n");
+	else
+		printf("8. ERROR command `cd ../..`\n");
+	free(str);
+
+	// Command "cd ./ ./Downloads". Error too many arguments
+	ft_strlcpy(argv[1], "./", 3);
+	argv[2] = calloc(12, sizeof(char));
+	ft_strlcpy(argv[2], "./Downloads", 3);
+	if (built_in_cd(argv, &env) == EXIT_FAILURE
+		&& count_env(env) == 3)
+		printf("9. OK\n");
+	else
+		printf("9. ERROR command `cd ../..`\n");
+
+	free(argv[2]);
+	free(argv[1]);
+	free(argv[0]);
+	free(argv);
+	free_env_list(&env);
 }
 
 void	test_built_in(void)

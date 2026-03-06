@@ -6,12 +6,26 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:13:01 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/10 09:13:43 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/06 12:37:49 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
+static void	free_tokens(t_token *head)
+{
+	t_token	*token;
+	t_token	*next_token;
+
+	token = head;
+	while (token != NULL)
+	{
+		next_token = token->next;
+		free(token);
+		token = next_token;
+	}
+}
 
 void	line_lexer_test()
 {
@@ -212,6 +226,8 @@ void	need_next_line_test()
 		&& !need_next_line(token_head))
 		printf("10. OK\n");
 	else printf("10. ERROR don't need next lint double quotes (include next line character)\n");
+
+	free_tokens(token_head);
 }
 
 void	test_lexer(void)
