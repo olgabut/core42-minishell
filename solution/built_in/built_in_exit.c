@@ -6,16 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/05 12:31:35 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/06 13:46:00 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	get_last_exit_code(void)
-{
-	return (1);
-}
 
 /*
 	built in EXIT command
