@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 17:39:10 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/07 08:59:18 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ typedef struct s_minishell
 	int					stdin_backup;
 	int					stdout_backup;
 }						t_minishell;
+
+void					init_shell(t_minishell *sh, char **envp);
 
 void					signals(void);
 
