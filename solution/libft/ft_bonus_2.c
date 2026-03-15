@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:57:35 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 13:28:35 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/15 22:59:55 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	{
 		tmp = (*lst)->next;
 		if (del)
-			ft_lstdelone(*lst, *del);
+			del((*lst)->content);
+		free(*lst);
 		*lst = tmp;
 	}
 	lst = NULL;
