@@ -15,3 +15,16 @@ t_token *add_token(t_token *head, enum e_token_type type, char *value)
     current->next = new_node;
     return head;
 }
+
+void free_test_tokens(t_token *head)
+{
+    t_token *tmp;
+    while (head)
+    {
+        tmp = head;
+        head = head->next;
+        if (tmp->value)
+            free(tmp->value);
+        free(tmp);
+    }
+}
