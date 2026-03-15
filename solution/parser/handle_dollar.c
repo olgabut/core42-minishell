@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 15:52:50 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/20 16:46:01 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/15 21:37:53 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*handle_dollar(t_minishell *mshell, char *result, const char *word,
 {
 	(*i)++;
 	if (!word[*i])
-		return (ft_straddchar(result, '$'));
+		return (ft_strjoin_free(result, "$"));
 	if (word[*i] == '?')
 	{
 		result = expand_question(mshell, result);
@@ -105,5 +105,5 @@ char	*handle_dollar(t_minishell *mshell, char *result, const char *word,
 		return (expand_digit(mshell, result, word, i));
 	if (ft_isalpha(word[*i]) || word[*i] == '_')
 		return (expand_normal_var(mshell, result, word, i));
-	return (ft_straddchar(result, '$'));
+	return (ft_strjoin_free(result, "$"));
 }

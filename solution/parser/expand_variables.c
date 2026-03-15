@@ -39,9 +39,15 @@ char	*expand_variables(t_minishell *mshell, const char *word)
 		if (word[i] == '$')
 			tmp = handle_dollar(mshell, result, word, &i);
 		else
+		{
 			tmp = process_literal(result, word, &i);
+			free(result);
+		}
 		if (!tmp)
+		{
+			free(result);
 			return (NULL);
+		}
 		result = tmp;
 	}
 	return (result);

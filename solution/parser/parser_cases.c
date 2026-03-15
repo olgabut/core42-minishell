@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/07 07:00:43 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/15 21:12:35 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,18 @@ void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	// if (node->type == TOKEN_HEREDOC)
 	// 	handle_here_doc();
 	// else
-		path = (*token)->value;
+	path = (*token)->value;
 	word_list = apply_ifs(mshell, check_word(mshell, path));
 	if (ft_lstsize(word_list) != 1)
-		return (perror("Ambigious redirect\n"));
+		return (free(node), ft_lstclear(&word_list, free),
+			perror("Ambigious redirect\n"));
 	node->path = word_list->content;
 	free(word_list);
 	node->next = NULL;
 	io_add_back(cmd, node);
 }
 
-void	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
+int	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 {
 	t_io	*node;
 	char	*buf;
@@ -87,10 +88,10 @@ void	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	printf("input\n");
 	node = malloc(sizeof(t_io));
 	if (!node)
-		return ;
+		return (1);
 	res = ft_strdup("");
 	if (!res)
-		return ;
+		return (free(node), 1);
 	buf = "";
 	*token = (*token)->next;
 	eof = (*token)->value;
@@ -99,11 +100,14 @@ void	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	{
 		res = ft_strjoin_free(res, buf);
 		if (!res)
-			return ;
+			return (free(node), free(res), 1);
 		buf = readline(">");
+		if (!buf)
+			return (free(node), free(res), 1);
 	}
 	node->next = NULL;
 	node->path = res;
 	node->type = TOKEN_HEREDOC;
 	io_add_back(cmd, node);
+	return (0);
 }
