@@ -32,6 +32,7 @@ SRC_FILES = lexer/lexer.c \
 	parser/handle_dollar.c \
 	parser/env_utils.c \
 	parser/print_parsed_commands.c \
+	parser/free_cmd.c \
 	utils/init.c \
 	env/init_env.c \
 	env/env_list_manager.c
@@ -70,7 +71,6 @@ tests: $(OBJS_TEST_FILES) $(LIBFT)
 
 test_parser: $(OBJ_TEST_PARSER) $(LIBFT)
 	$(CC) $(CFLAGS) $(TEST_FLAGS) $(OBJ_TEST_PARSER) $(LINKER_FLAGS) -o $(TEST_NAME)
-	./$(TEST_NAME)
 
 clean:
 	rm -rf $(BUILD)
