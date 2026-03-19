@@ -204,30 +204,6 @@ Test(parser_suite, append_redirection)
     free_memory_links(&(ms.memory_head));
 }
 
-// // --- TEST 9: Here Document ---
-// Test(parser_suite, here_document)
-// {
-//     t_minishell ms;
-//     char *envp[] = {NULL};
-//     init_shell(&ms, envp);
-//
-//     t_token *tokens = NULL;
-//     tokens = add_token(tokens, TOKEN_WORD, "cat");
-//     tokens = add_token(tokens, TOKEN_HEREDOC, "<<");
-//     tokens = add_token(tokens, TOKEN_WORD, "EOF");
-//
-//     t_cmd *cmd_list = parser(&ms, tokens);
-//
-//     cr_assert_not_null(cmd_list, "Command should exist.");
-//     cr_assert_str_eq(cmd_list->args[0], "cat", "First arg should be 'cat'");
-//     cr_assert_not_null(cmd_list->io_list, "IO list should exist.");
-//     cr_assert_eq(cmd_list->io_list->type, TOKEN_HEREDOC, "IO type should be TOKEN_HEREDOC");
-//
-//     free_cmd(cmd_list);
-//     free_test_tokens(tokens);
-//     free_memory_links(&(ms.memory_head));
-// }
-
 // --- TEST 10: Multiple Pipes ---
 Test(parser_suite, multiple_pipes)
 {

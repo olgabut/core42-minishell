@@ -118,6 +118,8 @@ int						init_env(t_memory_info **memory_head, t_env **env_head,
 							char **input);
 
 t_cmd					*parser(t_minishell *mshell, t_token *tokens);
+void					free_cmd(t_cmd *cmd);
+void					free_env_list(t_env *head);
 
 // built_in
 int						built_in_echo(char **argv);

@@ -12,6 +12,7 @@ READLINE_INC = /opt/homebrew/opt/readline/include
 READLINE_LIB = /opt/homebrew/opt/readline/lib
 
 LIBFT_DIR = libft
+LIBFT		= $(LIBFT_DIR)/libft.a
 INC_DIR = inc
 BUILD = build
 
@@ -38,15 +39,17 @@ SRC_FILES = lexer/lexer.c \
 	env/env_list_manager.c
 
 TEST_NAME = tests
-TEST_DIR = test
+TEST_DIR = test_src
+TEST_MODE ?= test_parser
 TEST_FILES = $(SRC_FILES) \
-	test/test.c \
-	test/test_lexer.c
+	$(TEST_DIR)/test.c \
+	$(TEST_DIR)/test_lexer.c
 
 SRC_TEST_PARSER = $(SRC_FILES) \
 	$(addprefix $(TEST_DIR)/, \
 	test_parser.c \
 	test_parser_utils.c \
+	test_parser_here_doc.c \
 	)
 OBJ_TEST_PARSER = $(SRC_TEST_PARSER:%.c=$(BUILD)/%.o)
 TEST_FLAGS = -I$(TEST_DIR) -lcriterion
@@ -69,18 +72,30 @@ $(NAME): $(OBJS_FILES) $(LIBFT)
 tests: $(OBJS_TEST_FILES) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_TEST_FILES) $(LINKER_FLAGS) -o $(TEST_NAME)
 
-test_parser: $(OBJ_TEST_PARSER) $(LIBFT)
+test_parser: $(OBJ_TEST_PARSER) $(LIBFT) readline_mock
 	$(CC) $(CFLAGS) $(TEST_FLAGS) $(OBJ_TEST_PARSER) $(LINKER_FLAGS) -o $(TEST_NAME)
 
+readline_mock:
+	gcc -shared -fPIC -o $(BUILD)/libreadline_mock.so $(TEST_DIR)/readline_mock.c -ldl
+
+test_parser_with_mock: test_parser readline_mock
+
+run_test: $(TEST_MODE)
+	export LD_PRELOAD="/usr/lib/libasan.so.8:$(PWD)/$(BUILD)/libreadline_mock.so"
+	./$(TEST_NAME)
+	unset LD_PRELOAD
+
 clean:
+	unset LD_PRELOAD
 	rm -rf $(BUILD)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(TEST_NAME)
+	rm -f $(TEST_DIR)/libreadline_mock.so
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re tests test_parser readline_mock test_parser_with_mock 
