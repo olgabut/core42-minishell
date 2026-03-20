@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 01:54:09 by marvin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:33:17 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:18:26 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
+	if (!s1 || !s2)
+		return (1);
 	while (n > 0 && *s1 && (*s1 == *s2))
 	{
 		s1++;

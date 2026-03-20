@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/12 18:01:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:49:39 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	Free all tokens
@@ -68,14 +68,12 @@ void	add_new_token(t_token **head, t_token *new_token)
 	if (*head == NULL)
 	{
 		*head = new_token;
-		new_token->prev = NULL;
 		return ;
 	}
 	token = *head;
 	while (token->next != NULL)
 		token = token->next;
 	token->next = new_token;
-	new_token->prev = token;
 }
 
 t_token	*get_last_token(t_token *head)

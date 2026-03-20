@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:57:25 by dprikhod         ###   ########.fr       */
+/*   Created: 2026/01/22 10:04:19 by obutolin          #+#    #+#             */
+/*   Updated: 2026/02/10 09:43:27 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-// #include "test.h"
+#ifndef TEST_H
+# define TEST_H
 
-// ft_fprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd_name, message);
-void	print_cmd_error(char *cmd_name, char *message)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
-}
+
+void	test_lexer(void);
+void	test_built_in(void);
+
+#endif

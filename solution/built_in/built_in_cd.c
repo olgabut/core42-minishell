@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/06 11:59:59 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:51:44 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static int	change_directory(t_env **env, char *new_dir, bool print_dir)
 {

@@ -3,6 +3,7 @@ libft/libft.a
 minishell
 .vscode
 tests
+build/
 **/*a
 .cache/
 compile_commands.json

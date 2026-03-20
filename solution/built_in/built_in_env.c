@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:28:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/05 12:06:00 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:55:04 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	built in ENV command

@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 13:42:43 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:55:03 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 bool	is_echo_flags(char *word)
 {

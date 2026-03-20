@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:37:58 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/24 13:25:05 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:55:10 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	built in UNSET command

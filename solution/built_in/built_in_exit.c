@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/06 13:46:00 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:55:06 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	built in EXIT command
