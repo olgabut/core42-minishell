@@ -6,11 +6,15 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/02/13 17:05:40 by obutolin         ###   ########.fr       */
+=======
+/*   Updated: 2026/02/22 17:15:25 by dprikhod         ###   ########.fr       */
+>>>>>>> 1c5e778 (Parser: squashed changes)
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static bool	print_lexical_error(char *message, bool result)
 {

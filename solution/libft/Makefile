@@ -1,4 +1,5 @@
 NAME = libft.a
+MODE ?= release
 
 SOURCES = ft_is_group.c \
 	ft_is_2.c \
@@ -18,6 +19,8 @@ SOURCES = ft_is_group.c \
 	ft_bonus_2.c \
 	get_next_line.c \
 	ft_compare.c \
+	ft_list_utils.c \
+	ft_split_by_chars.c \
 	memory_manager/memory_manager.c
 
 OBJECTS = $(SOURCES:.c=.o)
@@ -25,9 +28,13 @@ OBJECTS = $(SOURCES:.c=.o)
 BONUS = ft_bonus.c ft_bonus_2.c
 BONUS_OBJECTS = $(BONUS:.c=.o)
 
-HEADERS = libft.h
+HEADERS = libft.h ft_split_by_chars.h
 
 CFLAGS = -Wall -Wextra -Werror -fPIC
+DFLAGS = -g -O0 
+ifeq ($(MODE),debug)
+	CFLAGS += $(DFLAGS)
+endif
 
 CUR_DIR = $(shell pwd)
 

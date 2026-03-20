@@ -6,11 +6,15 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/02/13 17:06:34 by obutolin         ###   ########.fr       */
+=======
+/*   Updated: 2026/02/22 17:15:33 by dprikhod         ###   ########.fr       */
+>>>>>>> 1c5e778 (Parser: squashed changes)
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 Search for double special characters (<<, >>, &&, ||)

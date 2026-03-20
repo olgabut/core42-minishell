@@ -6,11 +6,15 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 09:59:32 by obutolin          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/02/12 18:01:25 by obutolin         ###   ########.fr       */
+=======
+/*   Updated: 2026/02/22 17:15:53 by dprikhod         ###   ########.fr       */
+>>>>>>> 1c5e778 (Parser: squashed changes)
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	Free all tokens

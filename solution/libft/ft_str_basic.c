@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_str_basic.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niel <niel@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 01:17:15 by niel              #+#    #+#             */
-/*   Updated: 2025/07/20 10:37:50 by niel             ###   ########.fr       */
+/*   Updated: 2026/02/18 19:23:20 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(res + len1, s2, len2);
 	res[len1 + len2] = '\0';
 	return (res);
+}
+
+char	*ft_strjoin_free(char *s1, const char *s2)
+{
+	char	*new;
+
+	new = ft_strjoin(s1, s2);
+	free(s1);
+	return (new);
 }
