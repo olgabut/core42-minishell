@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:44:08 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/06 10:47:03 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:50:46 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 bool	is_env_key_valid(char *key)
 {

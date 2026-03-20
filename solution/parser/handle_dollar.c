@@ -6,12 +6,11 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 15:52:50 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/15 21:37:53 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:10:59 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "handle_dollar.h"
-#include "env_utils.h"
 
 static char	*expand_question(t_minishell *mshell, char *result)
 {

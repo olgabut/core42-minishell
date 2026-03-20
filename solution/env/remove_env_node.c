@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 09:29:58 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/05 09:58:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:51:04 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	Free one env node

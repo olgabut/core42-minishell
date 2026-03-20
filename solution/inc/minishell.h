@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/07 08:59:18 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:20:48 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define EXIT_CMD_NOT_FOUND 127
+# define EXIT_CTRL_C 130
+# define EXIT_INVALID_ARG 255
 
 /*
 	0 word = TOKEN_WORD
@@ -50,7 +56,8 @@ enum					e_token_type
 	TOKEN_OR,
 	TOKEN_LPAREN,
 	TOKEN_RPAREN,
-	TOKEN_SEMICOLON
+	TOKEN_SEMICOLON,
+	TOKEN_AMPERSAND
 };
 
 typedef struct s_token
@@ -87,13 +94,10 @@ typedef struct s_minishell
 	t_env				*env_list;
 	t_cmd				*cmd_list;
 	t_memory_info		*memory_head;
-	t_memory_info		*memory_long;
 	int					exit_code;
 	int					stdin_backup;
 	int					stdout_backup;
 }						t_minishell;
-
-void					init_shell(t_minishell *sh, char **envp);
 
 void					signals(void);
 
@@ -111,25 +115,27 @@ bool					command_with_error(t_token *token_head);
 bool					need_next_line(t_token *token_head);
 
 // env
-void	free_env_node(t_env **env);
-void	free_env_list(t_env **head);
-int		pars_env_structure(char **key, char **value, char *str);
-int		update_env(t_env **head, char *key, char *value, bool sorted);
-bool	remove_env_node(t_env **head, char *key);
-char	*get_env_value(t_env *head, char *key);
-int		count_env(t_env *env);
-void	print_env_list(t_env *head);
-int		init_env(t_env **env_head, char **input);
-bool	is_env_key_valid(char *key);
+void					free_env_node(t_env **env);
+void					free_env_list(t_env **head);
+int						pars_env_structure(char **key, char **value, char *str);
+int						update_env(t_env **head, char *key, char *value,
+							bool sorted);
+bool					remove_env_node(t_env **head, char *key);
+char					*get_env_value(t_env *head, char *key);
+int						count_env(t_env *env);
+void					print_env_list(t_env *head);
+int						init_env(t_env **env_head, char **input);
+bool					is_env_key_valid(char *key);
 
 // built_in
-void	print_cmd_error(char *cmd_name, char *message);
-int		built_in_echo(char **argv);
-int		built_in_pwd(char **argv);
-int		built_in_exit(char **argv, int last_cmd_exit, bool *need_exit);
-int		built_in_env(char **argv, t_env *env);
-int		built_in_export(char **argv, t_env **env);
-int		built_in_unset(char **argv, t_env **env);
-int		built_in_cd(char **argv, t_env **env);
+void					print_cmd_error(char *cmd_name, char *message);
+int						built_in_echo(char **argv);
+int						built_in_pwd(char **argv);
+int						built_in_exit(char **argv, int last_cmd_exit,
+							bool *need_exit);
+int						built_in_env(char **argv, t_env *env);
+int						built_in_export(char **argv, t_env **env);
+int						built_in_unset(char **argv, t_env **env);
+int						built_in_cd(char **argv, t_env **env);
 
 #endif

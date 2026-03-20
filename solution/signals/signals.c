@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/22 17:16:13 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:31:21 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
 void	print_sigaction_error(void)
 {
 	if (errno == EINVAL)
-		ft_print_string(
-			"Error: invalid signal number or bad handler.\n");
+		ft_putstr_fd(
+			"Error: invalid signal number or bad handler.\n", 2);
 	else if (errno == EFAULT)
-		ft_print_string(
-			"Error: invalid memory address for sigaction structure.\n");
+		ft_putstr_fd(
+			"Error: invalid memory address for sigaction structure.\n", 2);
 	else if (errno == EINVAL)
-		ft_print_string(
-			"Error: signal not supported on this system.\n");
+		ft_putstr_fd(
+			"Error: signal not supported on this system.\n", 2);
 	else
-		ft_print_string(
-			"Error: unknown problem while setting signal handler.\n");
+		ft_putstr_fd(
+			"Error: unknown problem while setting signal handler.\n", 2);
 }
 
 void sigint_handler(int sig)

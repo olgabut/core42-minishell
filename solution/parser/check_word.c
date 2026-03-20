@@ -6,10 +6,9 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/24 14:19:30 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:10:47 by dprikhod         ###   ########.fr       */
 /* ************************************************************************** */
 
-#include "env_utils.h"
 #include "expand_variables.h"
 #include "ft_split_by_chars.h"
 #include "parse_cases.h"

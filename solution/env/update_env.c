@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:59:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/05 11:58:40 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:50:33 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	Creates new env by key and value (the value can be NULL)

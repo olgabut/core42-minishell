@@ -6,12 +6,13 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/20 12:49:40 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/20 22:01:20 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parse_cases.h"
+#include "free_cmd.h"
 
 static t_cmd	*init_cmd(void)
 {

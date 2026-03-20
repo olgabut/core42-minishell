@@ -36,19 +36,16 @@ SRC_FILES = lexer/lexer.c \
 	built_in/built_in_env.c \
 	built_in/built_in_export.c \
 	built_in/built_in_unset.c \
-	built_in/built_in_cd.c
+	built_in/built_in_cd.c \
 	signals/signals.c \
 	parser/parse.c \
 	parser/parser_cases.c \
 	parser/check_word.c \
 	parser/expand_variables.c \
 	parser/handle_dollar.c \
-	parser/env_utils.c \
 	parser/print_parsed_commands.c \
 	parser/free_cmd.c \
-	utils/init.c \
-	env/init_env.c \
-	env/env_list_manager.c
+	utils/init.c 
 
 TEST_NAME = tests
 TEST_DIR = test_src

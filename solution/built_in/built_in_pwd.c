@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:53:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/02/11 12:01:29 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/20 21:55:09 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /*
 	built in PWD command (print woring directory)
