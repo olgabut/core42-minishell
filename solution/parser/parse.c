@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/15 22:38:04 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/20 12:49:40 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 			add_io(mshell, cmd, &tokens);
 		else if (tokens->type == TOKEN_HEREDOC)
 		{
-			if (!add_here_doc(mshell, cmd, &tokens))
+			if (add_here_doc(mshell, cmd, &tokens))
 			{
 				ft_lstclear(&temp_args, free);
 				free_cmd(cmd);
