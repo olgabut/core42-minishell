@@ -1,33 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-<<<<<<<< HEAD:solution/built_in/built_in.c
-/*   Created: 2026/03/04 10:56:57 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/06 12:12:21 by obutolin         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../minishell.h"
-========
-/*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/07 08:28:58 by dprikhod         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 #include "test.h"
->>>>>>>> 1c5e778 (Parser: squashed changes):solution/test_src/test.c
 
-// ft_fprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd_name, message);
-void	print_cmd_error(char *cmd_name, char *message)
+// Run
+// make re && make tests && ./tests
+
+int	main(void)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
+	test_lexer();
+	test_built_in();
+	return (0);
 }

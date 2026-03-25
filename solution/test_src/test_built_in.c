@@ -6,11 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/06 12:39:39 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/25 22:11:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char *run_cmd_and_capture(char **argv, int (*func)(char **))
 {
