@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 17:54:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:50:56 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:37:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,18 @@ int	init_env(t_env **env_head, char **input)
 	char	*key;
 	char	*value;
 
+	*env_head = NULL;
 	i = 0;
 	while (input[i])
 	{
 		key = NULL;
 		value = NULL;
-		if (!pars_env_structure(&key, &value, input[i])
-			|| !update_env(env_head, key, value, false))
+		if (!pars_env_structure(&key, &value, input[i]))
 			return (0);
+		if (!update_env(env_head, key, value, false))
+			return (free(key), free(value), 0);
+		free(key);
+		free(value);
 		i++;
 	}
 	return (1);
