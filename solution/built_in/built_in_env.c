@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:28:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:55:04 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:55:03 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 /*
 	built in ENV command
@@ -31,14 +32,12 @@
  */
 int	built_in_env(char **argv, t_env *env)
 {
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "env") != 0)
-		return (-1);
 	if (argv[1])
 		return (print_cmd_error("env", "too many arguments"), EXIT_FAILURE);
 	while (env)
 	{
 		if (env->value)
-			ft_fprintf(STDOUT_FILENO, "%s=%s", env->key, env->value);
+			ft_fprintf(STDOUT_FILENO, "%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
 	return (EXIT_SUCCESS);

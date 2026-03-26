@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:55:03 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:08:16 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 bool	is_echo_flags(char *word)
 {
@@ -71,8 +72,6 @@ int	built_in_echo(char **argv)
 	bool	printed_first_word;
 	int		i;
 
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "echo") != 0)
-		return (-1);
 	i = 1;
 	flag = true;
 	n_flag = false;

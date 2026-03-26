@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:55:06 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:26:00 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 /*
 	built in EXIT command
@@ -31,9 +32,6 @@ int	built_in_exit(char **argv, int last_cmd_exit, bool *need_exit)
 {
 	int	num_argv;
 
-	*need_exit = false;
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "exit") != 0)
-		return (-1);
 	*need_exit = true;
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (!argv[1])
