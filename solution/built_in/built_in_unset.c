@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:37:58 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:55:10 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:23:32 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 /*
 	built in UNSET command
@@ -28,8 +29,6 @@ int	built_in_unset(char **argv, t_env **env)
 {
 	int	i;
 
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "unset") != 0)
-		return (-1);
 	i = 1;
 	while (argv[i])
 	{

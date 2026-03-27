@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:55:07 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:22:24 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 static int	clone_env_sorted(t_env *env, t_env **env_sorted_head)
 {
@@ -108,8 +109,6 @@ int	built_in_export(char **argv, t_env **env)
 	int	i;
 	int	exit_code;
 
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "export") != 0)
-		return (-1);
 	if (!argv[1])
 		return (print_env_export_format(*env));
 	i = 1;

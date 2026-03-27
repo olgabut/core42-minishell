@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 23:27:07 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 11:20:19 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		sh.cmd_list = parser(&sh, token_head);
-		print_parsed_commands(sh.cmd_list);
+		// print_parsed_commands(sh.cmd_list);
+		if (!execute(&sh))
+			break ;
 		free_memory_links(&sh.memory_head);
 	}
-	free_cmd(sh.cmd_list);
 	free_env_list(&sh.env_list);
 	free_memory_links(&sh.memory_head);
 	return (0);

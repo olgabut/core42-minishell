@@ -45,7 +45,8 @@ SRC_FILES = lexer/lexer.c \
 	parser/handle_dollar.c \
 	parser/print_parsed_commands.c \
 	parser/free_cmd.c \
-	utils/init.c 
+	utils/init.c \
+	executor/execute.c
 
 TEST_NAME = tests
 TEST_DIR = test_src

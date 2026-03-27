@@ -6,13 +6,13 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 17:20:32 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/20 19:20:59 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 17:08:42 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_split_by_chars.h"
 
-static void	add_field(t_list **lst, const char *str, int start, int len)
+static void	add_field(t_list **lst, const char *str, int start, size_t len)
 {
 	char	*field;
 
@@ -27,7 +27,7 @@ static void	on_ifs_char(t_split_state *st, const char *str, t_list **lst)
 {
 	if (st->in_field)
 	{
-		add_field(lst, str, st->start, st->start - st->i);
+		add_field(lst, str, st->start, st->i - st->start);
 		st->in_field = false;
 	}
 	st->i++;
@@ -59,6 +59,6 @@ t_list	*ft_split_by_chars(const char *str, const char *ifs)
 			on_regular_char(&st);
 	}
 	if (st.in_field)
-		add_field(&fields, str, st.start, st.start - st.i);
+		add_field(&fields, str, st.start, st.i - st.start);
 	return (fields);
 }

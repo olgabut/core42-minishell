@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/20 22:01:20 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/25 22:05:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 	if (!tokens || !tokens->value)
 		return (NULL);
 	head = init_cmd();
+	if (head != NULL)
+		add_new_memory_link_for_control(&mshell->memory_head, head);
 	cmd = head;
 	temp_args = NULL;
 	while (tokens)

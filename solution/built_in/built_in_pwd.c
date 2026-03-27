@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:53:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:55:09 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:40:36 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 /*
 	built in PWD command (print woring directory)
@@ -27,12 +28,10 @@
 		(0) - success exit status
 		(1..255) - error exit status
  */
-int	built_in_pwd(char **argv)
+int	built_in_pwd()
 {
 	char	*cwd;
 
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "pwd") != 0)
-		return (-1);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

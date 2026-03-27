@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:51:44 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/26 09:47:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 static int	change_directory(t_env **env, char *new_dir, bool print_dir)
 {
@@ -78,8 +79,6 @@ static int	change_to_old_directory(t_env **env)
 */
 int	built_in_cd(char **argv, t_env **env)
 {
-	if (!argv || !argv[0] || ft_strcmp(argv[0], "cd") != 0)
-		return (-1);
 	if (argv[2])
 		return (print_cmd_error("cd", "too many arguments"), EXIT_FAILURE);
 	if (!argv[1] || ft_strcmp(argv[1], "~") == 0)
