@@ -1,7 +1,7 @@
 NAME = minishell
 CC = cc
 MODE ?= debug
-CFLAGS = -Wall -Wextra -Werror  
+CFLAGS = -Wall -Wextra -Werror
 DFLAGS = -g -O0 -fsanitize=address,undefined
 ifeq ($(MODE),debug)
 	CFLAGS += $(DFLAGS)
@@ -29,6 +29,7 @@ SRC_FILES = lexer/lexer.c \
 	env/remove_env_node.c \
 	env/init_env.c \
 	env/env_utils.c \
+	env/env_array.c \
 	built_in/built_in.c \
 	built_in/built_in_echo.c \
 	built_in/built_in_pwd.c \
@@ -46,7 +47,9 @@ SRC_FILES = lexer/lexer.c \
 	parser/print_parsed_commands.c \
 	parser/free_cmd.c \
 	utils/init.c \
-	executor/execute.c
+	executor/execute.c \
+	executor/cmd_path.c \
+	executor/external_cmd.c
 
 TEST_NAME = tests
 TEST_DIR = test_src

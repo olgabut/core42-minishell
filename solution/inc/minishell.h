@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/26 11:20:02 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/27 22:17:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,17 @@ int						count_env(t_env *env);
 void					print_env_list(t_env *head);
 int						init_env(t_env **env_head, char **input);
 bool					is_env_key_valid(char *key);
+char	**get_env_array(t_memory_info **memory, t_env *env);
 
 // built_in
 bool	is_built_in_cmd(char *cmd_name);
 int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
+void	print_cmd_error(char *cmd_name, char *message);
 
 // execute
 int		execute(t_minishell *sh);
+void	find_cmd_path(t_cmd *cmd, t_minishell *sh);
+int		execute_external_cmd(t_cmd *cmd, t_minishell *sh);
+
 
 #endif
