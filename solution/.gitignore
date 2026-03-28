@@ -7,3 +7,5 @@ build/
 **/*a
 .cache/
 compile_commands.json
+.gdb
+count_args
