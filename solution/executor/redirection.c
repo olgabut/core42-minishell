@@ -6,102 +6,63 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/28 13:43:35 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/28 19:20:16 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor/redirection.h"
 #include "minishell.h"
 #include <fcntl.h>
-#include <errno.h>
 
-int	**prepare_pipes_for_here_doc(t_cmd *cmd)
+// maybe it is good to add check aftere each open later
+t_exec_info	*prepare_redirs_before_exec(t_cmd *cmd, t_memory_info **head)
 {
-	t_io	*list;
-	int		len;
-	int		i;
-	int		*fd_here_doc[2];
-	int		j;
-	int		**ret;
+	t_exec_info	*ei;
+	t_io		*list;
+			int pipefd[2];
 
-	j = 0;
-	i = 0;
-	list = cmd->io_list;
-	if (!list)
+	ei = malloc(sizeof(t_exec_info));
+	if (!add_new_memory_link_for_control(head, ei))
 		return (NULL);
-	len = ft_lstsize((t_list *)list);
-	while (i < len)
-	{
-		if (list->type == TOKEN_HEREDOC)
-		{
-			pipe(*(fd_here_doc + j));
-			j++;
-		}
-		list = list->next;
-	}
-	ret = malloc((sizeof(int[2])) * (j + 1));
-	if (!ret)
-		return (NULL);
-	ft_memcpy(ret, fd_here_doc, sizeof(int[2]) * (j + 1));
-	return (ret);
-}
-
-int	fill_here_doc(t_cmd *cmd, int *fd[2])
-{
-	t_io	*list;
-
+	ei->infd = STDIN_FILENO;
+	ei->outfd = STDOUT_FILENO;
 	list = cmd->io_list;
-	while (list->next)
-	{
-		if (list->type == TOKEN_HEREDOC)
-		{
-			close(*fd[0]);
-			ft_putstr_fd(list->path, *fd[1]);
-			close(*fd[1]);
-			fd++;
-		}
-	}
-	return (0);
-}
-
-int	apply_here_doc(int fd[2])
-{
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	return (0);
-}
-
-int	prepare_redirs_before_exec(t_cmd *cmd, int *hd_pipe[2])
-{
-	t_io	*list;
-	int		new_fd;
-	int		old_fd;
-
-	list = cmd->io_list;
-	old_fd = STDIN_FILENO;
 	while (list->next)
 	{
 		if (list->type == TOKEN_REDIR_IN)
-			new_fd = open(list->path, O_RDONLY);
+		{
+			if (ei->infd != STDIN_FILENO)
+				close(ei->infd);
+			ei->infd = open(list->path, O_RDONLY);
+		}
 		else if (list->type == TOKEN_REDIR_OUT)
-			new_fd = open(list->path, O_WRONLY | O_TRUNC);
+		{
+			if (ei->outfd != STDOUT_FILENO)
+				close(ei->outfd);
+			ei->outfd = open(list->path, O_WRONLY | O_TRUNC);
+		}
 		else if (list->type == TOKEN_APPEND)
-			new_fd = open(list->path, O_WRONLY | O_TRUNC | O_APPEND);
+		{
+			if (ei->outfd != STDOUT_FILENO)
+				close(ei->outfd);
+			ei->outfd = open(list->path, O_WRONLY | O_TRUNC | O_APPEND);
+		}
 		else if (list->type == TOKEN_HEREDOC)
 		{
-			if (!hd_pipe)
-				return (1);
-			close(*hd_pipe[1]);
-			new_fd = *hd_pipe[0];
-			hd_pipe++;
+			if (ei->infd != STDIN_FILENO)
+				close(ei->infd);
+			pipe(pipefd);
+			ft_putstr_fd(list->path, pipefd[1]);
+			close(pipefd[1]);
+			ei->infd = pipefd[0];
 		}
-		if (new_fd < 0)
-			return(errno);
-		if (list->type == TOKEN_REDIR_OUT || list->type == TOKEN_APPEND)
-			old_fd = STDOUT_FILENO;
-		if (dup2(new_fd, old_fd) < 0)
-			return (errno);
 		list = list->next;
 	}
-	return (0);
+	/*
+	only copies pointer to arguments, however, need to fill envp later and 
+	consider to allocate full copy of args and envp to send to fork, to free_memory_links
+	in child, but don't lost data. 
+	*/
+	ei->argv = cmd->args;	
+	return (ei);
 }
