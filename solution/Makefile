@@ -7,7 +7,6 @@ ifeq ($(MODE),debug)
 	CFLAGS += $(DFLAGS)
 endif
 
-
 READLINE_INC = /opt/homebrew/opt/readline/include
 READLINE_LIB = /opt/homebrew/opt/readline/lib
 
@@ -47,6 +46,7 @@ SRC_FILES = lexer/lexer.c \
 	parser/print_parsed_commands.c \
 	parser/free_cmd.c \
 	utils/init.c \
+	executor/redirection.c \
 	executor/execute.c \
 	executor/cmd_path.c \
 	executor/external_cmd.c
