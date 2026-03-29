@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/27 22:37:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/29 13:36:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ bool	is_built_in_cmd(char *cmd_name)
 {
 	if (!cmd_name)
 		return (false);
-	if (ft_strcmp(cmd_name, "cd") == 0
+	return (ft_strcmp(cmd_name, "cd") == 0
 		|| ft_strcmp(cmd_name, "echo") == 0
 		|| ft_strcmp(cmd_name, "env") == 0
 		|| ft_strcmp(cmd_name, "exit") == 0
 		|| ft_strcmp(cmd_name, "export") == 0
 		|| ft_strcmp(cmd_name, "pwd") == 0
-		|| ft_strcmp(cmd_name, "unset") == 0)
-		return (true);
-	return (false);
+		|| ft_strcmp(cmd_name, "unset") == 0);
 }
 
 /*
@@ -78,4 +76,3 @@ int	execute_built_in_cmd(t_cmd *cmd, t_minishell *sh)
 	}
 	return (-1);
 }
-

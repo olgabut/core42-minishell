@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/27 22:51:53 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/03/29 13:37:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	execute(t_minishell *sh)
 {
 	if (!sh || !sh->cmd_list || !sh->cmd_list->args)
 		return (1);
-
 	if (sh->cmd_list->next)
 		return (execute_pipeline(sh));
 	else
