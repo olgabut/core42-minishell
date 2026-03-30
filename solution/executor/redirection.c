@@ -6,13 +6,40 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/30 16:36:04 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/30 18:36:58 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor/redirection.h"
 #include "minishell.h"
 #include <fcntl.h>
+
+t_exec_info	*exec_info_init(char **argv, t_env *env_list, t_memory_info **head)
+{
+	t_exec_info	*ei;
+
+	ei = malloc(sizeof(t_exec_info));
+	if (!add_new_memory_link_for_control(head, ei))
+		return (NULL);
+	ei->infd = STDIN_FILENO;
+	ei->outfd = STDOUT_FILENO;
+	ei->argv = argv;
+	ei->envp = get_env_array(head, env_list);
+	if (!ei->envp)
+		return (NULL);
+	return (ei);
+}
+
+int	create_pipefd(t_exec_info *ei)
+{
+	int	fd_pipe[2];
+
+	if (pipe(fd_pipe) < 0)
+		return (-1);
+	ei->outfd = fd_pipe[1];
+
+	return (fd_pipe[0]);
+}
 
 static int	check_token(int type, t_exec_info *ei, char *path)
 {
@@ -51,25 +78,17 @@ static int	check_token(int type, t_exec_info *ei, char *path)
 	else
 		return (ei->infd);
 }
-// maybe it is good to add check after each open later
-t_exec_info	*prepare_redirs_before_exec(t_cmd *cmd, t_memory_info **head, t_env *env)
+
+int	prepare_redirs_before_exec(t_cmd *cmd, t_exec_info *ei)
 {
-	t_exec_info	*ei;
 	t_io		*list;
 
-	ei = malloc(sizeof(t_exec_info));
-	if (!add_new_memory_link_for_control(head, ei))
-		return (NULL);
-	ei->infd = STDIN_FILENO;
-	ei->outfd = STDOUT_FILENO;
 	list = cmd->io_list;
 	while (list->next)
 	{
 		if (check_token(list->type, ei, list->path) < 0)
-			return (NULL);
+			return (1);
 		list = list->next;
 	}
-	ei->argv = cmd->args;
-	ei->envp = get_env_array(head, env);
-	return (ei);
+	return (0);
 }
