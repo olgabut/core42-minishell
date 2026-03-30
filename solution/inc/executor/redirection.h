@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 10:39:02 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/28 18:59:44 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/30 16:37:04 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 
 #include "minishell.h"
 #include "executor/execute.h"
-
-/*
- * Creates pipes for any here_doc needed.
- */
-int	**prepare_pipes_for_here_doc(t_cmd *cmd);
-
-/*
-* Writes here_doc's 'line' to the pipe and closes both ends of this pipe. Repeat 
-* for every here_doc token.
-*/
-int	fill_here_doc(t_cmd *cmd, int *fd[2]);
 
 /*
 * Opens file with name `cmd->io_list->filename` with read-only or write-only
@@ -40,7 +29,6 @@ int	fill_here_doc(t_cmd *cmd, int *fd[2]);
 * `int *hd_pipe[2]` is array of "pipes" created by `prepare_pipes_for_here_doc`
 * function for every `TOKEN_HERE_DOC` token in `cmd->io_list`
 */
-// int	prepare_redirs_before_exec(t_cmd *cmd, int *hd_pipe[2]);
-t_exec_info	*prepare_redirs_before_exec(t_cmd *cmd, t_memory_info **head);
+t_exec_info	*prepare_redirs_before_exec(t_cmd *cmd, t_memory_info **head, t_env *env);
 
 #endif
