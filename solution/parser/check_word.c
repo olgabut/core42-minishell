@@ -3,41 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/20 22:10:47 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:41:57 by obutolin         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
-#include "expand_variables.h"
 #include "ft_split_by_chars.h"
 #include "parse_cases.h"
-
-static char	*trim_quotes(char *word, enum e_quote flag)
-{
-	char	*trim_set;
-	char	*trimmed;
-
-	if (flag == SINGLE)
-		trim_set = "'";
-	else if (flag == DOUBLE)
-		trim_set = "\"";
-	else
-		trim_set = NULL;
-	if (trim_set)
-	{
-		trimmed = ft_strtrim(word, trim_set);
-		if (!trimmed)
-			return (NULL);
-	}
-	else
-	{
-		trimmed = ft_strdup(word);
-		if (!trimmed)
-			return (NULL);
-	}
-	return (trimmed);
-}
+#include "expand_variables.h"
+#include "parser_utils.h"
 
 t_list	*apply_ifs(t_minishell *mshell, char *word)
 {
@@ -56,27 +32,94 @@ t_list	*apply_ifs(t_minishell *mshell, char *word)
 	return (fields);
 }
 
+// char	*check_word(t_minishell *mshell, char *word)
+// {
+// 	enum e_quote	flag;
+// 	char			*trimmed;
+// 	char			*expanded;
+
+// 	if (!word)
+// 		return (NULL);
+// 	flag = NONE;
+// 	if (word[0] == SINGLE || word[0] == DOUBLE)
+// 		flag = word[0];
+// 	if (flag)
+// 		trimmed = trim_quotes(word, flag);
+// 	if (flag == SINGLE)
+// 		expanded = trimmed;
+// 	else
+// 	{
+// 		expanded = expand_variables(mshell, trimmed);
+// 		free(trimmed);
+// 		if (!expanded)
+// 			return (NULL);
+// 	}
+// 	return (expanded);
+// }
+
+/*
+	Result will be in <substr> from <str> up to the character quote
+	without first and last quotes
+*/
+static int	substr_in_quotes(char **substr, char *str, int quote)
+{
+	int		i;
+	char	*quotation;
+
+	*substr = NULL;
+	i = 1;
+	while (str[i] != '\0' && str[i] != quote)
+		i++;
+	quotation = ft_calloc(i + 2, sizeof(char));
+	if (!quotation)
+		return (0);
+	ft_strlcpy(quotation, str, i + 2);
+	*substr = quotation;
+	return (i + 1);
+}
+
+/*
+	Create substr_list by string <word>
+	We cut <word> by quots
+	Example <word> = 123"abc"555'dd"d''ccc'8
+	 <substr_list> = 123 -> "abc" -> 555 -> 'dd"d' -> 'ccc' -> 8 -> NULL
+	It needs to understand where expand env and apply ifs
+*/
+static void	cut_word(t_list **substr_list_head, char *word)
+{
+	int		i;
+	char	*substr;
+
+	i = 0;
+	*substr_list_head = NULL;
+	while (word[i] != '\0')
+	{
+		if (word[i] == SINGLE || word[i] == DOUBLE)
+		{
+			beginning_of_str(&substr, word, i);
+			if (substr)
+				ft_lstadd_back(substr_list_head, ft_lstnew(substr));
+			word += i;
+			i = substr_in_quotes(&substr, word, word[0]);
+			if (substr)
+				ft_lstadd_back(substr_list_head, ft_lstnew(substr));
+			word += i;
+			i = -1;
+		}
+		i++;
+	}
+	beginning_of_str(&substr, word, i);
+	if (substr)
+		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
+}
+
 char	*check_word(t_minishell *mshell, char *word)
 {
-	enum e_quote	flag;
-	char			*trimmed;
-	char			*expanded;
+	t_list	*substr_list;
 
-	if (!word)
-		return (NULL);
-	flag = NONE;
-	if (word[0] == SINGLE || word[0] == DOUBLE)
-		flag = word[0];
-	if (flag)
-		trimmed = trim_quotes(word, flag);
-	if (flag == SINGLE)
-		expanded = trimmed;
-	else
-	{
-		expanded = expand_variables(mshell, trimmed);
-		free(trimmed);
-		if (!expanded)
-			return (NULL);
-	}
-	return (expanded);
+	(void)*mshell;
+	cut_word(&substr_list, word);
+	expand(mshell, &substr_list);
+	print_list(substr_list);
+	return (word);
 }

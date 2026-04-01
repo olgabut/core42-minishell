@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_dollar.h                                    :+:      :+:    :+:   */
+/*   parser_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/20 15:55:11 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 00:15:43 by obutolin         ###   ########.fr       */
+/*   Created: 2026/04/01 23:43:49 by obutolin          #+#    #+#             */
+/*   Updated: 2026/04/02 00:42:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HANDLE_DOLLAR_H
-# define HANDLE_DOLLAR_H
+#ifndef PARSER_UTILS_H
+# define PARSER_UTILS_H
 
 # include "minishell.h"
 
-char	*handle_dollar(t_minishell *mshell, char *result, const char *word,
-			size_t *i);
-char	*get_var_name(const char *word);
+void	beginning_of_str(char **substr, char *str, int len);
+char	*combine_str_from_list(t_list **head_list);
+void	print_list(t_list *head);
 
 #endif

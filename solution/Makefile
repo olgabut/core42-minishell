@@ -46,6 +46,7 @@ SRC_FILES = lexer/lexer.c \
 	parser/handle_dollar.c \
 	parser/print_parsed_commands.c \
 	parser/free_cmd.c \
+	parser/parser_utils.c \
 	utils/init.c \
 	executor/execute.c \
 	executor/cmd_path.c \

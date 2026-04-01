@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 15:52:50 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/20 22:10:59 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:27:05 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ static char	*expand_digit(t_minishell *mshell, char *result, const char *word,
 	return (result);
 }
 
-static char	*get_var_name(const char *word, size_t *i)
+/* Return var with '$' (first character)*/
+char	*get_var_name(const char *word)
 {
-	size_t	start;
+	int i;
 
-	start = *i;
-	while (ft_isalnum(word[*i]) || word[*i] == '_')
-		(*i)++;
-	return (ft_substr(word, start, *i - start));
+	i = 1;
+	while (ft_isalnum(word[i]) || word[i] == '_')
+		i++;
+	return (ft_substr(word, 0, i));
 }
 
 static char	*expand_normal_var(t_minishell *mshell, char *result,
@@ -68,7 +69,10 @@ static char	*expand_normal_var(t_minishell *mshell, char *result,
 	char	*key;
 	char	*value;
 
-	key = get_var_name(word, i);
+	(void)*word;
+	(void)*i;
+	// key = get_var_name(word, i);
+	key = NULL;
 	if (!key)
 	{
 		free(result);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cases.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/20 12:52:30 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 00:51:22 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ bool	is_redirection(enum e_token_type type)
 
 void	add_arg(t_minishell *mshell, t_list **word_list, char *arg)
 {
-	t_list	*node;
+	// t_list	*node;
 	char	*str;
 
+	(void)word_list;
 	str = check_word(mshell, arg);
 	if (!str)
 		return ;
-	node = apply_ifs(mshell, str);
-	ft_lstadd_back(word_list, node);
+ 	// node = apply_ifs(mshell, str);
+ 	// ft_lstadd_back(word_list, node);
 }
 
 static void	io_add_back(t_cmd *cmd, t_io *node)
