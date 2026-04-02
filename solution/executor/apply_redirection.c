@@ -6,11 +6,12 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/30 19:53:46 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 18:50:28 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor/apply_redirection.h"
+#include "executor/redirection.h"
 
 int	redirect_simple(t_exec_info *ei)
 {
@@ -53,4 +54,16 @@ int	restore_stdio(t_minishell *sh)
 		if (dup2(sh->stdout_backup, STDIN_FILENO) < 0)
 			return (-1);
 	return (0);
+}
+
+int	redirect_built_in(t_cmd *cmd, t_minishell *sh)
+{
+	t_exec_info *ei;
+
+	if (!cmd->io_list)
+		return (-1);
+	ei = exec_info_init(cmd->args,sh->env_list, &sh->memory_head);
+	if (!ei)
+		return (18);
+	return (redirect_in_parent(sh, ei));
 }

@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/30 20:03:00 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 19:50:46 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor/redirection.h"
+#include "executor/apply_redirection.h"
 #include "minishell.h"
 
 /*
@@ -53,9 +54,16 @@ static int	execute_pipeline(t_minishell *sh)
 
 static int	execute_single_cmd(t_minishell *sh)
 {
+	int exit_code;
+
 	if (sh->cmd_list && sh->cmd_list->args && sh->cmd_list->args[0]
 		&& is_built_in_cmd(sh->cmd_list->args[0]))
-		return (execute_built_in_cmd(sh->cmd_list, sh));
+	{
+		exit_code = execute_built_in_cmd(sh->cmd_list, sh);
+		if (restore_stdio(sh) < 0)
+			exit_code = -1;
+		return (exit_code);
+	}
 	else
 		return (execute_external_cmd(sh->cmd_list, sh));
 }

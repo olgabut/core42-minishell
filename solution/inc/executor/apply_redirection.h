@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:43:04 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/30 19:55:56 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 19:02:39 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,17 @@ int	redirect_in_parent(t_minishell *sh, t_exec_info *ei);
  *	On success, retruns 0. On failure returns -1.
  */
 int	restore_stdio(t_minishell *sh);
+/*
+ *	# DESCRIPTION
+ *	This function is meant to be called, when built-in command should be 
+ *	executed in parent process. It is higher level function to redirect I/O if
+ *	needed and set backup file descriptors inside `sh` structure to be restored
+ *	later. 
+ *
+ *
+ *	# RETURN VALUE
+ *	On success, retruns 0. On failure returns -1.
+ */
+int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
 
 #endif
