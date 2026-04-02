@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:44:08 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:50:46 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 11:20:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ bool	is_env_key_valid(char *key)
 }
 
 /*
-	if env with key exists - return true, value has the found value of interest
-	else return false
+	if env with key exists - return pointer to env_value
+	!!THIS FUNCTION DOES NOT DUPLICATE STRING WITH VALUE IN MEMORY!!
 	The value can be NULL
 */
 char	*get_env_value(t_env *head, char *key)

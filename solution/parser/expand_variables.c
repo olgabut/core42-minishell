@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 00:53:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/02 12:49:48 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,13 @@ void cut_word_before_expand(t_list **substr_list_head, char *word)
 		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
 }
 
-static char	*expand_variables(t_minishell *mshell, char *word)
+static char	*expand_variables(t_minishell *mshell, char *word, bool need_open_ifs)
 {
-	t_list *substr_for_expand;
-	t_list *node;
-	char *substr;
-	char *env_value;
+	t_list	*substr_for_expand;
+	t_list	*node;
+	char	*substr;
+	char	*value;
 
-	(void)*mshell;
 	substr_for_expand = NULL;
 	cut_word_before_expand(&substr_for_expand, word);
 	node = substr_for_expand;
@@ -110,14 +109,13 @@ static char	*expand_variables(t_minishell *mshell, char *word)
 		if (substr && substr[0] == '$')
 		{
 			if (substr[1] == '?')
-				env_value = ft_itoa(mshell->exit_code);
+				value = ft_itoa(mshell->exit_code);
 			else
-				env_value = get_env_value(mshell->env_list, substr + 1);
-			if (env_value)
-			{
-				// free(node->content);
-				node->content = env_value;
-			}
+				value = ft_strdup(get_env_value(mshell->env_list, substr + 1));
+			
+			//ifs on value with flag need_open_ifd == true
+			update_content(&node, value);
+			printf("NEW VAL=%s\n", (char *)(node->content));
 		}
 		node = node->next;
 	}
@@ -133,25 +131,16 @@ void	expand(t_minishell *mshell, t_list **substr_list)
 {
 	t_list	*node;
 	char	*substr;
-	char	*expanded;
 
+	(void)*mshell;
 	if (!substr_list || !*substr_list)
 		return ;
 	node = *substr_list;
 	while (node)
 	{
-		if (node->content)
-			substr = (char *)(node->content);
-		if (substr[0] != SINGLE)
-		{
-			expanded = expand_variables(mshell, substr);
-			printf("expanded = %s\n", expanded);
-			if (expanded)
-			{
-				free(node->content);
-				node->content = expanded;
-			}
-		}
+		substr = (char *)(node->content);
+		if (substr && substr[0] != SINGLE)
+			update_content(&node, expand_variables(mshell, substr, substr[0] != SINGLE));
 		node = node->next;
 	}
 }

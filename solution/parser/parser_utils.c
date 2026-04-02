@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 23:42:24 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/02 00:42:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/02 10:45:11 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,34 @@ char *combine_str_from_list(t_list **head_list)
 	return (str);
 }
 
-void	print_list(t_list *head)
+void	update_content(t_list **node, char *new_content)
+{
+	t_list *node_to_update;
+	char *str_for_free;
+
+	node_to_update = *node;
+	if (!new_content)
+		return ;
+	str_for_free = (char *)(node_to_update->content);
+	node_to_update->content = new_content;
+	free(str_for_free);
+	str_for_free = NULL;
+}
+
+void	print_list(t_list *head, char *message)
 {
 	t_list *node;
-	
+	int i;
+
 	node = head;
+	printf("%s\n", message);
+	i = 1;
 	while (node)
 	{
-		printf("%s\n", (char *)(node->content));
+		printf("%d %s\n", i, (char *)(node->content));
 		node = node->next;
+		i++;
 	}
+	printf("=====================\n");
 }
 

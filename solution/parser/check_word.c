@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 00:41:57 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/02 11:54:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,30 @@
 #include "expand_variables.h"
 #include "parser_utils.h"
 
-t_list	*apply_ifs(t_minishell *mshell, char *word)
+/*
+	Update substr_list
+	We split by env_ifs only if substr without quots
+*/
+void	apply_ifs(t_minishell *mshell, t_list **substr_list)
 {
 	char	*ifs;
 	t_list	*fields;
+	t_list	*node;
+	char	*word;
 
 	ifs = get_env_value(mshell->env_list, "IFS");
 	if (!ifs || !*ifs)
+		ifs = " \t\n";
+	node = *substr_list;
+	while (node)
 	{
-		free(ifs);
-		ifs = ft_strdup(" \t\n");
+		word = (char *)(node->content);
+		if (word && word[0] != SINGLE && word[0] != DOUBLE)
+		{
+			fields = ft_split_by_chars(word, ifs);
+			print_list(fields, "fields after ifs");
+		}
 	}
-	fields = ft_split_by_chars(word, ifs);
-	free(ifs);
-	free(word);
 	return (fields);
 }
 
@@ -119,7 +129,7 @@ char	*check_word(t_minishell *mshell, char *word)
 
 	(void)*mshell;
 	cut_word(&substr_list, word);
+	print_list(substr_list, "substrlist after cut by quotes");
 	expand(mshell, &substr_list);
-	print_list(substr_list);
-	return (word);
+	return (combine_str_from_list(&substr_list));
 }

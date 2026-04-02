@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_word.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 14:49:03 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/22 14:53:15 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/02 11:26:34 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "minishell.h"
 
-t_list	*apply_ifs(t_minishell *mshell, char *word);
+void	apply_ifs(t_minishell *mshell, t_list **substr_list);
 char	*check_word(t_minishell *mshell, char *word);
 
 #endif

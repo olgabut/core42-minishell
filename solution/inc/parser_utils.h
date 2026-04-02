@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 23:43:49 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/02 00:42:39 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/02 10:41:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 void	beginning_of_str(char **substr, char *str, int len);
 char	*combine_str_from_list(t_list **head_list);
-void	print_list(t_list *head);
+void	print_list(t_list *head, char *message);
+void	update_content(t_list **node, char *new_content);
 
 #endif
