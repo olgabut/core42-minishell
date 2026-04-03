@@ -6,12 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 12:49:48 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/03 16:49:53 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand_variables.h"
-#include "handle_dollar.h"
 #include "parse_cases.h"
 #include "parser_utils.h"
 
@@ -55,6 +54,17 @@
 // 	return (result);
 // }
 
+/* Return var with '$' (first character)*/
+static char	*get_var_name(const char *word)
+{
+	int i;
+
+	i = 1;
+	while (ft_isalnum(word[i]) || word[i] == '_')
+		i++;
+	return (ft_substr(word, 0, i));
+}
+
 void cut_word_before_expand(t_list **substr_list_head, char *word)
 {
 	size_t	i;
@@ -93,7 +103,7 @@ void cut_word_before_expand(t_list **substr_list_head, char *word)
 		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
 }
 
-static char	*expand_variables(t_minishell *mshell, char *word, bool need_open_ifs)
+static char	*expand_variables(t_minishell *mshell, char *word)
 {
 	t_list	*substr_for_expand;
 	t_list	*node;
@@ -112,10 +122,8 @@ static char	*expand_variables(t_minishell *mshell, char *word, bool need_open_if
 				value = ft_itoa(mshell->exit_code);
 			else
 				value = ft_strdup(get_env_value(mshell->env_list, substr + 1));
-			
 			//ifs on value with flag need_open_ifd == true
 			update_content(&node, value);
-			printf("NEW VAL=%s\n", (char *)(node->content));
 		}
 		node = node->next;
 	}
@@ -132,7 +140,6 @@ void	expand(t_minishell *mshell, t_list **substr_list)
 	t_list	*node;
 	char	*substr;
 
-	(void)*mshell;
 	if (!substr_list || !*substr_list)
 		return ;
 	node = *substr_list;
@@ -140,7 +147,7 @@ void	expand(t_minishell *mshell, t_list **substr_list)
 	{
 		substr = (char *)(node->content);
 		if (substr && substr[0] != SINGLE)
-			update_content(&node, expand_variables(mshell, substr, substr[0] != SINGLE));
+			update_content(&node, expand_variables(mshell, substr));
 		node = node->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/01 21:42:14 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/03 16:17:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "print_parsed_commands.h"
 #include "parse.h"
 #include "init.h"
-#include "free_cmd.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,8 +33,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		sh.cmd_list = parser(&sh, token_head);
 		// print_parsed_commands(sh.cmd_list);
-		// if (!execute(&sh))
-		// 	break ;
+		if (!execute(&sh))
+			break ;
 		free_memory_links(&sh.memory_head);
 	}
 	free_env_list(&sh.env_list);

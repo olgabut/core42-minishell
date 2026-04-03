@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cases.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 15:04:19 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/15 21:13:27 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/03 16:42:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 # include "minishell.h"
 # include <stdbool.h>
 
-enum e_quote 
+enum e_quote
 {
-SINGLE = 39,
-DOUBLE = 34,
-NONE,
+	SINGLE = 39,
+	DOUBLE = 34,
+	NONE,
 } ;
 
 bool	is_redirection(enum e_token_type type);
-void	add_arg(t_minishell *mshell, t_list **word_list, char *arg);
+void	add_arg(t_minishell *mshell, t_list **word_list, char *token_word);
 void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token);
 int		add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token);
 

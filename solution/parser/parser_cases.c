@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 00:51:22 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/02 21:34:30 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,15 @@ bool	is_redirection(enum e_token_type type)
 		return (false);
 }
 
-void	add_arg(t_minishell *mshell, t_list **word_list, char *arg)
+void	add_arg(t_minishell *mshell, t_list **word_list, char *token_word)
 {
-	// t_list	*node;
 	char	*str;
 
-	(void)word_list;
-	str = check_word(mshell, arg);
+	str = check_word(mshell, token_word);
 	if (!str)
 		return ;
- 	// node = apply_ifs(mshell, str);
- 	// ft_lstadd_back(word_list, node);
+	add_new_memory_link_for_control(&mshell->memory_head, str);
+	ft_lstadd_back(word_list, ft_lstnew(str));
 }
 
 static void	io_add_back(t_cmd *cmd, t_io *node)
@@ -72,8 +70,10 @@ void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 		return (free(node), ft_lstclear(&word_list, free),
 			perror("Ambigious redirect\n"));
 	node->path = word_list->content;
+	add_new_memory_link_for_control(&mshell->memory_head, node->path);
 	free(word_list);
 	node->next = NULL;
+	add_new_memory_link_for_control(&mshell->memory_head, node);
 	io_add_back(cmd, node);
 }
 

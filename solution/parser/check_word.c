@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 11:54:21 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/03 16:20:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,16 @@
 #include "expand_variables.h"
 #include "parser_utils.h"
 
-/*
-	Update substr_list
-	We split by env_ifs only if substr without quots
-*/
-void	apply_ifs(t_minishell *mshell, t_list **substr_list)
+t_list	*apply_ifs(t_minishell *mshell, char *word)
 {
 	char	*ifs;
 	t_list	*fields;
-	t_list	*node;
-	char	*word;
 
 	ifs = get_env_value(mshell->env_list, "IFS");
 	if (!ifs || !*ifs)
 		ifs = " \t\n";
-	node = *substr_list;
-	while (node)
-	{
-		word = (char *)(node->content);
-		if (word && word[0] != SINGLE && word[0] != DOUBLE)
-		{
-			fields = ft_split_by_chars(word, ifs);
-			print_list(fields, "fields after ifs");
-		}
-	}
+	fields = ft_split_by_chars(word, ifs);
+	free(word);
 	return (fields);
 }
 
@@ -123,13 +109,40 @@ static void	cut_word(t_list **substr_list_head, char *word)
 		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
 }
 
+void    remove_quotes(t_list **substr_list)
+{
+	t_list *node;
+	char *str;
+	char *str_without_quotes;
+	size_t len;
+
+	if (!substr_list || !*substr_list)
+		return ;
+	node = *substr_list;
+	while (node)
+	{
+		str = (char *)(node->content);
+		if (str && (str[0] == SINGLE || str[0] == DOUBLE))
+		{
+			len = ft_strlen(str) - 1;
+			str_without_quotes = ft_calloc(len, sizeof(char *));
+			if (str_without_quotes)
+			{
+				ft_strlcpy(str_without_quotes, str + 1, len);
+				update_content(&node, str_without_quotes);
+			}
+		}
+		node = node->next;
+	}
+}
+
 char	*check_word(t_minishell *mshell, char *word)
 {
 	t_list	*substr_list;
 
 	(void)*mshell;
 	cut_word(&substr_list, word);
-	print_list(substr_list, "substrlist after cut by quotes");
 	expand(mshell, &substr_list);
+	remove_quotes(&substr_list);
 	return (combine_str_from_list(&substr_list));
 }

@@ -6,15 +6,14 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/25 22:05:52 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/02 22:21:55 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parse_cases.h"
-#include "free_cmd.h"
 
-static t_cmd	*init_cmd(void)
+static t_cmd	*init_cmd(t_minishell *mshell)
 {
 	t_cmd	*cmd;
 
@@ -22,6 +21,7 @@ static t_cmd	*init_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->next = NULL;
+	add_new_memory_link_for_control(&mshell->memory_head, cmd);
 	return (cmd);
 }
 
@@ -33,9 +33,7 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 
 	if (!tokens || !tokens->value)
 		return (NULL);
-	head = init_cmd();
-	if (head != NULL)
-		add_new_memory_link_for_control(&mshell->memory_head, head);
+	head = init_cmd(mshell);
 	cmd = head;
 	temp_args = NULL;
 	while (tokens)
@@ -44,7 +42,7 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 		{
 			cmd->args = ft_strvec_from_word_list(temp_args);
 			ft_lstclear(&temp_args, NULL);
-			cmd->next = init_cmd();
+			cmd->next = init_cmd(mshell);
 			cmd = cmd->next;
 		}
 		else if (is_redirection(tokens->type))
@@ -54,7 +52,6 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 			if (add_here_doc(mshell, cmd, &tokens))
 			{
 				ft_lstclear(&temp_args, free);
-				free_cmd(cmd);
 				mshell->cmd_list = NULL;
 				return (NULL);
 			}
@@ -67,6 +64,7 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 	if (temp_args)
 	{
 		cmd->args = ft_strvec_from_word_list(temp_args);
+		add_new_memory_link_for_control(&mshell->memory_head, cmd->args);
 		ft_lstclear(&temp_args, NULL);
 	}
 	return (head);

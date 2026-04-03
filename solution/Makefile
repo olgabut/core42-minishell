@@ -16,7 +16,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 INC_DIR = inc
 BUILD = build
 
-LINKER_FLAGS = -L$(LIBFT_DIR) -L$(READLINE_LIB) -L$(INC_DIR) -lft -lreadline
+	LINKER_FLAGS = -L$(LIBFT_DIR) -L$(READLINE_LIB) -L$(INC_DIR) -lft -lreadline
 PREPROC_FLAGS = -I. -I$(LIBFT_DIR) -I$(READLINE_INC) -I$(INC_DIR)
 
 SRC_FILES_WITH_MAIN = minishell.c $(SRC_FILES)
@@ -43,9 +43,7 @@ SRC_FILES = lexer/lexer.c \
 	parser/parser_cases.c \
 	parser/check_word.c \
 	parser/expand_variables.c \
-	parser/handle_dollar.c \
 	parser/print_parsed_commands.c \
-	parser/free_cmd.c \
 	parser/parser_utils.c \
 	utils/init.c \
 	executor/execute.c \
