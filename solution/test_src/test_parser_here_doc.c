@@ -1,6 +1,8 @@
-#include <criterion/criterion.h>
+#include "criterion/criterion.h"
 #include "minishell.h"
 #include "test_parser_utils.h"
+#include "parse.h"
+#include "init.h"
 
 // Test: Single line heredoc - cat << EOF
 Test(parser_suite_here_doc, single_line_heredoc)
@@ -25,9 +27,8 @@ Test(parser_suite_here_doc, single_line_heredoc)
     cr_assert_str_eq(cmd_list->io_list->path, "hello world\n", "Heredoc content should match");
 
     unsetenv("MOCK_LINES");
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&(ms.env_list));
     free_memory_links(&(ms.memory_head));
 }
 
@@ -54,9 +55,8 @@ Test(parser_suite_here_doc, multi_line_heredoc)
     cr_assert_str_eq(cmd_list->io_list->path, "line 1\nline 2\nline 3\n", "Heredoc should have all lines");
 
     unsetenv("MOCK_LINES");
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&(ms.env_list));
     free_memory_links(&(ms.memory_head));
 }
 
@@ -82,10 +82,9 @@ Test(parser_suite_here_doc, immediate_delimiter)
     cr_assert_str_eq(cmd_list->io_list->path, "", "Heredoc should be empty");
 
     unsetenv("MOCK_LINES");
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
     
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&(ms.env_list));
     free_memory_links(&(ms.memory_head));
 }
 
@@ -112,10 +111,9 @@ Test(parser_suite_here_doc, custom_delimiter)
     cr_assert_str_eq(cmd_list->io_list->path, "some content\n", "Heredoc should have content until CUSTOM");
 
     unsetenv("MOCK_LINES");
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
     
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&(ms.env_list));
     free_memory_links(&(ms.memory_head));
 }
 
@@ -140,10 +138,9 @@ Test(parser_suite_here_doc, heredoc_only_redirection)
     cr_assert_eq(cmd_list->io_list->type, TOKEN_HEREDOC, "IO type should be TOKEN_HEREDOC");
 
     unsetenv("MOCK_LINES");
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
     
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&(ms.env_list));
     free_memory_links(&(ms.memory_head));
 }
 
@@ -176,9 +173,8 @@ Test(parser_suite_here_doc, heredoc_with_pipe)
     cr_assert_str_eq(cmd_list->next->args[1], "-l", "Second arg should be '-l'");
 
     unsetenv("MOCK_LINES");
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
     
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&(ms.env_list));
     free_memory_links(&(ms.memory_head));
 }

@@ -1,9 +1,11 @@
-#include <criterion/criterion.h>
+#include "criterion/criterion.h"
 #include "minishell.h"
 #include "test_parser_utils.h"
+#include "parse.h"
+#include "init.h"
 
 // --- TEST 1: Empty Input ---
-Test(parser_suite, empty_tokens) 
+Test(parser_suite, empty_tokens)
 {
     t_minishell ms;
     char *envp[] = {NULL};
@@ -13,7 +15,7 @@ Test(parser_suite, empty_tokens)
 
     cr_assert_null(cmd_list, "Parser should return NULL for empty token list.");
     free_test_tokens(NULL);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -36,9 +38,8 @@ Test(parser_suite, simple_command)
     cr_assert_null(cmd_list->args[2], "Args array must be NULL terminated");
     cr_assert_null(cmd_list->next, "Next command pointer should be NULL");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -68,9 +69,8 @@ Test(parser_suite, piped_command)
     cr_assert_str_eq(next_cmd->args[1], "-c");
     cr_assert_null(next_cmd->next, "This should be the last command.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -92,9 +92,8 @@ Test(parser_suite, single_argument)
     cr_assert_str_eq(cmd_list->args[1], "hello", "Second arg should be 'hello'");
     cr_assert_null(cmd_list->args[2], "Args array must be NULL terminated");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -114,9 +113,8 @@ Test(parser_suite, no_arguments)
     cr_assert_str_eq(cmd_list->args[0], "pwd", "First arg should be 'pwd'");
     cr_assert_null(cmd_list->args[1], "Args array should have only one element");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -144,9 +142,8 @@ Test(parser_suite, input_redirection)
     cr_assert_eq(cmd_list->io_list->type, TOKEN_REDIR_IN, "IO type should be TOKEN_REDIR_IN");
     cr_assert_str_eq(cmd_list->io_list->path, "file.txt", "IO path should be 'file.txt'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -172,9 +169,8 @@ Test(parser_suite, output_redirection)
     cr_assert_eq(cmd_list->io_list->type, TOKEN_REDIR_OUT, "IO type should be TOKEN_REDIR_OUT");
     cr_assert_str_eq(cmd_list->io_list->path, "out", "IO path should be 'out'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -198,9 +194,8 @@ Test(parser_suite, append_redirection)
     cr_assert_eq(cmd_list->io_list->type, TOKEN_APPEND, "IO type should be TOKEN_APPEND");
     cr_assert_str_eq(cmd_list->io_list->path, "out", "IO path should be 'out'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -230,9 +225,8 @@ Test(parser_suite, multiple_pipes)
     cr_assert_str_eq(cmd_list->next->next->args[0], "c", "Third command should be 'c'");
     cr_assert_null(cmd_list->next->next->next, "Should be the last command.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -261,9 +255,8 @@ Test(parser_suite, multiple_redirections)
     cr_assert_eq(cmd_list->io_list->next->type, TOKEN_REDIR_OUT, "Second IO should be output");
     cr_assert_str_eq(cmd_list->io_list->next->path, "outfile", "Second IO path should be 'outfile'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -293,9 +286,8 @@ Test(parser_suite, redirection_plus_pipe)
     cr_assert_str_eq(cmd_list->next->args[0], "wc", "Second command should be 'wc'");
     cr_assert_str_eq(cmd_list->next->args[1], "-l", "Second arg should be '-l'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -323,9 +315,8 @@ Test(parser_suite, args_pipe_redirect)
     cr_assert_not_null(cmd_list->next->io_list, "Second command should have IO.");
     cr_assert_eq(cmd_list->next->io_list->type, TOKEN_REDIR_OUT, "IO should be output");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -354,9 +345,8 @@ Test(parser_suite, only_redirections)
     cr_assert_eq(cmd_list->io_list->type, TOKEN_REDIR_IN, "First IO should be input");
     cr_assert_not_null(cmd_list->io_list->next, "Second IO should exist.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -379,9 +369,8 @@ Test(parser_suite, pipe_at_end)
     cr_assert_str_eq(cmd_list->args[1], "hello", "Second arg should be 'hello'");
     cr_assert_not_null(cmd_list->next, "Next command should exist (empty after pipe).");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -406,9 +395,8 @@ Test(parser_suite, redirection_after_pipe)
     cr_assert_not_null(cmd_list->next->io_list, "Second command should have IO.");
     cr_assert_eq(cmd_list->next->io_list->type, TOKEN_REDIR_IN, "IO should be input");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -437,9 +425,8 @@ Test(parser_suite, multiple_same_redirects)
     cr_assert_not_null(cmd_list->io_list->next->next, "Third IO should exist.");
     cr_assert_str_eq(cmd_list->io_list->next->next->path, "c", "Third path should be 'c'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -472,9 +459,8 @@ Test(parser_suite, many_arguments)
     cr_assert_str_eq(cmd_list->args[10], "j", "Arg 11 should be 'j'");
     cr_assert_null(cmd_list->args[11], "Args should be NULL terminated");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -510,9 +496,8 @@ Test(parser_suite, complex_cmd_pipe_redirect)
     cr_assert_not_null(cmd_list->next->io_list, "Second command should have IO.");
     cr_assert_str_eq(cmd_list->next->io_list->path, "result");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -535,9 +520,8 @@ Test(parser_suite, single_quotes)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "hello", "Single quotes should be trimmed.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -556,9 +540,8 @@ Test(parser_suite, double_quotes)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "hello", "Double quotes should be trimmed.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -579,9 +562,8 @@ Test(parser_suite, empty_single_quotes)
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
     cr_assert_null(cmd_list->args[1], "Empty single quotes filtered out.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -602,9 +584,8 @@ Test(parser_suite, empty_double_quotes)
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
     cr_assert_null(cmd_list->args[1], "Empty double quotes filtered out.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -625,9 +606,8 @@ Test(parser_suite, multiple_quoted_args)
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
     cr_assert_str_eq(cmd_list->args[1], "hello", "Second arg should be 'hello'");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -650,9 +630,8 @@ Test(parser_suite, simple_variable)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "/home/user", "$HOME should be expanded.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -672,9 +651,8 @@ Test(parser_suite, exit_code_variable)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "42", "$? should be expanded to exit code.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -695,9 +673,8 @@ Test(parser_suite, positional_variables)
     cr_assert_str_eq(cmd_list->args[0], "first", "$1 should be expanded.");
     cr_assert_str_eq(cmd_list->args[1], "second", "$2 should be expanded.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -716,9 +693,8 @@ Test(parser_suite, unset_variable)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_null(cmd_list->args, "Undefined var should result in no args (filtered).");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -743,9 +719,8 @@ Test(parser_suite, multiple_variables)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "123", "Multiple variables should be concatenated.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -768,9 +743,8 @@ Test(parser_suite, single_quoted_variable)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "$VAR", "Single quoted var should NOT be expanded.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -789,9 +763,8 @@ Test(parser_suite, double_quoted_variable)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "value", "Double quoted var should be expanded.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
 
@@ -810,8 +783,7 @@ Test(parser_suite, mixed_content)
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "hello john", "Mixed content should be expanded.");
 
-    free_cmd(cmd_list);
     free_test_tokens(tokens);
-    free_memory_links(&(ms.memory_long));
+    free_env_list(&ms.env_list);
     free_memory_links(&(ms.memory_head));
 }
