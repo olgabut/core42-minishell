@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/30 18:36:58 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/04 12:59:35 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	prepare_redirs_before_exec(t_cmd *cmd, t_exec_info *ei)
 {
 	t_io		*list;
 
+	if (!cmd->io_list)
+		return (-1);
 	list = cmd->io_list;
 	while (list->next)
 	{

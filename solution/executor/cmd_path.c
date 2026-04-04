@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 23:20:56 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:05:40 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "executor/execute.h"
 
 static char	*find_cmd_path_from_env(char *cmd_name, char **env_path_ar)
 {
@@ -52,23 +53,28 @@ static void	path_ar_free(char **env_path_ar)
 		free(env_path_ar);
 }
 
-void	find_cmd_path(t_cmd *cmd, t_minishell *sh)
+void	find_cmd_path(t_exec_info *ei, t_env *env, t_memory_info **head)
 {
 	char	*cmd_name_with_slash;
 	char	*env_path_value;
 	char	**path_ar;
 
-	cmd->path = NULL;
-	cmd_name_with_slash = ft_strchr(cmd->args[0], '/');
+	cmd_name_with_slash = ft_strchr(ei->argv[0], '/');
 	if (cmd_name_with_slash != NULL)
-		cmd->path = ft_strdup(cmd->args[0]);
+	{
+		ei->path = ft_strdup(ei->argv[0]);
+		add_new_memory_link_for_control(head, ei->path);
+	}
 	else
 	{
-		env_path_value = get_env_value(sh->env_list, "PATH");
+		env_path_value = get_env_value(env, "PATH");
 		if (env_path_value == NULL)
 			return ;
 		path_ar = ft_split(env_path_value, ':');
-		cmd->path = find_cmd_path_from_env(cmd->args[0], path_ar);
-		path_ar_free(path_ar);
+		if (path_ar == NULL)
+			return ;
+		ei->path = find_cmd_path_from_env(ei->argv[0], path_ar);
+		if (ei->path)
+			add_new_memory_link_for_control(head, ei->path);
 	}
 }

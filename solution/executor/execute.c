@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/02 19:50:46 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/03 09:18:41 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	execute_pipeline(t_minishell *sh)
 		}
 		if (prepare_redirs_before_exec(cur_cmd, ei) != 0)
 			return (errno);
-		apply_execution(&sh->memory_head, ei, &sh->exit_code);
+		// apply_execution(&sh->memory_head, ei, &sh->exit_code);
 		cur_cmd = cur_cmd->next;
 	}
 	return (0);

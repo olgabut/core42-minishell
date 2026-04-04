@@ -48,6 +48,7 @@ SRC_FILES = print_error/msh_error.c \
 	parser/free_cmd.c \
 	utils/init.c \
 	executor/redirection.c \
+	executor/apply_redirection.c \
 	executor/execute.c \
 	executor/cmd_path.c \
 	executor/external_cmd.c

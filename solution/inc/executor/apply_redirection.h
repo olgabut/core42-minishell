@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:43:04 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 19:02:39 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/03 10:01:40 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,13 @@ int	restore_stdio(t_minishell *sh);
  */
 int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
 
+/*
+ *	# DESCRIPTION
+ *	Closes `ei->outfd` and `ei->infd` if differs from standard I/O
+ *
+ *
+ *	# RETURN VALUE
+ *	On success, retruns 0. On failure returns -1.
+ */
+int close_in_parent(t_exec_info *ei);
 #endif
