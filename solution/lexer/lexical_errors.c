@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:49:52 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/04 22:28:12 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,9 @@ static bool	command_has_unsupported_tokens(t_token *token_head)
 	return (false);
 }
 
-static bool	command_error_wrong_token_sequence(t_token *token_head)
+static bool	command_error_wrong_token_sequence(t_token *token)
 {
-	t_token	*token;
-
-	token = token_head;
-	while (token->next != NULL)
+	while (token && token->next != NULL)
 	{
 		if (token->type == TOKEN_REDIR_IN
 			&& token->next->type != TOKEN_WORD)
@@ -70,6 +67,10 @@ static bool	command_error_wrong_token_sequence(t_token *token_head)
 			&& token->next->type != TOKEN_WORD)
 			return (print_lexical_error(
 					"minishell: syntax error near token `>>`\n", true));
+		if (token->type == TOKEN_PIPE
+			&& token->next->type == TOKEN_PIPE)
+			return (print_lexical_error(
+					"minishell: syntax error near unexpected token `|`\n", true));
 		token = token->next;
 	}
 	return (false);

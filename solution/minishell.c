@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/03 16:17:02 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 22:32:34 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	main(int argc, char **argv, char **envp)
 			printf("ctrl+D\n");
 			break ;
 		}
-		sh.cmd_list = parser(&sh, token_head);
+		if (!parser(&sh, token_head))
+			break;
 		// print_parsed_commands(sh.cmd_list);
 		if (!execute(&sh))
 			break ;

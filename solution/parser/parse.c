@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 14:05:58 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 22:48:42 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,21 @@ static t_cmd	*init_cmd(t_minishell *mshell)
 	return (cmd);
 }
 
-t_cmd	*parser(t_minishell *mshell, t_token *tokens)
+/*
+	Return
+		0 = we need to stop program (malloc errors or ambiguous redirect)
+		1 = OK, continue
+*/
+int	parser(t_minishell *mshell, t_token *tokens)
 {
 	t_cmd	*cmd;
-	t_cmd	*head;
+	t_cmd	*cmd_head;
 	t_list	*temp_args;
 
 	if (!tokens || !tokens->value)
-		return (NULL);
-	head = init_cmd(mshell);
-	cmd = head;
+		return (1);
+	cmd_head = init_cmd(mshell);
+	cmd = cmd_head;
 	temp_args = NULL;
 	while (tokens)
 	{
@@ -54,7 +59,7 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 			{
 				ft_lstclear(&temp_args, free);
 				mshell->cmd_list = NULL;
-				return (NULL);
+				return (1); //NULL
 			}
 		}
 		else
@@ -68,5 +73,6 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 		add_new_memory_link_for_control(&mshell->memory_head, cmd->args);
 		ft_lstclear(&temp_args, NULL);
 	}
-	return (head);
+	mshell->cmd_list = cmd_head;
+	return (1);
 }
