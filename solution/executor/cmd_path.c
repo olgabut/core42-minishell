@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:05:40 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:34:17 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	find_cmd_path(t_exec_info *ei, t_env *env, t_memory_info **head)
 		ei->path = find_cmd_path_from_env(ei->argv[0], path_ar);
 		if (ei->path)
 			add_new_memory_link_for_control(head, ei->path);
+		path_ar_free(path_ar);
 	}
 }

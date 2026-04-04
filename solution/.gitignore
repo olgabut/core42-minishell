@@ -3,6 +3,7 @@ libft/libft.a
 minishell
 .vscode
 tests
+_test*
 build/
 **/*a
 .cache/

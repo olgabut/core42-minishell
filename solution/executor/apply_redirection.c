@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/03 09:59:31 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:50:14 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	restore_stdio(t_minishell *sh)
 		if (dup2(sh->stdin_backup, STDIN_FILENO) < 0)
 			return (-1);
 	if (sh->stdout_backup != STDOUT_FILENO)
-		if (dup2(sh->stdout_backup, STDIN_FILENO) < 0)
+		if (dup2(sh->stdout_backup, STDOUT_FILENO) < 0)
 			return (-1);
 	return (0);
 }
@@ -65,6 +65,7 @@ int	redirect_built_in(t_cmd *cmd, t_minishell *sh)
 	ei = exec_info_init(cmd->args,sh->env_list, &sh->memory_head);
 	if (!ei)
 		return (18);
+	prepare_redirs_before_exec(cmd, ei);
 	return (redirect_in_parent(sh, ei));
 }
 

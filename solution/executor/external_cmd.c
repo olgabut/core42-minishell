@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:06:27 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:22:12 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ static int	execute_cmd_in_child_process(t_exec_info *ei)
 	int	id;
 	int	status;
 
-	redirect_simple(ei);
 	id = fork();
 	if (id == 0)
 	{
+		if (redirect_simple(ei) < 0)
+			exit(errno);
 		if (execve(ei->path, ei->argv, ei->envp) == -1)
 		{
-			msh_error(er->argv[0], NULL);
+			msh_error(ei->argv[0], NULL);
 			if (errno == ENOENT)
 				exit(EXIT_CMD_NOT_FOUND);
 			else if (errno == EACCES)
@@ -68,9 +69,10 @@ int	execute_external_cmd(t_cmd *cmd, t_minishell *sh)
 		return (1);
 	ei = exec_info_init(cmd->args, sh->env_list, &sh->memory_head);
 	if (cmd->io_list)
-		prepare_redirs_before_exec(cmd, ei);
+		if (prepare_redirs_before_exec(cmd, ei) < 0)
+			return (ft_fprintf(STDERR_FILENO, "ms: %s\n", strerror(errno)));
 	find_cmd_path(ei, sh->env_list, &sh->memory_head);
-	if (!cmd->path)
+	if (!ei->path)
 	{
 		msh_error(cmd->args[0], "command not found");
 		sh->exit_code = EXIT_CMD_NOT_FOUND;

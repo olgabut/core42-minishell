@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 12:59:35 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:00:29 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static int	check_token(int type, t_exec_info *ei, char *path)
 	{
 		if (ei->outfd != STDOUT_FILENO)
 			close(ei->outfd);
-		ei->outfd = open(path, O_WRONLY | O_TRUNC);
+		ei->outfd = open(path, O_WRONLY | O_CREAT, 446);
 	}
 	else if (type == TOKEN_APPEND)
 	{
 		if (ei->outfd != STDOUT_FILENO)
 			close(ei->outfd);
-		ei->outfd = open(path, O_WRONLY | O_TRUNC | O_APPEND);
+		ei->outfd = open(path, O_WRONLY | O_CREAT | O_APPEND, 446);
 	}
 	else if (type == TOKEN_HEREDOC)
 	{
@@ -86,10 +86,10 @@ int	prepare_redirs_before_exec(t_cmd *cmd, t_exec_info *ei)
 	if (!cmd->io_list)
 		return (-1);
 	list = cmd->io_list;
-	while (list->next)
+	while (list)
 	{
 		if (check_token(list->type, ei, list->path) < 0)
-			return (1);
+			return (ft_fprintf(STDERR_FILENO, strerror(errno)));
 		list = list->next;
 	}
 	return (0);
