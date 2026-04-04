@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/04 15:36:54 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:29:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	process_export_arg(char *arg, t_env **env, int *exit_code)
 	if (!pars_env_structure(&key, &value, arg))
 	{
 		*exit_code = EXIT_FAILURE;
-		print_cmd_error("export", "malloc error");
+		msh_error("export", "malloc error");
 		return ;
 	}
 	if (!is_env_key_valid(key))
@@ -76,7 +76,7 @@ static void	process_export_arg(char *arg, t_env **env, int *exit_code)
 		if (!update_env(env, key, value, false))
 		{
 			*exit_code = EXIT_FAILURE;
-			print_cmd_error("export", "malloc error");
+			msh_error("export", "malloc error");
 		}
 	}
 	free(key);

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 10:28:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/26 10:55:03 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:29:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 int	built_in_env(char **argv, t_env *env)
 {
 	if (argv[1])
-		return (print_cmd_error("env", "too many arguments"), EXIT_FAILURE);
+		return (msh_error("env", "too many arguments"), EXIT_FAILURE);
 	while (env)
 	{
 		if (env->value)

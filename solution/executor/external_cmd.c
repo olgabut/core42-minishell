@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/27 22:36:51 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:29:18 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	execute_cmd_in_child_process(
 	if (id == 0)
 	{
  		execve(cmd->path, cmd->args, env_array);
-		print_cmd_error(cmd->args[0], NULL);
+		msh_error(cmd->args[0], NULL);
 		exit(EXIT_CMD_NOT_FOUND);
 	}
 	else
@@ -51,7 +51,7 @@ int	execute_external_cmd(t_cmd *cmd, t_minishell *sh)
 	find_cmd_path(cmd, sh);
 	if (cmd->path == NULL)
 	{
-		print_cmd_error(cmd->args[0], "command not found");
+		msh_error(cmd->args[0], "command not found");
 		sh->exit_code = EXIT_CMD_NOT_FOUND;
 		return (1);
 	}

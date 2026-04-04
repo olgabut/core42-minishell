@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 13:44:49 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:48:19 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static void	io_add_back(t_cmd *cmd, t_io *node)
 	last->next = node;
 }
 
-void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
+/*
+	Return 0 - error
+		   1 - ok
+*/
+int	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 {
 	t_io	*node;
 	char	*path;
@@ -63,23 +67,26 @@ void	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 
 	node = malloc(sizeof(t_io));
 	if (!node)
-		return ;
+		return (0);
 	node->type = (*token)->type;
 	*token = (*token)->next;
-	// if (node->type == TOKEN_HEREDOC)
-	// 	handle_here_doc();
-	// else
 	path = (*token)->value;
 	word_list = apply_ifs(mshell, check_word(mshell, path));
 	if (ft_lstsize(word_list) != 1)
-		return (free(node), ft_lstclear(&word_list, free),
-			perror("Ambigious redirect\n"));
+	{
+		printf("path = %s\n", path);
+		msh_error(path, "ambiguous redirect");
+		free(node);
+		ft_lstclear(&word_list, free);
+		return (0);
+	}
 	node->path = word_list->content;
 	add_new_memory_link_for_control(&mshell->memory_head, node->path);
 	free(word_list);
 	node->next = NULL;
 	add_new_memory_link_for_control(&mshell->memory_head, node);
 	io_add_back(cmd, node);
+	return (1);
 }
 
 int	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)

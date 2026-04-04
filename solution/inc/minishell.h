@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/27 22:17:13 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:29:40 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_minishell
 	int					stdout_backup;
 }						t_minishell;
 
+void	msh_error(char *reason, char *message);
 void					signals(void);
 
 int						lexer(t_memory_info **memory_head,
@@ -131,7 +132,6 @@ char	**get_env_array(t_memory_info **memory, t_env *env);
 // built_in
 bool	is_built_in_cmd(char *cmd_name);
 int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
-void	print_cmd_error(char *cmd_name, char *message);
 
 // execute
 int		execute(t_minishell *sh);

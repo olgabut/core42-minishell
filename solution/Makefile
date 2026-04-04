@@ -20,7 +20,8 @@ BUILD = build
 PREPROC_FLAGS = -I. -I$(LIBFT_DIR) -I$(READLINE_INC) -I$(INC_DIR)
 
 SRC_FILES_WITH_MAIN = minishell.c $(SRC_FILES)
-SRC_FILES = lexer/lexer.c \
+SRC_FILES = print_error/msh_error.c \
+	lexer/lexer.c \
 	lexer/line_lexer.c \
 	lexer/token_list_manager.c \
 	lexer/lexical_errors.c \

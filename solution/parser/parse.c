@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 22:48:42 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 23:02:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	parser(t_minishell *mshell, t_token *tokens)
 			cmd = cmd->next;
 		}
 		else if (is_redirection(tokens->type))
-			add_io(mshell, cmd, &tokens);
+		{
+			if (!add_io(mshell, cmd, &tokens))
+				return (0);
+		}
 		else if (tokens->type == TOKEN_HEREDOC)
 		{
 			if (add_here_doc(mshell, cmd, &tokens))
