@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/03 16:49:53 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:40:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,13 @@ static char	*expand_variables(t_minishell *mshell, char *word)
 			if (substr[1] == '?')
 				value = ft_itoa(mshell->exit_code);
 			else
-				value = ft_strdup(get_env_value(mshell->env_list, substr + 1));
+			{
+				value = get_env_value(mshell->env_list, substr + 1);
+				if (value)
+					value = ft_strdup(value);
+				else
+					value = ft_strdup("");
+			}
 			//ifs on value with flag need_open_ifd == true
 			update_content(&node, value);
 		}

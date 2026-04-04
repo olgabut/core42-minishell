@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 21:34:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 13:44:49 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	add_arg(t_minishell *mshell, t_list **word_list, char *token_word)
 	str = check_word(mshell, token_word);
 	if (!str)
 		return ;
+	if (str[0] == '\0')
+	{
+		free(str);
+		return ;
+	}
 	add_new_memory_link_for_control(&mshell->memory_head, str);
 	ft_lstadd_back(word_list, ft_lstnew(str));
 }

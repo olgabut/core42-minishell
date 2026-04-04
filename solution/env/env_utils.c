@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 13:44:08 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/02 11:20:21 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:46:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ char	*get_env_value(t_env *head, char *key)
 {
 	t_env	*env;
 
+	if (!head)
+		return (NULL);
 	env = head;
-	while (env)
+	while (env && env->key)
 	{
 		if (ft_strcmp(env->key, key) == 0)
 			return (env->value);

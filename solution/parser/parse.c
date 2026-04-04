@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/02 22:21:55 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:05:58 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_cmd	*parser(t_minishell *mshell, t_token *tokens)
 		if (tokens->type == TOKEN_PIPE)
 		{
 			cmd->args = ft_strvec_from_word_list(temp_args);
+			add_new_memory_link_for_control(&mshell->memory_head, cmd->args);
 			ft_lstclear(&temp_args, NULL);
 			cmd->next = init_cmd(mshell);
 			cmd = cmd->next;
