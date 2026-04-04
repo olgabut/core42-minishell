@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/26 09:47:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:32:07 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int	change_to_old_directory(t_env **env)
 */
 int	built_in_cd(char **argv, t_env **env)
 {
+	if (!argv || !env)
+		return (EXIT_SUCCESS);
 	if (argv[2])
 		return (print_cmd_error("cd", "too many arguments"), EXIT_FAILURE);
 	if (!argv[1] || ft_strcmp(argv[1], "~") == 0)

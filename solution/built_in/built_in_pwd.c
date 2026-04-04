@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 10:53:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/27 22:17:49 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:19:13 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@
 		(0) - success exit status
 		(1..255) - error exit status
  */
-int	built_in_pwd(void)
+int	built_in_pwd(char **argv)
 {
 	char	*cwd;
 
+	(void)argv;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

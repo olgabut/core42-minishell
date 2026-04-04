@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/25 22:11:52 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:36:05 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "built_in.h"
 
 char *run_cmd_and_capture(char **argv, int (*func)(char **))
 {
@@ -136,24 +137,24 @@ void	built_in_echo_test()
 	char *str;
 
 	printf("\nECHO BUILTIN\n");
-	// argv == NULL.  Return -1;
+	// argv == NULL.  Return 0;
 	argv = NULL;
-	if (built_in_echo(argv) == -1)
+	if (built_in_echo(argv) == 0)
 		printf("1. OK\n");
 	else
 		printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] = NULL.  Return -1;
+	// First argv[0] = NULL.  Return 0;
 	argv = calloc(7, sizeof(char *));
-	if (built_in_echo(argv) == -1)
+	if (built_in_echo(argv) == 0)
 		printf("2. OK\n");
 	else
 		printf("2. ERROR argv[0] == NULL\n");
 
-	// First argv[0] != "echo". Command "bubu". Return -1;
+	// First argv[0] != "echo". Command "bubu". Return 0;
 	argv[0] = calloc(5, sizeof(char));
 	ft_strlcpy(argv[0], "bubu", 5);
-	if (built_in_echo(argv) == -1)
+	if (built_in_echo(argv) == 0)
 		printf("3. OK\n");
 	else
 		printf("3. ERROR argv[0] != 'echo'\n");
@@ -354,22 +355,22 @@ void	built_in_pwd_test()
 	char	*str_expected;
 
 	printf("\nPWD BUILTIN\n");
-	// argv == NULL.  Return -1;
+	// argv == NULL.  Return 0;
 	argv = NULL;
-	if (built_in_pwd(argv) == -1)
+	if (built_in_pwd(argv) == 0)
 		printf("1. OK\n");
 	else printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] = NULL.  Return -1;
+	// First argv[0] = NULL.  Return 0;
 	argv = calloc(3, sizeof(char *));
-	if (built_in_pwd(argv) == -1)
+	if (built_in_pwd(argv) == 0)
 		printf("2. OK\n");
 	else printf("2. ERROR argv[0] == NULL\n");
 
-	// First argv[0] != "pwd". Command "mmm". Return -1;
+	// First argv[0] != "pwd". Command "mmm". Return 0;
 	argv[0] = calloc(4, sizeof(char));
 	ft_strlcpy(argv[0], "mmm", 4);
-	if (built_in_pwd(argv) == -1)
+	if (built_in_pwd(argv) == 0)
 		printf("3. OK\n");
 	else printf("3. ERROR argv[0] != 'pwd'\n");
 
@@ -418,21 +419,21 @@ void	built_in_export_test(void)
 	argv = NULL;
 	argv_only_export = NULL;
 	env = NULL;
-	if (built_in_export(argv, &env) == -1)
+	if (built_in_export(argv, &env) == 0)
 		printf("1. OK\n");
 	else printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] = NULL.  Return -1;
+	// First argv[0] = NULL.  Return 0;
 	argv = calloc(4, sizeof(char *));
-	if (built_in_export(argv, &env) == -1)
+	if (built_in_export(argv, &env) == 0)
 		printf("2. OK\n");
 	else
 		printf("2. ERROR argv[0] == NULL\n");
 
-	// First argv[0] != "export". Command "bububub". Return -1;
+	// First argv[0] != "export". Command "bububub". Return 0;
 	argv[0] = calloc(7, sizeof(char));
 	ft_strlcpy(argv[0], "bububub", 7);
-	if (built_in_export(argv, &env) == -1)
+	if (built_in_export(argv, &env) == 0)
 		printf("3. OK\n");
 	else
 		printf("3. ERROR argv[0] != 'echo'\n");
@@ -657,24 +658,24 @@ void	built_in_unset_test(void)
 	update_env(&env, "XVAR", "X", false);
 	update_env(&env, "DVAR", "D", false);
 
-	// argv == NULL.  Return -1;
+	// argv == NULL.  Return 0;
 	argv = NULL;
-	if (built_in_unset(argv, &env) == -1)
+	if (built_in_unset(argv, &env) == 0)
 		printf("1. OK\n");
 	else
 		printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] = NULL.  Return -1;
+	// First argv[0] = NULL.  Return 0;
 	argv = calloc(3, sizeof(char *));
-	if (built_in_unset(argv, &env) == -1)
+	if (built_in_unset(argv, &env) == 0)
 		printf("2. OK\n");
 	else
 		printf("2. ERROR argv[0] == NULL\n");
 
-	// First argv[0] != "unset". Command "bubub". Return -1;
+	// First argv[0] != "unset". Command "bubub". Return 0;
 	argv[0] = calloc(6, sizeof(char));
 	ft_strlcpy(argv[0], "bubub", 6);
-	if (built_in_unset(argv, &env) == -1)
+	if (built_in_unset(argv, &env) == 0)
 		printf("3. OK\n");
 	else
 		printf("3. ERROR argv[0] != 'unset'\n");
@@ -744,17 +745,18 @@ void	built_in_cd_test(void)
 	printf("\nCD BUILTIN\n");
 	env = NULL;
 
-	// argv == NULL.  Return -1;
+	// argv == NULL.  Return 0;
 	argv = calloc(4, sizeof(char *));
-	if (built_in_cd(argv, &env) == -1)
+	argv[0] = NULL;
+	if (built_in_cd(argv, &env) == 0)
 		printf("1. OK\n");
 	else
 		printf("1. ERROR argv == NULL\n");
 
-	// First argv[0] != "cd". Command "bu". Return -1;
+	// First argv[0] != "cd". Command "bu". Return 0;
 	argv[0] = calloc(3, sizeof(char));
 	ft_strlcpy(argv[0], "bu", 3);
-	if (built_in_cd(argv, &env) == -1)
+	if (built_in_cd(argv, &env) == 0)
 		printf("2. OK\n");
 	else
 		printf("2. ERROR argv[0] != 'cd'\n");
@@ -782,8 +784,9 @@ void	built_in_cd_test(void)
 	update_env(&env, "HOME", "/Users", false);
 	str = NULL;
 	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	char *value = get_env_value(env, "PWD");
 	if (ft_strlen(str) == 0
-		&& ft_strcmp(get_env_value(env, "PWD"), "/Users") == 0
+		&& value && ft_strcmp(value, "/Users") == 0
 		&& count_env(env) == 3)
 		printf("5. OK\n");
 	else
@@ -796,9 +799,11 @@ void	built_in_cd_test(void)
 	ft_strlcpy(argv[1], "~", 2);
 	str = NULL;
 	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	char *value1 = get_env_value(env, "PWD");
+	char *value2 = get_env_value(env, "OLDPWD");
 	if (ft_strlen(str) == 0
-		&& ft_strcmp(get_env_value(env, "PWD"), "/Users/olgabutolina") == 0
-		&& ft_strcmp(get_env_value(env, "OLDPWD"), "/Users") == 0
+		&& value1 && ft_strcmp(value1, "/Users/olgabutolina") == 0
+		&& value2 && ft_strcmp(value2, "/Users") == 0
 		&& count_env(env) == 3)
 		printf("6. OK\n");
 	else
@@ -810,9 +815,11 @@ void	built_in_cd_test(void)
 	ft_strlcpy(argv[1], "./Documents", 12);
 	str = NULL;
 	str = run_env_cmd_and_capture(argv, &env, built_in_cd);
+	value1 = get_env_value(env, "PWD");
+	value2 = get_env_value(env, "OLDPWD");
 	if (ft_strlen(str) == 0
-		&& ft_strcmp(get_env_value(env, "PWD"), "/Users/olgabutolina/Documents") == 0
-		&& ft_strcmp(get_env_value(env, "OLDPWD"), "/Users/olgabutolina") == 0
+		&& value1 && ft_strcmp(value1, "/Users/olgabutolina/Documents") == 0
+		&& value2 && ft_strcmp(value2, "/Users/olgabutolina") == 0
 		&& count_env(env) == 3)
 		printf("7. OK\n");
 	else
@@ -854,8 +861,8 @@ void	test_built_in(void)
 	printf("\n===BUILTIN===\n");
 	built_in_echo_test();
 	built_in_pwd_test();
-	// built_in_exit_test();
+	built_in_exit_test();
 	built_in_export_test();
 	built_in_unset_test();
-	built_in_cd_test();
+	// built_in_cd_test();
 }

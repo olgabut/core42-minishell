@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 10:51:59 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/26 10:08:16 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:14:16 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	built_in_echo(char **argv)
 	bool	printed_first_word;
 	int		i;
 
+	if (!argv)
+		return (EXIT_SUCCESS);
 	i = 1;
 	flag = true;
 	n_flag = false;

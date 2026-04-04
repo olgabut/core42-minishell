@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/29 13:36:52 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:27:51 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execute_built_in_cmd(t_cmd *cmd, t_minishell *sh)
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (sh->exit_code = built_in_cd(cmd->args, &sh->env_list), 1);
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		return (sh->exit_code = built_in_pwd(), 1);
+		return (sh->exit_code = built_in_pwd(cmd->args), 1);
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 		return (sh->exit_code = built_in_export(cmd->args, &sh->env_list), 1);
 	if (ft_strcmp(cmd->args[0], "unset") == 0)

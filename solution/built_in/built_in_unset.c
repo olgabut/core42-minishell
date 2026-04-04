@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:37:58 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/26 10:23:32 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 14:30:40 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	built_in_unset(char **argv, t_env **env)
 	int	i;
 
 	i = 1;
-	while (argv[i])
+	while (argv && argv[i])
 	{
 		remove_env_node(env, argv[i]);
 		i++;

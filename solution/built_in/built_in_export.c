@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:46:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/26 10:22:24 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:36:54 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ int	built_in_export(char **argv, t_env **env)
 	int	i;
 	int	exit_code;
 
-	if (!argv[1])
+	if (!env)
+		return (EXIT_SUCCESS);
+	if (!argv || !argv[1])
 		return (print_env_export_format(*env));
 	i = 1;
 	exit_code = EXIT_SUCCESS;
