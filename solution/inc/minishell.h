@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/04 23:29:40 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/05 21:09:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
+# define EXIT_PERMISSION_DENIED 126
 # define EXIT_CMD_NOT_FOUND 127
 # define EXIT_CTRL_C 130
 # define EXIT_INVALID_ARG 255

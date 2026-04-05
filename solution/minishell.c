@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/04 22:32:34 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/05 23:02:11 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_env			*env_list;
 	t_token			*token_head;
 	t_minishell		sh;
 
 	(void)argc;
 	(void)**argv;
-	init_shell(&sh, envp);
+	init_env(&env_list, envp);
+	sh.exit_code = 0;
 	while (1)
 	{
+		init_shell(&sh, &env_list);
 		token_head = NULL;
 		if (!lexer(&sh.memory_head, &token_head))
 		{

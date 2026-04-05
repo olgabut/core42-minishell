@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 19:33:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/27 22:16:53 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/05 19:45:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**get_env_array(t_memory_info **memory, t_env *env)
 		tmp = ft_straddchar(env->key, '=');
 		env_array[i] = ft_strjoin(tmp, env->value);
 		add_new_memory_link_for_control(memory, env_array[i]);
-		free(tmp);
 		env = env->next;
 		i++;
 	}

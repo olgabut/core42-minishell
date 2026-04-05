@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:37:58 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/04 14:30:40 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/05 23:14:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,25 @@
  */
 int	built_in_unset(char **argv, t_env **env)
 {
-	int	i;
+	int		i;
+	char	*error;
+	int		exit_code;
 
 	i = 1;
+	exit_code = EXIT_SUCCESS;
 	while (argv && argv[i])
 	{
-		remove_env_node(env, argv[i]);
+		if (is_env_key_valid(argv[i]))
+			remove_env_node(env, argv[i]);
+		else
+		{
+			error = ft_strjoin("unset: `", argv[i]);
+			error = ft_strjoin_free(error, "`");
+			msh_error(error, "not a valid identifier");
+			free(error);
+			exit_code = EXIT_FAILURE;
+		}
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (exit_code);
 }
