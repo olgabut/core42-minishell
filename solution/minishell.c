@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 23:02:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 00:06:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		init_shell(&sh, &env_list);
 		token_head = NULL;
-		if (!lexer(&sh.memory_head, &token_head))
+		if (!lexer(&sh, &token_head))
 		{
 			printf("ctrl+D\n");
 			break ;

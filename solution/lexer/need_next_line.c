@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 10:43:47 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:48:40 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/06 00:11:01 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
 static bool	need_wait_for_closing_quote(t_token *token_head)
 {

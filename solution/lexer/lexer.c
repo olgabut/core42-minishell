@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:41:39 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/06 00:04:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
 /*	Function add_new_line rewrites
 	line = line + '\n' + new_line
@@ -58,10 +59,11 @@ static int	wait_next_line(t_memory_info **memory_head, t_token **token_head,
 	return (1);
 }
 
-static int	wrong_command(t_memory_info **memory_head, t_token **token_head)
+static int	wrong_command(t_minishell *sh, t_token **token_head)
 {
-	free_memory_links(memory_head);
+	free_memory_links(&sh->memory_head);
 	*token_head = NULL;
+	sh->exit_code = EXIT_SYNTAX_ERROR;
 	return (1);
 }
 
@@ -70,23 +72,23 @@ static int	wrong_command(t_memory_info **memory_head, t_token **token_head)
 		0 = we need to stop program (readline == NULL or malloc errors)
 		1 = OK, continue
 */
-int	lexer(t_memory_info **memory_head, t_token **token_head)
+int	lexer(t_minishell *sh, t_token **token_head)
 {
 	char	*line;
 
 	line = NULL;
 	line = readline("Minishell> ");
-	if (!line || !add_new_memory_link_for_control(memory_head, line))
+	if (!line || !add_new_memory_link_for_control(&sh->memory_head, line))
 		return (0);
 	if (line[0] == '\0'
-		|| !line_lexer(memory_head, token_head, line))
+		|| !line_lexer(&sh->memory_head, token_head, line))
 		return (1);
 	if (command_with_error(*token_head))
-		return (wrong_command(memory_head, token_head));
-	if (!wait_next_line(memory_head, token_head, &line))
+		return (wrong_command(sh, token_head));
+	if (!wait_next_line(&sh->memory_head, token_head, &line))
 		return (0);
 	if (command_with_error(*token_head))
-		return (wrong_command(memory_head, token_head));
+		return (wrong_command(sh, token_head));
 	add_history(line);
 	return (1);
 }

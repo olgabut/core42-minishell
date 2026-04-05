@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:13:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 21:43:19 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/05 23:50:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
 /*
 Search for double special characters (<<, >>, &&, ||)

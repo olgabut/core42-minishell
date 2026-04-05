@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 21:09:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 00:01:26 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define EXIT_CMD_NOT_FOUND 127
 # define EXIT_CTRL_C 130
 # define EXIT_INVALID_ARG 255
+# define EXIT_SYNTAX_ERROR 258
 
 /*
 	0 word = TOKEN_WORD
@@ -103,18 +104,7 @@ typedef struct s_minishell
 void	msh_error(char *reason, char *message);
 void					signals(void);
 
-int						lexer(t_memory_info **memory_head,
-							t_token **token_head);
-int						line_lexer(t_memory_info **memory_head,
-							t_token **token_head, char *line);
-int						create_token(t_token **token, enum e_token_type type,
-							char *value);
-void					add_new_token(t_token **head, t_token *new_token);
-void					free_token_list(t_token *head);
-t_token					*get_last_token(t_token *head);
-void					print_token_list(t_token *head);
-bool					command_with_error(t_token *token_head);
-bool					need_next_line(t_token *token_head);
+int		lexer(t_minishell *sh, t_token **token_head);
 
 // env
 void					free_env_node(t_env **env);
