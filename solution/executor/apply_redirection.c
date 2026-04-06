@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 14:50:14 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:59:38 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int	redirect_built_in(t_cmd *cmd, t_minishell *sh)
 int close_in_parent(t_exec_info *ei) 
 {
 	if (ei->infd != STDIN_FILENO)
-		if (close(ei->infd < -1))
+		if (close(ei->infd) < -1)
 			return (-1);
 	if (ei->outfd != STDOUT_FILENO)
-		if (close(ei->outfd < -1))
+		if (close(ei->outfd) < -1)
 			return (-1);
 	return (0);
 
