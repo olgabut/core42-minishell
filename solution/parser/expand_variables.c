@@ -6,58 +6,16 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 15:40:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:44:26 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expand_variables.h"
-#include "parse_cases.h"
-#include "parser_utils.h"
-
-// static char	*process_literal(char *result, const char *word, size_t *i)
-// {
-// 	char	*tmp;
-
-// 	tmp = ft_straddchar(result, word[*i]);
-// 	if (!tmp)
-// 		return (NULL);
-// 	(*i)++;
-// 	return (tmp);
-// }
-
-// char	*expand_variables(t_minishell *mshell, const char *word)
-// {
-// 	char	*result;
-// 	size_t	i;
-// 	char	*tmp;
-
-// 	result = ft_strdup("");
-// 	if (!result)
-// 		return (NULL);
-// 	i = 0;
-// 	while (word[i])
-// 	{
-// 		if (word[i] == '$')
-// 			tmp = handle_dollar(mshell, result, word, &i);
-// 		else
-// 		{
-// 			tmp = process_literal(result, word, &i);
-// 			free(result);
-// 		}
-// 		if (!tmp)
-// 		{
-// 			free(result);
-// 			return (NULL);
-// 		}
-// 		result = tmp;
-// 	}
-// 	return (result);
-// }
+#include "parser.h"
 
 /* Return var with '$' (first character)*/
 static char	*get_var_name(const char *word)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (ft_isalnum(word[i]) || word[i] == '_')
@@ -65,7 +23,7 @@ static char	*get_var_name(const char *word)
 	return (ft_substr(word, 0, i));
 }
 
-void cut_word_before_expand(t_list **substr_list_head, char *word)
+void	cut_word_before_expand(t_list **substr_list_head, char *word)
 {
 	size_t	i;
 	char	*substr;
@@ -103,6 +61,17 @@ void cut_word_before_expand(t_list **substr_list_head, char *word)
 		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
 }
 
+static char	*get_value_from_env(t_env *env_list, char *key)
+{
+	char	*value;
+
+	value = get_env_value(env_list, key);
+	if (value)
+		return (ft_strdup(value));
+	else
+		return (ft_strdup(""));
+}
+
 static char	*expand_variables(t_minishell *mshell, char *word)
 {
 	t_list	*substr_for_expand;
@@ -121,13 +90,7 @@ static char	*expand_variables(t_minishell *mshell, char *word)
 			if (substr[1] == '?')
 				value = ft_itoa(mshell->exit_code);
 			else
-			{
-				value = get_env_value(mshell->env_list, substr + 1);
-				if (value)
-					value = ft_strdup(value);
-				else
-					value = ft_strdup("");
-			}
+				value = get_value_from_env(mshell->env_list, substr + 1);
 			//ifs on value with flag need_open_ifd == true
 			update_content(&node, value);
 		}

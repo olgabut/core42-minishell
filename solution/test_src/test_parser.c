@@ -11,7 +11,7 @@ Test(parser_suite, empty_tokens)
     char *envp[] = {NULL};
     init_shell(&ms, envp);
 
-    t_cmd *cmd_list = parser(&ms, NULL);
+    t_cmd *cmd_list = parse(&ms, NULL);
 
     cr_assert_null(cmd_list, "Parser should return NULL for empty token list.");
     free_test_tokens(NULL);
@@ -30,7 +30,7 @@ Test(parser_suite, simple_command)
     tokens = add_token(tokens, TOKEN_WORD, "ls");    
     tokens = add_token(tokens, TOKEN_WORD, "-l");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command list should not be NULL.");
     cr_assert_str_eq(cmd_list->args[0], "ls", "First arg should be 'ls'");
@@ -57,7 +57,7 @@ Test(parser_suite, piped_command)
     tokens = add_token(tokens, TOKEN_WORD, "wc");
     tokens = add_token(tokens, TOKEN_WORD, "-c");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "First command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo");
@@ -85,7 +85,7 @@ Test(parser_suite, single_argument)
     tokens = add_token(tokens, TOKEN_WORD, "echo");
     tokens = add_token(tokens, TOKEN_WORD, "hello");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command list should not be NULL.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -107,7 +107,7 @@ Test(parser_suite, no_arguments)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "pwd");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "pwd", "First arg should be 'pwd'");
@@ -134,7 +134,7 @@ Test(parser_suite, input_redirection)
     tokens = add_token(tokens, TOKEN_REDIR_IN, "<");
     tokens = add_token(tokens, TOKEN_WORD, "file.txt");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "cat", "First arg should be 'cat'");
@@ -160,7 +160,7 @@ Test(parser_suite, output_redirection)
     tokens = add_token(tokens, TOKEN_REDIR_OUT, ">");
     tokens = add_token(tokens, TOKEN_WORD, "out");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -187,7 +187,7 @@ Test(parser_suite, append_redirection)
     tokens = add_token(tokens, TOKEN_APPEND, ">>");
     tokens = add_token(tokens, TOKEN_WORD, "out");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_not_null(cmd_list->io_list, "IO list should exist.");
@@ -213,7 +213,7 @@ Test(parser_suite, multiple_pipes)
     tokens = add_token(tokens, TOKEN_PIPE, "|");
     tokens = add_token(tokens, TOKEN_WORD, "c");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "First command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "a", "First command should be 'a'");
@@ -244,7 +244,7 @@ Test(parser_suite, multiple_redirections)
     tokens = add_token(tokens, TOKEN_REDIR_OUT, ">");
     tokens = add_token(tokens, TOKEN_WORD, "outfile");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_not_null(cmd_list->io_list, "IO list should exist.");
@@ -275,7 +275,7 @@ Test(parser_suite, redirection_plus_pipe)
     tokens = add_token(tokens, TOKEN_WORD, "wc");
     tokens = add_token(tokens, TOKEN_WORD, "-l");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "First command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "cat", "First command should be 'cat'");
@@ -308,7 +308,7 @@ Test(parser_suite, args_pipe_redirect)
     tokens = add_token(tokens, TOKEN_REDIR_OUT, ">");
     tokens = add_token(tokens, TOKEN_WORD, "result");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list->next, "Second command should exist.");
     cr_assert_str_eq(cmd_list->next->args[0], "wc", "Second command should be 'wc'");
@@ -337,7 +337,7 @@ Test(parser_suite, only_redirections)
     tokens = add_token(tokens, TOKEN_REDIR_OUT, ">");
     tokens = add_token(tokens, TOKEN_WORD, "outfile");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_null(cmd_list->args, "Args should be NULL");
@@ -362,7 +362,7 @@ Test(parser_suite, pipe_at_end)
     tokens = add_token(tokens, TOKEN_WORD, "hello");
     tokens = add_token(tokens, TOKEN_PIPE, "|");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "First command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -388,7 +388,7 @@ Test(parser_suite, redirection_after_pipe)
     tokens = add_token(tokens, TOKEN_REDIR_IN, "<");
     tokens = add_token(tokens, TOKEN_WORD, "file");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list->next, "Second command should exist.");
     cr_assert_str_eq(cmd_list->next->args[0], "cmd2", "Second command should be 'cmd2'");
@@ -416,7 +416,7 @@ Test(parser_suite, multiple_same_redirects)
     tokens = add_token(tokens, TOKEN_REDIR_OUT, ">");
     tokens = add_token(tokens, TOKEN_WORD, "c");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list->io_list, "IO list should exist.");
     cr_assert_str_eq(cmd_list->io_list->path, "a", "First path should be 'a'");
@@ -450,7 +450,7 @@ Test(parser_suite, many_arguments)
     tokens = add_token(tokens, TOKEN_WORD, "i");
     tokens = add_token(tokens, TOKEN_WORD, "j");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -482,7 +482,7 @@ Test(parser_suite, complex_cmd_pipe_redirect)
     tokens = add_token(tokens, TOKEN_REDIR_OUT, ">");
     tokens = add_token(tokens, TOKEN_WORD, "result");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "First command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo");
@@ -515,7 +515,7 @@ Test(parser_suite, single_quotes)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "'hello'");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "hello", "Single quotes should be trimmed.");
@@ -535,7 +535,7 @@ Test(parser_suite, double_quotes)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "\"hello\"");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "hello", "Double quotes should be trimmed.");
@@ -556,7 +556,7 @@ Test(parser_suite, empty_single_quotes)
     tokens = add_token(tokens, TOKEN_WORD, "echo");
     tokens = add_token(tokens, TOKEN_WORD, "''");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -578,7 +578,7 @@ Test(parser_suite, empty_double_quotes)
     tokens = add_token(tokens, TOKEN_WORD, "echo");
     tokens = add_token(tokens, TOKEN_WORD, "\"\"");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -600,7 +600,7 @@ Test(parser_suite, multiple_quoted_args)
     tokens = add_token(tokens, TOKEN_WORD, "'echo'");
     tokens = add_token(tokens, TOKEN_WORD, "'hello'");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "echo", "First arg should be 'echo'");
@@ -625,7 +625,7 @@ Test(parser_suite, simple_variable)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "$HOME");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "/home/user", "$HOME should be expanded.");
@@ -646,7 +646,7 @@ Test(parser_suite, exit_code_variable)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "$?");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "42", "$? should be expanded to exit code.");
@@ -667,7 +667,7 @@ Test(parser_suite, positional_variables)
     tokens = add_token(tokens, TOKEN_WORD, "$1");
     tokens = add_token(tokens, TOKEN_WORD, "$2");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "first", "$1 should be expanded.");
@@ -688,7 +688,7 @@ Test(parser_suite, unset_variable)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "$UNDEFINED");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_null(cmd_list->args, "Undefined var should result in no args (filtered).");
@@ -714,7 +714,7 @@ Test(parser_suite, multiple_variables)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "$A$B$C");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "123", "Multiple variables should be concatenated.");
@@ -738,7 +738,7 @@ Test(parser_suite, single_quoted_variable)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "'$VAR'");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "$VAR", "Single quoted var should NOT be expanded.");
@@ -758,7 +758,7 @@ Test(parser_suite, double_quoted_variable)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "\"$VAR\"");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "value", "Double quoted var should be expanded.");
@@ -778,7 +778,7 @@ Test(parser_suite, mixed_content)
     t_token *tokens = NULL;
     tokens = add_token(tokens, TOKEN_WORD, "\"hello $USER\"");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "hello john", "Mixed content should be expanded.");

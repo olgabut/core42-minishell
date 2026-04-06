@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 23:42:24 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/02 10:45:11 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:24:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	beginning_of_str(char **substr, char *str, int len)
 	ft_strlcpy(*substr, str, len + 1);
 }
 
-char *combine_str_from_list(t_list **head_list)
+char	*combine_str_from_list(t_list **head_list)
 {
-	char *str;
-	t_list *node;
-	t_list *tmp_node;
+	char	*str;
+	t_list	*node;
+	t_list	*tmp_node;
 
 	if (!head_list)
 		return (NULL);
@@ -37,7 +37,6 @@ char *combine_str_from_list(t_list **head_list)
 	node = *head_list;
 	while (node)
 	{
-		// printf("list = %s\n", (char *)(node->content));
 		str = ft_strjoin_free(str, node->content);
 		tmp_node = node;
 		node = node->next;
@@ -49,8 +48,8 @@ char *combine_str_from_list(t_list **head_list)
 
 void	update_content(t_list **node, char *new_content)
 {
-	t_list *node_to_update;
-	char *str_for_free;
+	t_list	*node_to_update;
+	char	*str_for_free;
 
 	node_to_update = *node;
 	if (!new_content)
@@ -63,8 +62,8 @@ void	update_content(t_list **node, char *new_content)
 
 void	print_list(t_list *head, char *message)
 {
-	t_list *node;
-	int i;
+	t_list	*node;
+	int		i;
 
 	node = head;
 	printf("%s\n", message);
@@ -77,4 +76,3 @@ void	print_list(t_list *head, char *message)
 	}
 	printf("=====================\n");
 }
-

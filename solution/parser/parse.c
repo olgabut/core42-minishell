@@ -6,12 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 23:02:37 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:49:44 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parse_cases.h"
+#include "parser.h"
 
 static t_cmd	*init_cmd(t_minishell *mshell)
 {
@@ -30,7 +30,7 @@ static t_cmd	*init_cmd(t_minishell *mshell)
 		0 = we need to stop program (malloc errors or ambiguous redirect)
 		1 = OK, continue
 */
-int	parser(t_minishell *mshell, t_token *tokens)
+int	parse(t_minishell *mshell, t_token *tokens)
 {
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
@@ -62,7 +62,7 @@ int	parser(t_minishell *mshell, t_token *tokens)
 			{
 				ft_lstclear(&temp_args, free);
 				mshell->cmd_list = NULL;
-				return (1); //NULL
+				return (1);// NULL
 			}
 		}
 		else

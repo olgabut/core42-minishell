@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/20 21:37:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/05 18:34:20 by obutolin         ###   ########.fr       */
+/*   Created: 2026/04/06 11:05:12 by obutolin          #+#    #+#             */
+/*   Updated: 2026/04/06 11:10:36 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#ifndef ENV_H
+# define ENV_H
 
 # include "minishell.h"
 
-void	init_shell(t_minishell *sh, t_env **env_list);
+void	free_env_node(t_env **env);
+int		count_env(t_env *env);
+void	print_env_list(t_env *head);
 
 #endif

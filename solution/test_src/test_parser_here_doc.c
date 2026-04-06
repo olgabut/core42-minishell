@@ -18,7 +18,7 @@ Test(parser_suite_here_doc, single_line_heredoc)
     tokens = add_token(tokens, TOKEN_HEREDOC, "<<");
     tokens = add_token(tokens, TOKEN_WORD, "EOF");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "cat", "First arg should be 'cat'");
@@ -46,7 +46,7 @@ Test(parser_suite_here_doc, multi_line_heredoc)
     tokens = add_token(tokens, TOKEN_HEREDOC, "<<");
     tokens = add_token(tokens, TOKEN_WORD, "EOF");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "cat", "First arg should be 'cat'");
@@ -74,7 +74,7 @@ Test(parser_suite_here_doc, immediate_delimiter)
     tokens = add_token(tokens, TOKEN_HEREDOC, "<<");
     tokens = add_token(tokens, TOKEN_WORD, "EOF");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_not_null(cmd_list->io_list, "IO list should exist.");
@@ -102,7 +102,7 @@ Test(parser_suite_here_doc, custom_delimiter)
     tokens = add_token(tokens, TOKEN_HEREDOC, "<<");
     tokens = add_token(tokens, TOKEN_WORD, "CUSTOM");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "wc", "First arg should be 'wc'");
@@ -130,7 +130,7 @@ Test(parser_suite_here_doc, heredoc_only_redirection)
     tokens = add_token(tokens, TOKEN_HEREDOC, "<<");
     tokens = add_token(tokens, TOKEN_WORD, "EOF");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "Command should exist.");
     cr_assert_null(cmd_list->args, "Args should be NULL");
@@ -161,7 +161,7 @@ Test(parser_suite_here_doc, heredoc_with_pipe)
     tokens = add_token(tokens, TOKEN_WORD, "wc");
     tokens = add_token(tokens, TOKEN_WORD, "-l");
 
-    t_cmd *cmd_list = parser(&ms, tokens);
+    t_cmd *cmd_list = parse(&ms, tokens);
 
     cr_assert_not_null(cmd_list, "First command should exist.");
     cr_assert_str_eq(cmd_list->args[0], "cat", "First command should be 'cat'");

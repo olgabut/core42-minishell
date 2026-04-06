@@ -46,7 +46,6 @@ SRC_FILES = print_error/msh_error.c \
 	parser/expand_variables.c \
 	parser/print_parsed_commands.c \
 	parser/parser_utils.c \
-	utils/init.c \
 	executor/execute.c \
 	executor/cmd_path.c \
 	executor/external_cmd.c

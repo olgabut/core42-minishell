@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:00:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 00:49:08 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:20:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static bool	command_has_unsupported_tokens(t_token *token_head)
 			|| token->type == TOKEN_RPAREN
 			|| token->type == TOKEN_SEMICOLON
 			|| token->type == TOKEN_AMPERSAND)
-			{
-				msh_error(NULL, "the command contains unsupported characters");
-				return (true);
-			}
+		{
+			msh_error(NULL, "the command contains unsupported characters");
+			return (true);
+		}
 		token = token->next;
 	}
 	return (false);
@@ -68,34 +68,34 @@ char	*get_token_by_type(enum e_token_type type)
 	return (NULL);
 }
 
-static bool	command_error_wrong_token_sequence(t_token *token)
+static bool	command_error_wrong_token_sequence(t_token *tkn)
 {
 	char	*message;
 
-	while (token && token->next != NULL)
+	while (tkn && tkn->next != NULL)
 	{
-		if ((token->type == TOKEN_REDIR_IN && token->next->type != TOKEN_WORD)
-			|| (token->type == TOKEN_REDIR_OUT && token->next->type != TOKEN_WORD)
-			|| (token->type == TOKEN_HEREDOC && token->next->type != TOKEN_WORD)
-			|| (token->type == TOKEN_APPEND && token->next->type != TOKEN_WORD)
-			|| (token->type == TOKEN_PIPE && token->next->type == TOKEN_PIPE))
+		if ((tkn->type == TOKEN_REDIR_IN && tkn->next->type != TOKEN_WORD)
+			|| (tkn->type == TOKEN_REDIR_OUT && tkn->next->type != TOKEN_WORD)
+			|| (tkn->type == TOKEN_HEREDOC && tkn->next->type != TOKEN_WORD)
+			|| (tkn->type == TOKEN_APPEND && tkn->next->type != TOKEN_WORD)
+			|| (tkn->type == TOKEN_PIPE && tkn->next->type == TOKEN_PIPE))
 		{
 			message = ft_strjoin("syntax error near unexpected token `",
-				get_token_by_type(token->next->type));
+					get_token_by_type(tkn->next->type));
 			message = ft_strjoin_free(message, "`");
 			msh_error(NULL, message);
 			free(message);
 			return (true);
 		}
-		token = token->next;
+		tkn = tkn->next;
 	}
 	return (false);
 }
 
 /*
 	Return
-	true- The command has a error
-	false- The command is ok, without errors
+	true  - The command has a error
+	false - The command is ok, without errors
 */
 bool	command_with_error(t_token *token_head)
 {
@@ -106,7 +106,10 @@ bool	command_with_error(t_token *token_head)
 	if (command_has_unsupported_tokens(token_head))
 		return (true);
 	if (token_head->type == TOKEN_PIPE)
-		return (msh_error(NULL, "syntax error near unexpected token `|`"), true);
+	{
+		msh_error(NULL, "syntax error near unexpected token `|`");
+		return (true);
+	}
 	if (command_error_wrong_token_sequence(token_head))
 		return (true);
 	last_token = get_last_token(token_head);
@@ -114,6 +117,9 @@ bool	command_with_error(t_token *token_head)
 		|| last_token->type == TOKEN_REDIR_OUT
 		|| last_token->type == TOKEN_HEREDOC
 		|| last_token->type == TOKEN_APPEND)
-		return (msh_error(NULL, "syntax error near unexpected token `newline`"), true);
+	{
+		msh_error(NULL, "syntax error near unexpected token `newline`");
+		return (true);
+	}
 	return (false);
 }

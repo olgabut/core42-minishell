@@ -6,14 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/03 16:20:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:25:33 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_split_by_chars.h"
-#include "parse_cases.h"
-#include "expand_variables.h"
-#include "parser_utils.h"
+#include "parser.h"
 
 t_list	*apply_ifs(t_minishell *mshell, char *word)
 {
@@ -109,12 +107,12 @@ static void	cut_word(t_list **substr_list_head, char *word)
 		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
 }
 
-void    remove_quotes(t_list **substr_list)
+void	remove_quotes(t_list **substr_list)
 {
-	t_list *node;
-	char *str;
-	char *str_without_quotes;
-	size_t len;
+	t_list	*node;
+	char	*str;
+	char	*str_without_quotes;
+	size_t	len;
 
 	if (!substr_list || !*substr_list)
 		return ;

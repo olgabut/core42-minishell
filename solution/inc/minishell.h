@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 00:01:26 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:16:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,33 +101,35 @@ typedef struct s_minishell
 	int					stdout_backup;
 }						t_minishell;
 
+// print_error
 void	msh_error(char *reason, char *message);
-void					signals(void);
 
+// signals
+void	signals(void);
+
+// lexer
 int		lexer(t_minishell *sh, t_token **token_head);
 
 // env
-void					free_env_node(t_env **env);
-void					free_env_list(t_env **head);
-int						pars_env_structure(char **key, char **value, char *str);
-int						update_env(t_env **head, char *key, char *value,
-							bool sorted);
-bool					remove_env_node(t_env **head, char *key);
-char					*get_env_value(t_env *head, char *key);
-int						count_env(t_env *env);
-void					print_env_list(t_env *head);
-int						init_env(t_env **env_head, char **input);
-bool					is_env_key_valid(char *key);
+void	free_env_list(t_env **head);
+int		pars_env_structure(char **key, char **value, char *str);
+int		update_env(t_env **head, char *key, char *value, bool sorted);
+bool	remove_env_node(t_env **head, char *key);
+char	*get_env_value(t_env *head, char *key);
+int		init_env(t_env **env_head, char **input);
+bool	is_env_key_valid(char *key);
 char	**get_env_array(t_memory_info **memory, t_env *env);
+
+// parser
+int		parse(t_minishell *mshell, t_token *tokens);
 
 // built_in
 bool	is_built_in_cmd(char *cmd_name);
 int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
 
-// execute
+// executor
 int		execute(t_minishell *sh);
 void	find_cmd_path(t_cmd *cmd, t_minishell *sh);
 int		execute_external_cmd(t_cmd *cmd, t_minishell *sh);
-
 
 #endif

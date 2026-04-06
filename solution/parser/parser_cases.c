@@ -6,12 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/04 23:48:19 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:22:32 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "check_word.h"
 #include "minishell.h"
+#include "parser.h"
 
 bool	is_redirection(enum e_token_type type)
 {
@@ -74,7 +74,6 @@ int	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	word_list = apply_ifs(mshell, check_word(mshell, path));
 	if (ft_lstsize(word_list) != 1)
 	{
-		printf("path = %s\n", path);
 		msh_error(path, "ambiguous redirect");
 		free(node);
 		ft_lstclear(&word_list, free);
@@ -98,7 +97,6 @@ int	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	int		n;
 
 	(void)mshell;
-	printf("input\n");
 	node = malloc(sizeof(t_io));
 	if (!node)
 		return (1);

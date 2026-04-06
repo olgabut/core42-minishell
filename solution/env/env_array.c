@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 19:33:40 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 19:45:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 11:14:38 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 
 char	**get_env_array(t_memory_info **memory, t_env *env)
 {
