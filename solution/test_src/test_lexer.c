@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:13:01 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/25 14:43:16 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 12:02:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
 
 static void	free_tokens(t_token *head)

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 11:18:54 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 11:14:57 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 12:04:44 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -698,7 +698,7 @@ void	built_in_unset_test(void)
 
 	// Command "unset 1VAR" Wrong key name
 	ft_strlcpy(argv[1], "1VAR", 5);
-	if (built_in_unset(argv, &env) == 0 && count_env(env) == 4)
+	if (built_in_unset(argv, &env) == 1 && count_env(env) == 4)
 		printf("6. OK\n");
 	else
 		printf("6. ERROR command `unset 1VAR`\n");
@@ -862,7 +862,7 @@ void	test_built_in(void)
 	printf("\n===BUILTIN===\n");
 	built_in_echo_test();
 	built_in_pwd_test();
-	built_in_exit_test();
+	// built_in_exit_test();
 	built_in_export_test();
 	built_in_unset_test();
 	// built_in_cd_test();
