@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:34:17 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:43:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static char	*find_cmd_path_from_env(char *cmd_name, char **env_path_ar)
 	while (env_path_ar && env_path_ar[i] != NULL)
 	{
 		tmp = ft_straddchar(env_path_ar[i], '/');
-		path = ft_strjoin(tmp, cmd_name);
-		free(tmp);
+		path = ft_strjoin_free(tmp, cmd_name);
 		tmp = NULL;
 		if (access(path, X_OK) == 0)
 			break ;
@@ -35,7 +34,7 @@ static char	*find_cmd_path_from_env(char *cmd_name, char **env_path_ar)
 	}
 	if (!path)
 		return (NULL);
-	return (ft_strdup(path));
+	return (path);
 }
 
 static void	path_ar_free(char **env_path_ar)
