@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 01:51:00 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/12 09:55:12 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,17 @@ typedef struct s_minishell
 	int					stdin_backup;
 	int					stdout_backup;
 }						t_minishell;
+
+typedef struct s_global
+{
+	int					sigint;
+	int					sigquit;
+	int					exit_status;
+	int					stage;
+	pid_t				pid;
+}						t_global;
+
+extern t_global	g_signal;
 
 // print_error
 void	msh_error(char *reason, char *message);

@@ -6,13 +6,11 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 22:31:21 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/07 23:40:06 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// volatile sig_atomic_t	g_sig_type = 0;
 
 void	print_sigaction_error(void)
 {
@@ -30,16 +28,14 @@ void	print_sigaction_error(void)
 			"Error: unknown problem while setting signal handler.\n", 2);
 }
 
-void sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
-	if (sig == SIGINT)
-	{
-		// g_sig_type = 'C';
-		write(1, "\n", 1);
-		rl_on_new_line();
-		// rl_replace_line("", 0);//macOS don't have
-		rl_redisplay();
-	}
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_signal.sigint = 1;
 }
 
 /*
@@ -57,13 +53,15 @@ SIGQUIT // Ctrl+\
 */
 void	signals(void)
 {
-	struct sigaction sa;
+	// struct sigaction sa_sigint;
 
-	sa.sa_handler = &sigint_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		// || sigaction(SIGQUIT, &sa, NULL) == -1)
-		print_sigaction_error();
+	// sa_sigint.sa_handler = sigint_handler;
+    // sigemptyset(&sa_sigint.sa_mask);
+    // sa_sigint.sa_flags = SA_RESTART;
+    // if (sigaction(SIGINT, &sa_sigint, NULL))
+	// 	print_sigaction_error();
+	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+	g_signal.sigint = 0;
 }

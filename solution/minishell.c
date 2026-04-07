@@ -6,12 +6,14 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 02:15:24 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/12 09:54:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "print_parsed_commands.h"
+
+t_global	g_signal;
 
 static void	init_shell(t_minishell *sh, t_env **env_list)
 {
@@ -31,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)**argv;
 	init_env(&env_list, envp);
+	signals();
 	sh.exit_code = 0;
 	while (1)
 	{
@@ -53,6 +56,12 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		free_memory_links(&sh.memory_head);
+		if (g_signal.sigint)
+		{
+			printf("ctrl+C");
+			sh.exit_code = EXIT_CTRL_C;
+			g_signal.sigint = 0;
+		}
 	}
 	free_env_list(&sh.env_list);
 	free_memory_links(&sh.memory_head);
