@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:22:12 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/07 17:28:23 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,8 @@
 		argv - The arguments to pass to the new program
 		envp - The environment list
 */
-
-/* Return <exit_code> */
-static int	execute_cmd_in_child_process(t_exec_info *ei)
+void	external_child(t_exec_info *ei)
 {
-	int	id;
-	int	status;
-
-	id = fork();
-	if (id == 0)
-	{
 		if (redirect_simple(ei) < 0)
 			exit(errno);
 		if (execve(ei->path, ei->argv, ei->envp) == -1)
@@ -46,14 +38,21 @@ static int	execute_cmd_in_child_process(t_exec_info *ei)
 		}
 		else
 			exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		close_in_parent(ei);
-		waitpid(id, &status, 0);
-		status = status >> 8;
-		return (status);
-	}
+}
+
+/* Return <exit_code> */
+static int	execute_cmd_in_child_process(t_exec_info *ei)
+{
+	int	id;
+	int	status;
+
+	id = fork();
+	if (id == 0)
+		external_child(ei);
+	close_in_parent(ei);
+	waitpid(id, &status, 0);
+	status = status >> 8;
+	return (status);
 }
 
 /*
