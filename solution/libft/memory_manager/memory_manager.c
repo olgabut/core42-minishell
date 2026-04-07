@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 18:44:20 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 20:06:01 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/03/28 18:53:26 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	create_memory_link_node(t_memory_info **new_memory_info, void *new_link)
 {
 	t_memory_info	*new_memory_info_node;
 
+	if (!new_link)
+		return (0);
 	new_memory_info_node = malloc(sizeof(t_memory_info));
 	if (!new_memory_info_node)
 		return (0);

@@ -6,11 +6,15 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 23:30:33 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:22:12 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/wait.h>
+#include "executor/redirection.h"
+#include "executor/apply_redirection.h"
+#include "executor/cmd_path.h"
 
 /*
 	execve(pathname, argv, envp)
@@ -20,8 +24,7 @@
 */
 
 /* Return <exit_code> */
-static int	execute_cmd_in_child_process(
-	t_cmd *cmd, char **env_array)
+static int	execute_cmd_in_child_process(t_exec_info *ei)
 {
 	int	id;
 	int	status;
@@ -29,9 +32,11 @@ static int	execute_cmd_in_child_process(
 	id = fork();
 	if (id == 0)
 	{
-		if (execve(cmd->path, cmd->args, env_array) == -1)
+		if (redirect_simple(ei) < 0)
+			exit(errno);
+		if (execve(ei->path, ei->argv, ei->envp) == -1)
 		{
-			msh_error(cmd->args[0], NULL);
+			msh_error(ei->argv[0], NULL);
 			if (errno == ENOENT)
 				exit(EXIT_CMD_NOT_FOUND);
 			else if (errno == EACCES)
@@ -44,6 +49,7 @@ static int	execute_cmd_in_child_process(
 	}
 	else
 	{
+		close_in_parent(ei);
 		waitpid(id, &status, 0);
 		status = status >> 8;
 		return (status);
@@ -53,22 +59,25 @@ static int	execute_cmd_in_child_process(
 /*
 	Return	1  - ok
 			0  - error
+
 */
 int	execute_external_cmd(t_cmd *cmd, t_minishell *sh)
 {
-	char	**env_array;
+	t_exec_info	*ei;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (1);
-	env_array = get_env_array(&sh->memory_head, sh->env_list);
-	find_cmd_path(cmd, sh);
-	if (!cmd->path)
+	ei = exec_info_init(cmd->args, sh->env_list, &sh->memory_head);
+	if (cmd->io_list)
+		if (prepare_redirs_before_exec(cmd, ei) < 0)
+			return (ft_fprintf(STDERR_FILENO, "ms: %s\n", strerror(errno)));
+	find_cmd_path(ei, sh->env_list, &sh->memory_head);
+	if (!ei->path)
 	{
 		msh_error(cmd->args[0], "command not found");
 		sh->exit_code = EXIT_CMD_NOT_FOUND;
 		return (1);
 	}
-	add_new_memory_link_for_control(&sh->memory_head, cmd->path);
-	sh->exit_code = execute_cmd_in_child_process(cmd, env_array);
+	sh->exit_code = execute_cmd_in_child_process(ei);
 	return (1);
 }

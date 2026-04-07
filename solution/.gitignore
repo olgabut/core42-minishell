@@ -3,7 +3,10 @@ libft/libft.a
 minishell
 .vscode
 tests
+_test*
 build/
 **/*a
 .cache/
 compile_commands.json
+.gdb
+count_args

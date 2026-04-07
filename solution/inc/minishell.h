@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 11:16:57 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:05:13 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
 
 // executor
 int		execute(t_minishell *sh);
-void	find_cmd_path(t_cmd *cmd, t_minishell *sh);
 int		execute_external_cmd(t_cmd *cmd, t_minishell *sh);
 
 #endif

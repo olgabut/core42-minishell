@@ -6,12 +6,13 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 22:10:58 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:01:16 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "built_in.h"
+#include "executor/apply_redirection.h"
 
 size_t	count_argv(char **argv)
 {
@@ -49,11 +50,15 @@ bool	is_built_in_cmd(char *cmd_name)
 	Return	1  - ok
 			0  - need_exit
 			-1 - it's not built-in command
+			-2 - error occured during redirections
 */
 int	execute_built_in_cmd(t_cmd *cmd, t_minishell *sh)
 {
 	bool	need_exit;
 
+	if (cmd->io_list)
+		if (redirect_built_in(cmd, sh) < 0)
+			return (-2);
 	if (!cmd->args || !cmd->args[0])
 		return (-1);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)

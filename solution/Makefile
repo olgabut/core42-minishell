@@ -2,11 +2,10 @@ NAME = minishell
 CC = cc
 MODE ?= debug
 CFLAGS = -Wall -Wextra -Werror
-DFLAGS = -g -O0 -fsanitize=address,undefined
+DFLAGS = -g -O0 #-fsanitize=address,undefined
 ifeq ($(MODE),debug)
 	CFLAGS += $(DFLAGS)
 endif
-
 
 READLINE_INC = /opt/homebrew/opt/readline/include
 READLINE_LIB = /opt/homebrew/opt/readline/lib
@@ -46,6 +45,8 @@ SRC_FILES = print_error/msh_error.c \
 	parser/expand_variables.c \
 	parser/print_parsed_commands.c \
 	parser/parser_utils.c \
+	executor/redirection.c \
+	executor/apply_redirection.c \
 	executor/execute.c \
 	executor/cmd_path.c \
 	executor/external_cmd.c
