@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 09:59:59 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:06:50 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ enum					e_token_type
 	TOKEN_AMPERSAND
 };
 
+enum					e_stage
+{
+	STAGE_READLINE,
+	STAGE_CHILD_PROCESS,
+	STAGE_HEREDOC,
+	STAGE_COMMON
+};
+
 typedef struct s_token
 {
 	struct s_token		*next;
@@ -106,7 +114,7 @@ typedef struct s_global
 	int					sigint;
 	int					sigquit;
 	int					exit_code;
-	int					stage;
+	enum e_stage		stage;
 }						t_global;
 
 extern t_global	g_info;

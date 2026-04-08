@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/06 11:22:32 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:27:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	*token = (*token)->next;
 	eof = (*token)->value;
 	n = ft_strlen(eof);
+	g_info.stage = STAGE_HEREDOC;
 	while (ft_strncmp(buf, eof, n))
 	{
 		res = ft_strjoin_free(res, buf);
