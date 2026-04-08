@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/06 11:44:26 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/08 09:36:23 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*expand_variables(t_minishell *mshell, char *word)
 		if (substr && substr[0] == '$')
 		{
 			if (substr[1] == '?')
-				value = ft_itoa(mshell->exit_code);
+				value = ft_itoa(g_info.exit_code);
 			else
 				value = get_value_from_env(mshell->env_list, substr + 1);
 			//ifs on value with flag need_open_ifd == true

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/07 23:40:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/08 11:52:05 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,40 +28,33 @@ void	print_sigaction_error(void)
 			"Error: unknown problem while setting signal handler.\n", 2);
 }
 
+/*
+	stage = 1 (readline in lexer)
+	stage = 2 (child process in executor)
+	stage = 3 (heredoc)
+	stage = 0 (other)
+*/
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_signal.sigint = 1;
+	g_info.exit_code = EXIT_CTRL_C;
+	g_info.sigint = 1;
+	if (g_info.stage == 1)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 /*
-struct sigaction {
-    void     (*sa_handler)(int); // Link to the handler
-    void     (*sa_sigaction)(int, siginfo_t *, void *); // For SA_SIGINFO
-    sigset_t   sa_mask;
-    int        sa_flags; // SA_RESTART making certain system
-                            calls restartable across signals
-    void     (*sa_restorer)(void);
-};
-
 SIGINT // Ctrl+C
 SIGQUIT // Ctrl+\
 */
-void	signals(void)
+void	set_signals(void)
 {
-	// struct sigaction sa_sigint;
-
-	// sa_sigint.sa_handler = sigint_handler;
-    // sigemptyset(&sa_sigint.sa_mask);
-    // sa_sigint.sa_flags = SA_RESTART;
-    // if (sigaction(SIGINT, &sa_sigint, NULL))
-	// 	print_sigaction_error();
-	// signal(SIGQUIT, SIG_IGN);
+	g_info.stage = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	g_signal.sigint = 0;
 }

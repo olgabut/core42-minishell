@@ -6,9 +6,10 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 02:11:04 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:05:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include "built_in.h"
@@ -47,39 +48,33 @@ bool	is_built_in_cmd(char *cmd_name)
 }
 
 /*
-# RETURN VALUE
-
-1  - need_exit
-0  - ok
--1 - it's not built-in command
--2 - error occured during redirections
+	Return	1  - ok
+			0  - need_exit
+			-1 - it's not built-in command
 */
 int	execute_built_in_cmd(t_cmd *cmd, t_minishell *sh)
 {
 	bool	need_exit;
 
-	if (cmd->io_list)
-		if (redirect_built_in(cmd, sh) < 0)
-			return (-2);
 	if (!cmd->args || !cmd->args[0])
 		return (-1);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		return (sh->exit_code = built_in_echo(cmd->args));
+		return (g_info.exit_code = built_in_echo(cmd->args), 1);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
-		return (sh->exit_code = built_in_cd(cmd->args, &sh->env_list));
+		return (g_info.exit_code = built_in_cd(cmd->args, &sh->env_list), 1);
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		return (sh->exit_code = built_in_pwd(cmd->args));
+		return (g_info.exit_code = built_in_pwd(cmd->args), 1);
 	if (ft_strcmp(cmd->args[0], "export") == 0)
-		return (sh->exit_code = built_in_export(cmd->args, &sh->env_list));
+		return (g_info.exit_code = built_in_export(cmd->args, &sh->env_list), 1);
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
-		return (sh->exit_code = built_in_unset(cmd->args, &sh->env_list));
+		return (g_info.exit_code = built_in_unset(cmd->args, &sh->env_list), 1);
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		return (sh->exit_code = built_in_env(cmd->args, sh->env_list));
+		return (g_info.exit_code = built_in_env(cmd->args, sh->env_list), 1);
 	need_exit = false;
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 	{
-		sh->exit_code = built_in_exit(cmd->args, sh->exit_code, &need_exit);
-		return (need_exit);
+		g_info.exit_code = built_in_exit(cmd->args, g_info.exit_code, &need_exit);
+		return (!need_exit);
 	}
 	return (-1);
 }

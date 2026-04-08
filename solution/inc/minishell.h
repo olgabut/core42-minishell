@@ -6,9 +6,10 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 09:55:12 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 09:59:59 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -96,7 +97,6 @@ typedef struct s_minishell
 	t_env				*env_list;
 	t_cmd				*cmd_list;
 	t_memory_info		*memory_head;
-	int					exit_code;
 	int					stdin_backup;
 	int					stdout_backup;
 }						t_minishell;
@@ -105,18 +105,17 @@ typedef struct s_global
 {
 	int					sigint;
 	int					sigquit;
-	int					exit_status;
+	int					exit_code;
 	int					stage;
-	pid_t				pid;
 }						t_global;
 
-extern t_global	g_signal;
+extern t_global	g_info;
 
 // print_error
 void	msh_error(char *reason, char *message);
 
 // signals
-void	signals(void);
+void	set_signals(void);
 
 // lexer
 int		lexer(t_minishell *sh, t_token **token_head);
