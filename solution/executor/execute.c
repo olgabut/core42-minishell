@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 01:05:22 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 01:37:42 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "executor/execute_built_in.h"
 #include "executor/redirection.h"
 #include "executor/external_cmd.h"
+#include "executor/cmd_path.h"
 #include "minishell.h"
 #include <sys/wait.h>
 
@@ -33,6 +34,7 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork)
 			return (execute_built_in_parent(ei, sh));
 	else
 	{
+		find_cmd_path(ei, sh->env_list, &sh->memory_head);
 		pid = fork();
 		if (pid == 0)
 			external_child(ei);
