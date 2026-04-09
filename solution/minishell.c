@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:05:45 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:08:24 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	init_shell(t_minishell *sh, t_env **env_list)
 	sh->memory_head = NULL;
 	sh->stdin_backup = STDIN_FILENO;
 	sh->stdout_backup = STDOUT_FILENO;
-	set_signals();
+	set_signals_for_common_code();
 }
 
 int	main(int argc, char **argv, char **envp)

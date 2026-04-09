@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 15:06:31 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/08 12:27:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/09 22:16:32 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,21 @@ int	add_io(t_minishell *mshell, t_cmd *cmd, t_token **token)
 	io_add_back(cmd, node);
 	return (1);
 }
-
+/*
+HEREDOC documentation:
+https://tiswww.case.edu/php/chet/readline/readline.html#index-rl_005fredisplay_005ffunction
+*/
+/*
+	Return 0 - error
+		   1 - ok
+*/
 int	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 {
 	t_io	*node;
 	char	*buf;
 	char	*eof;
 	char	*res;
-	int		n;
+	int (*default_getc)(FILE *);
 
 	(void)mshell;
 	node = malloc(sizeof(t_io));
@@ -102,24 +109,45 @@ int	add_here_doc(t_minishell *mshell, t_cmd *cmd, t_token **token)
 		return (1);
 	res = ft_strdup("");
 	if (!res)
-		return (free(node), 1);
-	buf = "";
+	{
+		free(node);
+		return (0);
+	}
 	*token = (*token)->next;
 	eof = (*token)->value;
-	n = ft_strlen(eof);
-	g_info.stage = STAGE_HEREDOC;
-	while (ft_strncmp(buf, eof, n))
+	default_getc = rl_getc_function;
+	rl_getc_function = getc;
+	while (1)
 	{
+		buf = readline("> ");
+		if (g_info.sigint)
+		{
+			rl_getc_function = default_getc;
+			g_info.exit_code = 1;
+			if (buf)
+				free(buf);
+			if (res)
+				free(res);
+			return (0);
+		}
+		if (!buf)
+		{
+			if (buf)
+				free(buf);
+			return (0);
+		}
+		if  (ft_strcmp(buf, eof) == 0)
+			break ;
 		res = ft_strjoin_free(res, buf);
 		if (!res)
-			return (free(node), free(res), 1);
-		buf = readline(">");
-		if (!buf)
-			return (free(node), free(res), 1);
+		{
+			free(node);
+			return (0);
+		}
 	}
 	node->next = NULL;
 	node->path = res;
 	node->type = TOKEN_HEREDOC;
 	io_add_back(cmd, node);
-	return (0);
+	return (1);
 }

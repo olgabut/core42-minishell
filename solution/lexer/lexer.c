@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/08 12:28:03 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:22:18 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	lexer(t_minishell *sh, t_token **token_head)
 	g_info.stage = STAGE_READLINE;
 	line = readline("Minishell> ");
 	g_info.sigint = 0;
-	set_signals();
+	g_info.stage = STAGE_COMMON;
 	if (!line || !add_new_memory_link_for_control(&sh->memory_head, line))
 		return (0);
 	if (line[0] == '\0'

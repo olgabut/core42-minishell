@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:06:50 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:07:20 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # define EXIT_FAILURE 1
 # define EXIT_PERMISSION_DENIED 126
 # define EXIT_CMD_NOT_FOUND 127
-# define EXIT_CTRL_C 130
+# define EXIT_SIGINT 130
+# define EXIT_SIGQUIT 131
 # define EXIT_INVALID_ARG 255
 # define EXIT_SYNTAX_ERROR 258
 
@@ -66,8 +67,6 @@ enum					e_token_type
 enum					e_stage
 {
 	STAGE_READLINE,
-	STAGE_CHILD_PROCESS,
-	STAGE_HEREDOC,
 	STAGE_COMMON
 };
 
@@ -112,7 +111,6 @@ typedef struct s_minishell
 typedef struct s_global
 {
 	int					sigint;
-	int					sigquit;
 	int					exit_code;
 	enum e_stage		stage;
 }						t_global;
@@ -123,7 +121,8 @@ extern t_global	g_info;
 void	msh_error(char *reason, char *message);
 
 // signals
-void	set_signals(void);
+void	set_signals_for_common_code(void);
+void	set_signals_for_child_proces(void);
 
 // lexer
 int		lexer(t_minishell *sh, t_token **token_head);

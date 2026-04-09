@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:04:09 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:08:10 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 /* Return exit_code */
 static int	external_child_process(t_exec_info *ei)
 {
-	signal(SIGINT, SIG_DFL);
+	set_signals_for_child_proces();
 	if (redirect_simple(ei) < 0)
 		return (errno);
 	if (execve(ei->path, ei->argv, ei->envp) == -1)
@@ -42,11 +42,27 @@ static int	external_child_process(t_exec_info *ei)
 	return (EXIT_SUCCESS);
 }
 
+/*
+	execve(pathname, argv, envp)
+		pathname - The pathname of the command to execute
+		argv - The arguments to pass to the new program
+		envp - The environment list
+
+	waitpid status bits meaning
+		0-6    signal number that caused child to exit,
+		       or 0177 if child stopped / continued
+		       or zero if child exited without a signal
+		7     1 if core dumped, else 0
+		8-15   low 8 bits of value passed to _exit/exit or returned by main,
+		       or signal that caused child to stop/continue
+*/
+
 /* Return <exit_code> */
-static int	execute_cmd_in_child_process(t_exec_info *ei)
+static void	execute_cmd_in_child_process(t_exec_info *ei)
 {
 	int	id;
 	int	status;
+	int	sig;
 
 	id = fork();
 	if (id == 0)
@@ -55,13 +71,17 @@ static int	execute_cmd_in_child_process(t_exec_info *ei)
 	{
 		close_in_parent(ei);
 		waitpid(id, &status, 0);
-		status = status >> 8;
-		if (g_info.sigint)
+		if (WIFEXITED(status))
+			g_info.exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
 		{
-			write(STDOUT_FILENO, "\n", 1);
-			return (EXIT_CTRL_C);
+			sig = WTERMSIG(status);
+			g_info.exit_code = 128 + sig;
+			if (sig == SIGQUIT)
+				write(1, "Quit\n", 5);
+			if (sig == SIGINT)
+				write(1, "\n", 1);
 		}
-		return (status);
 	}
 }
 
@@ -81,6 +101,6 @@ int	execute_external_cmd(t_cmd *cmd, t_minishell *sh)
 		g_info.exit_code = EXIT_CMD_NOT_FOUND;
 		return (1);
 	}
-	g_info.exit_code = execute_cmd_in_child_process(ei);
+	execute_cmd_in_child_process(ei);
 	return (1);
 }
