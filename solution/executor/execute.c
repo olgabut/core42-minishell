@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/07 17:26:43 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 01:05:22 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork)
 {
 	int	pid;
+	int status;
 
 	if (is_built_in_cmd(ei->argv[0]))
 		if (need_fork)
@@ -37,7 +38,9 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork)
 			external_child(ei);
 	}
 	close_in_parent(ei);
-	waitpid(pid, &(sh->exit_code), 0);
+	status = 0;
+	waitpid(pid, &status, 0);
+	sh->exit_code = WEXITSTATUS(status);
 	return (sh->exit_code);
 }
 /*
@@ -53,11 +56,11 @@ static int	execute_pipeline(t_minishell *sh)
 	t_exec_info	*ei;
 	bool		need_fork;
 
-	need_fork = 0;
 	prev_read_fd = -1;
 	cur_cmd = sh->cmd_list;
 	while (cur_cmd)
 	{
+		need_fork = 0;
 		ei = exec_info_init(cur_cmd->args, sh->env_list, &sh->memory_head);
 		if (!ei)
 			return (ENOMEM);
