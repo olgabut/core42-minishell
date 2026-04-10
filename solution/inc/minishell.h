@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:07:20 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:08:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	msh_error(char *reason, char *message);
 // signals
 void	set_signals_for_common_code(void);
 void	set_signals_for_child_proces(void);
+int		heredoc_rl_getc(FILE *stream);
 
 // lexer
 int		lexer(t_minishell *sh, t_token **token_head);

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:08:10 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:09:06 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	execute_cmd_in_child_process(t_exec_info *ei)
 			sig = WTERMSIG(status);
 			g_info.exit_code = 128 + sig;
 			if (sig == SIGQUIT)
-				write(1, "Quit\n", 5);
+				write(1, "Quit (core dumped)\n", 19);
 			if (sig == SIGINT)
 				write(1, "\n", 1);
 		}
