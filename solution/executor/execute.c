@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 01:37:42 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 02:27:46 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	execute_pipeline(t_minishell *sh)
 		execute_cmd(ei, sh, need_fork);
 		cur_cmd = cur_cmd->next;
 	}
-	return (0);
+	return (sh->exit_code);
 }
 
 static int	execute_single_cmd(t_minishell *sh)
@@ -103,11 +103,6 @@ static int	execute_single_cmd(t_minishell *sh)
 		return (execute_external_cmd(sh->cmd_list, sh));
 }
 
-/*
-	Executes commands (sh->cmd_list)
-	Return	1-ok
-			0-error
-*/
 int	execute(t_minishell *sh)
 {
 	if (!sh || !sh->cmd_list || !sh->cmd_list->args)
