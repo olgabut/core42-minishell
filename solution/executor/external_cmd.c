@@ -6,15 +6,15 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:22:12 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 01:47:30 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <sys/wait.h>
-#include "executor/redirection.h"
 #include "executor/apply_redirection.h"
 #include "executor/cmd_path.h"
+#include "executor/redirection.h"
+#include "minishell.h"
+#include <sys/wait.h>
 
 /*
 	execve(pathname, argv, envp)
@@ -22,6 +22,23 @@
 		argv - The arguments to pass to the new program
 		envp - The environment list
 */
+void	external_child(t_exec_info *ei)
+{
+	if (redirect_simple(ei) < 0)
+		exit(errno);
+	if (execve(ei->path, ei->argv, ei->envp) == -1)
+	{
+		msh_error(ei->argv[0], NULL);
+		if (errno == ENOENT)
+			exit(EXIT_CMD_NOT_FOUND);
+		else if (errno == EACCES)
+			exit(EXIT_PERMISSION_DENIED);
+		else
+			exit(EXIT_FAILURE);
+	}
+	else
+		exit(EXIT_SUCCESS);
+}
 
 /* Return <exit_code> */
 static int	execute_cmd_in_child_process(t_exec_info *ei)
@@ -31,36 +48,13 @@ static int	execute_cmd_in_child_process(t_exec_info *ei)
 
 	id = fork();
 	if (id == 0)
-	{
-		if (redirect_simple(ei) < 0)
-			exit(errno);
-		if (execve(ei->path, ei->argv, ei->envp) == -1)
-		{
-			msh_error(ei->argv[0], NULL);
-			if (errno == ENOENT)
-				exit(EXIT_CMD_NOT_FOUND);
-			else if (errno == EACCES)
-				exit (EXIT_PERMISSION_DENIED);
-			else
-				exit (EXIT_FAILURE);
-		}
-		else
-			exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		close_in_parent(ei);
-		waitpid(id, &status, 0);
-		status = status >> 8;
-		return (status);
-	}
+		external_child(ei);
+	close_in_parent(ei);
+	waitpid(id, &status, 0);
+	status = status >> 8;
+	return (status);
 }
 
-/*
-	Return	1  - ok
-			0  - error
-
-*/
 int	execute_external_cmd(t_cmd *cmd, t_minishell *sh)
 {
 	t_exec_info	*ei;
@@ -79,5 +73,5 @@ int	execute_external_cmd(t_cmd *cmd, t_minishell *sh)
 		return (1);
 	}
 	sh->exit_code = execute_cmd_in_child_process(ei);
-	return (1);
+	return (sh->exit_code);
 }

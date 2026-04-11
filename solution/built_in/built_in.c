@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:01:16 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 02:11:04 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ bool	is_built_in_cmd(char *cmd_name)
 }
 
 /*
-	Return	1  - ok
-			0  - need_exit
-			-1 - it's not built-in command
-			-2 - error occured during redirections
+# RETURN VALUE
+
+1  - need_exit
+0  - ok
+-1 - it's not built-in command
+-2 - error occured during redirections
 */
 int	execute_built_in_cmd(t_cmd *cmd, t_minishell *sh)
 {
@@ -62,22 +64,22 @@ int	execute_built_in_cmd(t_cmd *cmd, t_minishell *sh)
 	if (!cmd->args || !cmd->args[0])
 		return (-1);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		return (sh->exit_code = built_in_echo(cmd->args), 1);
+		return (sh->exit_code = built_in_echo(cmd->args));
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
-		return (sh->exit_code = built_in_cd(cmd->args, &sh->env_list), 1);
+		return (sh->exit_code = built_in_cd(cmd->args, &sh->env_list));
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		return (sh->exit_code = built_in_pwd(cmd->args), 1);
+		return (sh->exit_code = built_in_pwd(cmd->args));
 	if (ft_strcmp(cmd->args[0], "export") == 0)
-		return (sh->exit_code = built_in_export(cmd->args, &sh->env_list), 1);
+		return (sh->exit_code = built_in_export(cmd->args, &sh->env_list));
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
-		return (sh->exit_code = built_in_unset(cmd->args, &sh->env_list), 1);
+		return (sh->exit_code = built_in_unset(cmd->args, &sh->env_list));
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		return (sh->exit_code = built_in_env(cmd->args, sh->env_list), 1);
+		return (sh->exit_code = built_in_env(cmd->args, sh->env_list));
 	need_exit = false;
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 	{
 		sh->exit_code = built_in_exit(cmd->args, sh->exit_code, &need_exit);
-		return (!need_exit);
+		return (need_exit);
 	}
 	return (-1);
 }

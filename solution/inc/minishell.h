@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 14:05:13 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 01:51:00 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,11 @@ bool	is_built_in_cmd(char *cmd_name);
 int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
 
 // executor
+/*
+*	# RETURN VALUE
+*
+*	returns exit code of executed command, in case of empty 's' returns 1
+*/
 int		execute(t_minishell *sh);
-int		execute_external_cmd(t_cmd *cmd, t_minishell *sh);
 
 #endif

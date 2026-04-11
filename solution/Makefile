@@ -49,6 +49,7 @@ SRC_FILES = print_error/msh_error.c \
 	executor/apply_redirection.c \
 	executor/execute.c \
 	executor/cmd_path.c \
+	executor/execute_built_in.c \
 	executor/external_cmd.c
 
 TEST_NAME = tests
