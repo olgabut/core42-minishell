@@ -6,7 +6,7 @@
 /*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/07 16:46:49 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:36:39 by dprikhod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@
 int	redirect_simple(t_exec_info *ei)
 {
 	if (ei->infd != STDIN_FILENO)
+	{
 		if (dup2(ei->infd, STDIN_FILENO) < 0)
 			return (-1);
+		close(ei->infd);
+	}
 	if (ei->outfd != STDOUT_FILENO)
+	{
 		if (dup2(ei->outfd, STDOUT_FILENO) < 0)
 			return (-1);
+		close(ei->outfd);
+	}
 	return (0);
 }
 
