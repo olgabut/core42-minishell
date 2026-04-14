@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/13 20:36:58 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/14 15:01:30 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
 			pid = fork();
 			if (pid == 0)
 			{
+				set_signals_for_child_proces();
 				if (pipefd != -1)
 					close(pipefd);
 				execute_built_in_child(ei, sh);
@@ -42,9 +43,10 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
 		pid = fork();
 		if (pid == 0)
 		{
+			set_signals_for_child_proces();
 			if (pipefd != -1)
 				close(pipefd);
-			external_child(ei);
+			external_child_process(ei);
 		}
 	}
 	close_in_parent(ei);
@@ -52,16 +54,13 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
 }
 /*
  * # RETURN VALUE
- * on success returns 0, on failure returns error code:
- * - 12 in case of `malloc()` failure;
- * - `errno` that set by `open()` or `pipe()` on its failure.
- */
+ * on success returns 1, on failure return 0
+*/
 static int	execute_pipeline(t_minishell *sh)
 {
 	t_cmd		*cur_cmd;
 	int			prev_read_fd;
 	t_exec_info	*ei;
-	bool		need_fork;
 	int			pid[MAX_PIPE_COUNT];
 	int			i = 0;
 	int			status;
@@ -70,10 +69,12 @@ static int	execute_pipeline(t_minishell *sh)
 	cur_cmd = sh->cmd_list;
 	while (cur_cmd)
 	{
-		need_fork = 0;
 		ei = exec_info_init(cur_cmd->args, sh->env_list, &sh->memory_head);
 		if (!ei)
-			return (ENOMEM);
+		{
+			msh_error("memory", "Memory allocation error");
+			return (0);
+		}
 		if (prev_read_fd != -1)
 		{
 			ei->infd = prev_read_fd;
@@ -83,13 +84,17 @@ static int	execute_pipeline(t_minishell *sh)
 		{
 			prev_read_fd = create_pipefd(ei);
 			if (prev_read_fd == -1)
-				return (errno);
+			{
+				msh_error("read_fd", NULL);
+				return (0);
+			}
 		}
 		if (prepare_redirs_before_exec(cur_cmd, ei) != 0)
-			return (errno);
-		if (cur_cmd->next)
-			need_fork = 1;
-		pid[i] = execute_cmd(ei, sh, need_fork, prev_read_fd);
+		{
+			msh_error("redirections", NULL);
+			return (0);
+		}
+		pid[i] = execute_cmd(ei, sh, cur_cmd->next != NULL, prev_read_fd);
 		if (pid[i] < 0)
 			break ;
 		i++;
@@ -100,27 +105,32 @@ static int	execute_pipeline(t_minishell *sh)
 		i--;
 		if (pid[i] != 0)
 			waitpid(pid[i], &status, 0);
-		sh->exit_code = WEXITSTATUS(status);
+		g_info.exit_code = WEXITSTATUS(status);
 	}
-	return (sh->exit_code);
+	return (1);
 }
 
 static int	execute_single_cmd(t_minishell *sh)
 {
-	int	exit_code;
+	int	res;
 
 	if (sh->cmd_list && sh->cmd_list->args && sh->cmd_list->args[0]
 		&& is_built_in_cmd(sh->cmd_list->args[0]))
 	{
-		exit_code = execute_built_in_cmd(sh->cmd_list, sh);
+		res = execute_built_in_cmd(sh->cmd_list, sh);
 		if (restore_stdio(sh) < 0)
-			exit_code = -1;
-		return (exit_code);
+			res = 0;
+		return (res);
 	}
 	else
 		return (execute_external_cmd(sh->cmd_list, sh));
 }
 
+/*
+	Return
+		0 = we need to stop program (readirection errors or malloc errors)
+		1 = OK, continue
+*/
 int	execute(t_minishell *sh)
 {
 	if (!sh || !sh->cmd_list || !sh->cmd_list->args)

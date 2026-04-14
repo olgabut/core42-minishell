@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:17:10 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 00:04:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:22:18 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	wrong_command(t_minishell *sh, t_token **token_head)
 {
 	free_memory_links(&sh->memory_head);
 	*token_head = NULL;
-	sh->exit_code = EXIT_SYNTAX_ERROR;
+	g_info.exit_code = EXIT_SYNTAX_ERROR;
 	return (1);
 }
 
@@ -77,7 +77,10 @@ int	lexer(t_minishell *sh, t_token **token_head)
 	char	*line;
 
 	line = NULL;
+	g_info.stage = STAGE_READLINE;
 	line = readline("Minishell> ");
+	g_info.sigint = 0;
+	g_info.stage = STAGE_COMMON;
 	if (!line || !add_new_memory_link_for_control(&sh->memory_head, line))
 		return (0);
 	if (line[0] == '\0'

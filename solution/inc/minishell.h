@@ -6,9 +6,10 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 01:51:00 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/12 10:08:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -27,7 +28,8 @@
 # define EXIT_FAILURE 1
 # define EXIT_PERMISSION_DENIED 126
 # define EXIT_CMD_NOT_FOUND 127
-# define EXIT_CTRL_C 130
+# define EXIT_SIGINT 130
+# define EXIT_SIGQUIT 131
 # define EXIT_INVALID_ARG 255
 # define EXIT_SYNTAX_ERROR 258
 
@@ -60,6 +62,12 @@ enum					e_token_type
 	TOKEN_RPAREN,
 	TOKEN_SEMICOLON,
 	TOKEN_AMPERSAND
+};
+
+enum					e_stage
+{
+	STAGE_READLINE,
+	STAGE_COMMON
 };
 
 typedef struct s_token
@@ -96,16 +104,26 @@ typedef struct s_minishell
 	t_env				*env_list;
 	t_cmd				*cmd_list;
 	t_memory_info		*memory_head;
-	int					exit_code;
 	int					stdin_backup;
 	int					stdout_backup;
 }						t_minishell;
+
+typedef struct s_global
+{
+	int					sigint;
+	int					exit_code;
+	enum e_stage		stage;
+}						t_global;
+
+extern t_global	g_info;
 
 // print_error
 void	msh_error(char *reason, char *message);
 
 // signals
-void	signals(void);
+void	set_signals_for_common_code(void);
+void	set_signals_for_child_proces(void);
+int		heredoc_rl_getc(FILE *stream);
 
 // lexer
 int		lexer(t_minishell *sh, t_token **token_head);

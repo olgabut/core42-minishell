@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:13:43 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/07 17:03:34 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:09:44 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ static void	choose_built_in(t_exec_info *ei, t_minishell *sh)
 	bool	need_exit;
 
 	if (ft_strcmp(ei->argv[0], "echo") == 0)
-		sh->exit_code = built_in_echo(ei->argv);
+		g_info.exit_code = built_in_echo(ei->argv);
 	if (ft_strcmp(ei->argv[0], "cd") == 0)
-		sh->exit_code = built_in_cd(ei->argv, &sh->env_list);
+		g_info.exit_code = built_in_cd(ei->argv, &sh->env_list);
 	if (ft_strcmp(ei->argv[0], "pwd") == 0)
-		sh->exit_code = built_in_pwd(ei->argv);
+		g_info.exit_code = built_in_pwd(ei->argv);
 	if (ft_strcmp(ei->argv[0], "export") == 0)
-		sh->exit_code = built_in_export(ei->argv, &sh->env_list);
+		g_info.exit_code = built_in_export(ei->argv, &sh->env_list);
 	if (ft_strcmp(ei->argv[0], "unset") == 0)
-		sh->exit_code = built_in_unset(ei->argv, &sh->env_list);
+		g_info.exit_code = built_in_unset(ei->argv, &sh->env_list);
 	if (ft_strcmp(ei->argv[0], "env") == 0)
-		sh->exit_code = built_in_env(ei->argv, sh->env_list);
+		g_info.exit_code = built_in_env(ei->argv, sh->env_list);
 	need_exit = false;
 	if (ft_strcmp(ei->argv[0], "exit") == 0)
-		sh->exit_code = built_in_exit(ei->argv, sh->exit_code, &need_exit);
+		g_info.exit_code = built_in_exit(ei->argv, &need_exit);
 }
 int	execute_built_in_parent(t_exec_info *ei, t_minishell *sh)
 {
@@ -43,7 +43,7 @@ int	execute_built_in_parent(t_exec_info *ei, t_minishell *sh)
 	choose_built_in(ei, sh);
 	if (restore_stdio(sh) < 0)
 		return (errno);
-	return (sh->exit_code);
+	return (g_info.exit_code);
 }
 
 void	execute_built_in_child(t_exec_info *ei, t_minishell *sh)
@@ -56,5 +56,5 @@ void	execute_built_in_child(t_exec_info *ei, t_minishell *sh)
 	if (!ei->argv || !ei->argv[0])
 		exit (-1);
 	choose_built_in(ei, sh);
-	exit(sh->exit_code);
+	exit(g_info.exit_code);
 }

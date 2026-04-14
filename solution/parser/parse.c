@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/06 11:49:44 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/09 22:16:19 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ int	parse(t_minishell *mshell, t_token *tokens)
 		}
 		else if (tokens->type == TOKEN_HEREDOC)
 		{
-			if (add_here_doc(mshell, cmd, &tokens))
+			if (!add_here_doc(mshell, cmd, &tokens))
 			{
-				ft_lstclear(&temp_args, free);
 				mshell->cmd_list = NULL;
 				return (1);// NULL
 			}

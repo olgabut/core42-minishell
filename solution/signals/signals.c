@@ -6,64 +6,53 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/03/20 22:31:21 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:28:53 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// volatile sig_atomic_t	g_sig_type = 0;
-
-void	print_sigaction_error(void)
+int	heredoc_rl_getc(FILE *stream)
 {
-	if (errno == EINVAL)
-		ft_putstr_fd(
-			"Error: invalid signal number or bad handler.\n", 2);
-	else if (errno == EFAULT)
-		ft_putstr_fd(
-			"Error: invalid memory address for sigaction structure.\n", 2);
-	else if (errno == EINVAL)
-		ft_putstr_fd(
-			"Error: signal not supported on this system.\n", 2);
-	else
-		ft_putstr_fd(
-			"Error: unknown problem while setting signal handler.\n", 2);
+	char	c;
+	int		ret;
+
+	(void)stream;
+	ret = read(STDIN_FILENO, &c, 1);
+	if (ret < 0 && errno == EINTR)
+		return (EOF);
+	if (ret == 0)
+		return (EOF);
+	return ((unsigned char)c);
 }
 
-void sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
-	if (sig == SIGINT)
+	(void)sig;
+	g_info.sigint = 1;
+	g_info.exit_code = EXIT_SIGINT;
+	if (g_info.stage == STAGE_READLINE)
 	{
-		// g_sig_type = 'C';
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
-		// rl_replace_line("", 0);//macOS don't have
 		rl_redisplay();
 	}
 }
 
-/*
-struct sigaction {
-    void     (*sa_handler)(int); // Link to the handler
-    void     (*sa_sigaction)(int, siginfo_t *, void *); // For SA_SIGINFO
-    sigset_t   sa_mask;
-    int        sa_flags; // SA_RESTART making certain system
-                            calls restartable across signals
-    void     (*sa_restorer)(void);
-};
-
-SIGINT // Ctrl+C
-SIGQUIT // Ctrl+\
-*/
-void	signals(void)
+void	set_signals_for_child_proces(void)
 {
-	struct sigaction sa;
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+		perror("signal");
+	if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+		perror("signal");
+}
 
-	sa.sa_handler = &sigint_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		// || sigaction(SIGQUIT, &sa, NULL) == -1)
-		print_sigaction_error();
-	signal(SIGQUIT, SIG_IGN);
+void	set_signals_for_common_code(void)
+{
+	g_info.sigint = 0;
+	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+		perror("signal");
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		perror("signal");
 }
