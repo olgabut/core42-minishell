@@ -6,11 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 23:42:24 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/06 11:24:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 22:31:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 /*
 	Result is substr of str (first len characters)
 */

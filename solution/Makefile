@@ -2,7 +2,7 @@ NAME = minishell
 CC = cc
 MODE ?= debug
 CFLAGS = -Wall -Wextra -Werror
-DFLAGS = -g -O0 #-fsanitize=address,undefined
+DFLAGS = -g -O0 -fsanitize=address,undefined
 ifeq ($(MODE),debug)
 	CFLAGS += $(DFLAGS)
 endif
@@ -40,11 +40,14 @@ SRC_FILES = print_error/msh_error.c \
 	built_in/built_in_cd.c \
 	signals/signals.c \
 	parser/parse.c \
-	parser/parser_cases.c \
-	parser/check_word.c \
-	parser/expand_variables.c \
+	parser/parse_word.c \
+	parser/parse_here_doc.c \
+	parser/parse_redirection.c \
+	parser/process_word.c \
+	parser/expand.c \
 	parser/print_parsed_commands.c \
 	parser/parser_utils.c \
+	parser/cmd_list_manager.c \
 	executor/redirection.c \
 	executor/apply_redirection.c \
 	executor/execute.c \

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:08:52 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 22:25:06 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_cmd
 {
 	struct s_cmd		*next;
 	char				**args;
+	t_list				*args_list;
 	char				*path;
 	t_io				*io_list;
 }						t_cmd;
@@ -140,6 +141,7 @@ char	**get_env_array(t_memory_info **memory, t_env *env);
 
 // parser
 int		parse(t_minishell *mshell, t_token *tokens);
+void	print_parsed_commands(t_cmd *cmds);
 
 // built_in
 bool	is_built_in_cmd(char *cmd_name);
