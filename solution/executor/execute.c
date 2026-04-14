@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/13 20:36:58 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:12:52 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
 		{
 			if (pipefd != -1)
 				close(pipefd);
-			external_child(ei);
+			external_child_process(ei);
 		}
 	}
 	close_in_parent(ei);
@@ -100,9 +100,9 @@ static int	execute_pipeline(t_minishell *sh)
 		i--;
 		if (pid[i] != 0)
 			waitpid(pid[i], &status, 0);
-		sh->exit_code = WEXITSTATUS(status);
+		g_info.exit_code = WEXITSTATUS(status);
 	}
-	return (sh->exit_code);
+	return (g_info.exit_code);
 }
 
 static int	execute_single_cmd(t_minishell *sh)

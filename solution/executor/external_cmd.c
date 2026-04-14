@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:09:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:14:53 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 		envp - The environment list
 */
 /* Return exit_code */
-static int	external_child_process(t_exec_info *ei)
+int	external_child_process(t_exec_info *ei)
 {
 	set_signals_for_child_proces();
 	if (redirect_simple(ei) < 0)

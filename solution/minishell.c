@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:08:24 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:07:56 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int argc, char **argv, char **envp)
 		// print_parsed_commands(sh.cmd_list);
 		if (execute(&sh) != 0)
 		{
-			ft_fprintf(STDERR_FILENO, "executor: %d\n", sh.exit_code);
 			break ;
 		}
 		free_memory_links(&sh.memory_head);
