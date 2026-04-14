@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 14:47:24 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 15:01:30 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
 			pid = fork();
 			if (pid == 0)
 			{
+				set_signals_for_child_proces();
 				if (pipefd != -1)
 					close(pipefd);
 				execute_built_in_child(ei, sh);
@@ -42,6 +43,7 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
 		pid = fork();
 		if (pid == 0)
 		{
+			set_signals_for_child_proces();
 			if (pipefd != -1)
 				close(pipefd);
 			external_child_process(ei);
