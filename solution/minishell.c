@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:07:56 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:46:34 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		// print_parsed_commands(sh.cmd_list);
-		if (execute(&sh) != 0)
+		if (!execute(&sh))
 		{
 			break ;
 		}
