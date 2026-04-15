@@ -41,5 +41,14 @@
 | echo hello world | 0 | `hello world`|
 | echo | 0 | Empty line |
 | ./a.out | 127 | `minishell: ./a.out: No such file or directory` |
+| ./philo | 0 | Result of ./philo |
+| invalidcmd | 127 | `minishell: invalidcmd: command not found`|
+
+## Arguments
+| Command | Code_exit | Result |
+|:------- | :-------- | :----- |
+| ls -l | 0 | Detailed list |
+
+
 
 
