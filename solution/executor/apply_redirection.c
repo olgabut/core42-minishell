@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/13 20:36:39 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:41:22 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	redirect_in_parent(t_minishell *sh, t_exec_info *ei)
 	return (0);
 }
 
-int	restore_stdio(t_minishell *sh)
+int	restore_stdio_from_backup(t_minishell *sh)
 {
 	if (sh->stdin_backup != STDIN_FILENO)
 	{
@@ -66,19 +66,6 @@ int	restore_stdio(t_minishell *sh)
 		sh->stdout_backup = STDOUT_FILENO;
 	}
 	return (0);
-}
-
-int	redirect_built_in(t_cmd *cmd, t_minishell *sh)
-{
-	t_exec_info	*ei;
-
-	if (!cmd->io_list)
-		return (-1);
-	ei = exec_info_init(cmd->args, sh->env_list, &sh->memory_head);
-	if (!ei)
-		return (18);
-	prepare_redirs_before_exec(cmd, ei);
-	return (redirect_in_parent(sh, ei));
 }
 
 int	close_in_parent(t_exec_info *ei)

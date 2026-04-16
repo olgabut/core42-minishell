@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/07 12:43:21 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:57:34 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*find_cmd_path_from_env(char *cmd_name, char **env_path_ar)
 	return (path);
 }
 
-static void	path_ar_free(char **env_path_ar)
+static void	possible_path_ar_free(char **env_path_ar)
 {
 	int		i;
 
@@ -52,29 +52,26 @@ static void	path_ar_free(char **env_path_ar)
 		free(env_path_ar);
 }
 
-void	find_cmd_path(t_exec_info *ei, t_env *env, t_memory_info **head)
+char	*find_cmd_path(char *cmd_name, t_env *env)
 {
 	char	*cmd_name_with_slash;
 	char	*env_path_value;
-	char	**path_ar;
+	char	**possible_path_ar;
+	char	*path;
 
-	cmd_name_with_slash = ft_strchr(ei->argv[0], '/');
+	cmd_name_with_slash = ft_strchr(cmd_name, '/');
 	if (cmd_name_with_slash != NULL)
-	{
-		ei->path = ft_strdup(ei->argv[0]);
-		add_new_memory_link_for_control(head, ei->path);
-	}
+		return (ft_strdup(cmd_name));
 	else
 	{
 		env_path_value = get_env_value(env, "PATH");
 		if (env_path_value == NULL)
-			return ;
-		path_ar = ft_split(env_path_value, ':');
-		if (path_ar == NULL)
-			return ;
-		ei->path = find_cmd_path_from_env(ei->argv[0], path_ar);
-		if (ei->path)
-			add_new_memory_link_for_control(head, ei->path);
-		path_ar_free(path_ar);
+			return (NULL);
+		possible_path_ar = ft_split(env_path_value, ':');
+		if (possible_path_ar == NULL)
+			return (NULL);
+		path = find_cmd_path_from_env(cmd_name, possible_path_ar);
+		possible_path_ar_free(possible_path_ar);
+		return (path);
 	}
 }

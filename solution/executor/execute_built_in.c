@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:13:43 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/14 13:09:44 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:41:28 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 #include "executor/apply_redirection.h"
 #include "executor/execute_built_in.h"
 
-static void	choose_built_in(t_exec_info *ei, t_minishell *sh)
+/*
+	Return	1  - ok
+			0  - need_exit
+*/
+static int	choose_built_in(t_exec_info *ei, t_minishell *sh)
 {
 	bool	need_exit;
 
@@ -32,18 +36,27 @@ static void	choose_built_in(t_exec_info *ei, t_minishell *sh)
 		g_info.exit_code = built_in_env(ei->argv, sh->env_list);
 	need_exit = false;
 	if (ft_strcmp(ei->argv[0], "exit") == 0)
+	{
 		g_info.exit_code = built_in_exit(ei->argv, &need_exit);
+		return (!need_exit);
+	}
+	return (true);
 }
+
 int	execute_built_in_parent(t_exec_info *ei, t_minishell *sh)
 {
-	if (redirect_in_parent(sh, ei))
-		return (-2);
+	int res;
+
 	if (!ei->argv || !ei->argv[0])
-		return (-1);
-	choose_built_in(ei, sh);
-	if (restore_stdio(sh) < 0)
-		return (errno);
-	return (g_info.exit_code);
+		return (1); // -1
+	//
+	if (redirect_in_parent(sh, ei))
+		return (1);// -2
+	res = choose_built_in(ei, sh);
+	close_in_parent(ei);
+	if (restore_stdio_from_backup(sh) < 0)
+		msh_error("redirection", NULL);
+	return (res);
 }
 
 void	execute_built_in_child(t_exec_info *ei, t_minishell *sh)

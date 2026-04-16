@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirection.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:43:04 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/03 10:01:40 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:41:32 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	redirect_in_parent(t_minishell *sh, t_exec_info *ei);
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int	restore_stdio(t_minishell *sh);
+int	restore_stdio_from_backup(t_minishell *sh);
 /*
  *	# DESCRIPTION
  *	This function is meant to be called, when built-in command should be 
@@ -59,7 +59,7 @@ int	restore_stdio(t_minishell *sh);
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
+// int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
 
 /*
  *	# DESCRIPTION

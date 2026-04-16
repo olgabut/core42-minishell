@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 22:25:06 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/16 21:49:02 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	msh_error(char *reason, char *message);
 
 // signals
 void	set_signals_for_common_code(void);
-void	set_signals_for_child_proces(void);
+void	set_signals_in_child_process(void);
 int		heredoc_rl_getc(FILE *stream);
 
 // lexer
@@ -145,7 +145,6 @@ void	print_parsed_commands(t_cmd *cmds);
 
 // built_in
 bool	is_built_in_cmd(char *cmd_name);
-int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
 
 // executor
 /*

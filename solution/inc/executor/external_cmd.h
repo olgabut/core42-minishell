@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 17:20:49 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/14 13:11:13 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/16 10:21:16 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "executor/execute.h"
 # include "minishell.h"
 
-void	external_child_process(t_exec_info *ei);
+void	execute_external_in_child(t_exec_info *ei);
 /*
 * # RETURN VALUE
 *

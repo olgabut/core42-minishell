@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 10:39:02 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/03/30 18:30:20 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/16 09:56:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	create_pipefd(t_exec_info *ei);
 * accordingly.
 *
 *
-* For `TOKEN_HERE_DOC` creates pipe, writes `cmd->io_list->path` to the 
+* For `TOKEN_HERE_DOC` creates pipe, writes `cmd->io_list->path` to the
 * write-end and sets `ei->infd` to read-end.
 */
-int	prepare_redirs_before_exec(t_cmd *cmd, t_exec_info *ei);
+int	prepare_redirections(t_exec_info *ei, t_io *io_head);
 
 #endif
