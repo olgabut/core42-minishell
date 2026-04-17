@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:43:04 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/16 22:41:32 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:32:59 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int	redirect_simple(t_exec_info *ei);
+int	redirect_infd_in_child(t_exec_info *ei);
+int	redirect_outfd_in_child(t_exec_info *ei);
 
 /*
  *	# DESCRIPTION
@@ -69,5 +70,7 @@ int	restore_stdio_from_backup(t_minishell *sh);
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int close_in_parent(t_exec_info *ei);
+int close_fd_in_parent(t_exec_info *ei);
+int close_all_pipes(t_exec_info *ei_head);
+
 #endif

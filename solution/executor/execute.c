@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/16 23:14:41 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:22:08 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,19 @@ int	execute_cmd(t_exec_info *ei, t_minishell *sh)
 	if (pid == 0)
 	{
 		set_signals_in_child_process();
-		if (ei->pipefd != -1)
-			close(ei->pipefd);
+		if (redirect_infd_in_child(ei) < 0
+			|| redirect_outfd_in_child(ei) < 0
+			|| close_all_pipes(sh->ei_list) < 0)
+		{
+			//msh_error();
+			exit (errno);
+		}
 		if (ei->is_built_in)
 			execute_built_in_child(ei, sh);
 		else
 			execute_external_in_child(ei);
 		exit(g_info.exit_code);
 	}
-	close_in_parent(ei);
 	return (pid);
 }
 
@@ -91,6 +95,8 @@ int execute_in_child(t_minishell *sh, t_exec_info *ei_head)
 		i++;
 		ei = ei->next;
 	}
+	if (close_all_pipes(ei_head) < 0)
+		return (0);
 	i = 0;
 	while (i < cmd_count)
 	{
@@ -114,7 +120,8 @@ void print_ei_list(t_exec_info *ei_head)
 		printf("%d ", i);
 		printf("ei %s \nis_built_in=%d\npath=%s\n", 
 			ei->argv[0], ei->is_built_in, ei->path);
-		printf("infd=%d\noutfd=%d\npipefd=%d\n", ei->infd, ei->outfd, ei->pipefd);
+		printf("infd=%d\noutfd=%d\n", ei->infd, ei->outfd);
+		printf("pipe_infd=%d\npipe_outfd=%d\n", ei->pipe_infd, ei->pipe_outfd);
 		printf("----------------\n");
 		i++;
 		ei=ei->next;
@@ -136,7 +143,8 @@ int	execute(t_minishell *sh)
 		return (1);
 	if (!ei_head || !ei_head->argv || !ei_head->argv[0])
 		return (1);
-	print_ei_list(ei_head);
+	sh->ei_list = ei_head;
+	//print_ei_list(ei_head);
 	if (ei_head->next == NULL && ei_head->is_built_in)
 		return(execute_built_in_parent(ei_head, sh));
 	else

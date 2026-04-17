@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:13:43 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/16 22:41:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:32:51 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	execute_built_in_parent(t_exec_info *ei, t_minishell *sh)
 	if (redirect_in_parent(sh, ei))
 		return (1);// -2
 	res = choose_built_in(ei, sh);
-	close_in_parent(ei);
+	close_fd_in_parent(ei);
 	if (restore_stdio_from_backup(sh) < 0)
 		msh_error("redirection", NULL);
 	return (res);
@@ -61,12 +61,7 @@ int	execute_built_in_parent(t_exec_info *ei, t_minishell *sh)
 
 void	execute_built_in_child(t_exec_info *ei, t_minishell *sh)
 {
-	if (redirect_simple(ei))
-	{
-		ft_fprintf(STDERR_FILENO, "ms: %s\n", strerror(errno));
-		exit (-1);
-	}
-	if (!ei->argv || !ei->argv[0])
+	if (!ei || !ei->argv || !ei->argv[0])
 		exit (-1);
 	choose_built_in(ei, sh);
 	exit(g_info.exit_code);

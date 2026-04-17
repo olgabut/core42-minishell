@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/16 21:49:02 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/17 22:27:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,24 @@ typedef struct s_env
 	char				*value;
 }						t_env;
 
+typedef struct s_exec_info {
+	struct s_exec_info	*next;
+	struct s_exec_info	*prev;
+	int					outfd;
+	int					pipe_infd;
+	int					pipe_outfd;
+	int					infd;
+	char				**argv;
+	char				**envp;
+	char				*path;
+	bool				is_built_in;
+}	t_exec_info;
+
 typedef struct s_minishell
 {
 	t_env				*env_list;
 	t_cmd				*cmd_list;
+	t_exec_info			*ei_list;
 	t_memory_info		*memory_head;
 	int					stdin_backup;
 	int					stdout_backup;

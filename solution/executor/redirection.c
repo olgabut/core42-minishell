@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/16 23:18:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/17 22:30:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 #include "minishell.h"
 #include <fcntl.h>
 
-
-
-
 static int	set_outfd(t_exec_info *ei, t_io *io)
 {
 	if (io->type == TOKEN_REDIR_OUT)
 	{
 		if (ei->outfd != STDOUT_FILENO)
 			close(ei->outfd);
-		ei->outfd = open(io->path, O_WRONLY | O_CREAT, 446);
+		ei->outfd = open(io->path, O_WRONLY | O_CREAT, 446);//open(io->path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 	else if (io->type == TOKEN_APPEND)
 	{
