@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 13:16:12 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 13:16:37 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 16:05:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-int close_fd_in_parent(t_exec_info *ei);
-int close_all_pipes(t_exec_info *ei_head);
+int	close_fd_in_parent(t_exec_info *ei);
+int	close_all_pipes(t_exec_info *ei_head);
 
 #endif

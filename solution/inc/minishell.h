@@ -6,10 +6,9 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 13:22:42 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:51:14 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -100,7 +99,8 @@ typedef struct s_env
 	char				*value;
 }						t_env;
 
-typedef struct s_exec_info {
+typedef struct s_exec_info
+{
 	struct s_exec_info	*next;
 	struct s_exec_info	*prev;
 	int					outfd;

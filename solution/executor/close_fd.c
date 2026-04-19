@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 13:08:44 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 15:35:44 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:49:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ int	close_all_pipes(t_exec_info *ei_head)
 		if (ei_head->pipe_infd != -1)
 		{
 			close(ei_head->pipe_infd);
-			// printf("[CLOSE] closing fd=%d\n", ei_head->pipe_infd);
 			ei_head->pipe_infd = -1;
 		}
 		if (ei_head->pipe_outfd != -1)
 		{
 			close(ei_head->pipe_outfd);
-			// printf("[CLOSE] closing fd=%d\n", ei_head->pipe_outfd);
 			ei_head->pipe_outfd = -1;
 		}
 		ei_head = ei_head->next;

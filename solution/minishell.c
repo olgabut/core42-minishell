@@ -6,10 +6,9 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:46:34 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 16:09:27 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 #include "print_parsed_commands.h"
@@ -42,18 +41,11 @@ int	main(int argc, char **argv, char **envp)
 		init_shell(&sh, &env_list);
 		token_head = NULL;
 		if (!lexer(&sh, &token_head))
-		{
 			break ;
-		}
 		if (!parse(&sh, token_head))
-		{
 			break ;
-		}
-		// print_parsed_commands(sh.cmd_list);
 		if (!execute(&sh))
-		{
 			break ;
-		}
 		free_memory_links(&sh.memory_head);
 	}
 	free_env_list(&sh.env_list);
