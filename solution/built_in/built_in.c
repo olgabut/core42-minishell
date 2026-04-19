@@ -6,14 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/16 10:41:13 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 12:02:56 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 #include "built_in.h"
-#include "executor/apply_redirection.h"
 
 size_t	count_argv(char **argv)
 {

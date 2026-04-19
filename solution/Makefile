@@ -50,11 +50,13 @@ SRC_FILES = print_error/msh_error.c \
 	parser/cmd_list_manager.c \
 	executor/execute.c \
 	executor/exec_info_list_manager.c \
-	executor/redirection.c \
+	executor/prepare_exec_info_list.c \
+	executor/prepare_redirection.c \
 	executor/cmd_path.c \
-	executor/apply_redirection.c \
+	executor/redirect.c \
+	executor/close_fd.c \
 	executor/execute_built_in.c \
-	executor/external_cmd.c
+	executor/run_child_process.c
 
 TEST_NAME = tests
 TEST_DIR = test_src

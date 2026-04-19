@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   apply_redirection.h                                :+:      :+:    :+:   */
+/*   redirect.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:43:04 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/17 23:32:59 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:15:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef APPLY_REDIRECTION_H
-# define APPLY_REDIRECTION_H
+#ifndef REDIRECT_H
+# define REDIRECT_H
 
-# include "executor/execute.h"
 # include "minishell.h"
 
 /*
@@ -54,7 +53,7 @@ int	restore_stdio_from_backup(t_minishell *sh);
  *	This function is meant to be called, when built-in command should be 
  *	executed in parent process. It is higher level function to redirect I/O if
  *	needed and set backup file descriptors inside `sh` structure to be restored
- *	later. 
+ *	later.
  *
  *
  *	# RETURN VALUE
@@ -70,7 +69,5 @@ int	restore_stdio_from_backup(t_minishell *sh);
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int close_fd_in_parent(t_exec_info *ei);
-int close_all_pipes(t_exec_info *ei_head);
 
 #endif

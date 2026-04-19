@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/17 22:27:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:22:42 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,11 +161,6 @@ void	print_parsed_commands(t_cmd *cmds);
 bool	is_built_in_cmd(char *cmd_name);
 
 // executor
-/*
-*	# RETURN VALUE
-*
-*	returns exit code of executed command, in case of empty 's' returns 1
-*/
 int		execute(t_minishell *sh);
 
 #endif

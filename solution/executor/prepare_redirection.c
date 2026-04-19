@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   prepare_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/17 22:30:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:37:19 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor/redirection.h"
 #include "minishell.h"
 #include <fcntl.h>
 
@@ -20,7 +19,7 @@ static int	set_outfd(t_exec_info *ei, t_io *io)
 	{
 		if (ei->outfd != STDOUT_FILENO)
 			close(ei->outfd);
-		ei->outfd = open(io->path, O_WRONLY | O_CREAT, 446);//open(io->path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		ei->outfd = open(io->path, O_WRONLY | O_CREAT, 446);
 	}
 	else if (io->type == TOKEN_APPEND)
 	{
@@ -31,7 +30,7 @@ static int	set_outfd(t_exec_info *ei, t_io *io)
 	return (ei->outfd);
 }
 
-static int set_infd(t_exec_info *ei, t_io *io)
+static int	set_infd(t_exec_info *ei, t_io *io)
 {
 	int	pipefd[2];
 
@@ -60,8 +59,8 @@ static int set_infd(t_exec_info *ei, t_io *io)
 */
 int	prepare_redirections(t_exec_info *ei, t_io *io_head)
 {
-	t_io		*io;
-	int res;
+	t_io	*io;
+	int		res;
 
 	if (!io_head)
 		return (1);
@@ -79,5 +78,21 @@ int	prepare_redirections(t_exec_info *ei, t_io *io_head)
 		}
 		io = io->next;
 	}
+	return (1);
+}
+
+int	prepare_pipe_fd(t_exec_info *ei)
+{
+	int	fd_pipe[2];
+
+	if (!ei->prev)
+		return (1);
+	if (pipe(fd_pipe) < 0)
+	{
+		msh_error("pipe", "Pipe error");
+		return (0);
+	}
+	ei->prev->pipe_outfd = fd_pipe[1];
+	ei->pipe_infd = fd_pipe[0];
 	return (1);
 }

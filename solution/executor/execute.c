@@ -6,88 +6,47 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/17 23:22:08 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 14:46:55 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor/apply_redirection.h"
 #include "executor/execute_built_in.h"
-#include "executor/redirection.h"
-#include "executor/external_cmd.h"
-#include "executor/cmd_path.h"
 #include "executor/execute.h"
+#include "executor/close_fd.h"
+#include "executor/run_child_process.h"
 #include "minishell.h"
 #include <sys/wait.h>
 
-/* Return PID */
-int	execute_cmd(t_exec_info *ei, t_minishell *sh)
+static int	create_pids(pid_t **pids, int cmd_count, t_memory_info **memory)
 {
-	int	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		set_signals_in_child_process();
-		if (redirect_infd_in_child(ei) < 0
-			|| redirect_outfd_in_child(ei) < 0
-			|| close_all_pipes(sh->ei_list) < 0)
-		{
-			//msh_error();
-			exit (errno);
-		}
-		if (ei->is_built_in)
-			execute_built_in_child(ei, sh);
-		else
-			execute_external_in_child(ei);
-		exit(g_info.exit_code);
-	}
-	return (pid);
-}
-
-void analyse_status_from_child(int status)
-{
-	int	sig;
-
-	if (WIFEXITED(status))
-			g_info.exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		g_info.exit_code = 128 + sig;
-		if (sig == SIGQUIT)
-			write(1, "Quit (core dumped)\n", 19);
-		if (sig == SIGINT)
-			write(1, "\n", 1);
-	}
-}
-
-/*
-	Return
-		0 = we need to stop program (readirection errors or malloc errors)
-		1 = OK, continue
-*/
-int execute_in_child(t_minishell *sh, t_exec_info *ei_head)
-{
-	t_exec_info	*ei;
-	pid_t		*pids;
-	int			status;
-	int cmd_count;
-	int i;
-
-	ei = ei_head;
-	cmd_count = get_cmd_count_by_ei(ei_head);
-	pids = ft_calloc(cmd_count, sizeof(pid_t));
-	if (pids == NULL)
+	*pids = ft_calloc(cmd_count, sizeof(pid_t));
+	if (*pids == NULL)
 	{
 		msh_error("malloc", "Malloc Error");
 		return (0);
 	}
-	add_new_memory_link_for_control(&sh->memory_head, pids);
+	if (!add_new_memory_link_for_control(memory, *pids))
+	{
+		msh_error("malloc", "Malloc Error");
+		return (0);
+	}
+	return (1);
+}
+
+static int	run_child_processes(t_exec_info *ei_head, pid_t **pids,
+	t_minishell *sh)
+{
+	t_exec_info	*ei;
+	pid_t		*local_pids;
+	int			i;
+
 	i = 0;
+	ei = ei_head;
+	local_pids = *pids;
 	while (ei)
 	{
-		pids[i] = execute_cmd(ei, sh);
-		if (pids[i] == -1)
+		local_pids[i] = run_child_process(ei, sh);
+		if (local_pids[i] == -1)
 		{
 			msh_error("fork", "Fork error");
 			return (0);
@@ -95,38 +54,79 @@ int execute_in_child(t_minishell *sh, t_exec_info *ei_head)
 		i++;
 		ei = ei->next;
 	}
-	if (close_all_pipes(ei_head) < 0)
-		return (0);
+	return (1);
+}
+
+static int	wait_pids(pid_t *pids, int cmd_count)
+{
+	int	i;
+	int	status;
+	int	sig;
+
 	i = 0;
 	while (i < cmd_count)
 	{
 		waitpid(pids[i], &status, 0);
 		if (i == cmd_count - 1)
-			analyse_status_from_child(status);
+		{
+			if (WIFEXITED(status))
+				g_info.exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				sig = WTERMSIG(status);
+				g_info.exit_code = 128 + sig;
+				if (sig == SIGQUIT)
+					write(1, "Quit (core dumped)\n", 19);
+				if (sig == SIGINT)
+					write(1, "\n", 1);
+			}
+		}
 		i++;
 	}
 	return (1);
 }
 
-void print_ei_list(t_exec_info *ei_head)
+/*
+	Return
+		0 = we need to stop program (readirection errors or malloc errors)
+		1 = OK, continue
+*/
+static int	execute_cmd_in_child_process(t_minishell *sh, t_exec_info *ei_head)
 {
-	t_exec_info	*ei;
-	int i;
+	pid_t		*pids;
+	int			cmd_count;
 
-	ei = ei_head;
-	i = 0;
-	while(ei)
-	{
-		printf("%d ", i);
-		printf("ei %s \nis_built_in=%d\npath=%s\n", 
-			ei->argv[0], ei->is_built_in, ei->path);
-		printf("infd=%d\noutfd=%d\n", ei->infd, ei->outfd);
-		printf("pipe_infd=%d\npipe_outfd=%d\n", ei->pipe_infd, ei->pipe_outfd);
-		printf("----------------\n");
-		i++;
-		ei=ei->next;
-	}
+	cmd_count = get_cmd_count_by_ei(ei_head);
+	if (!create_pids(&pids, cmd_count, &sh->memory_head))
+		return (0);
+	if (!run_child_processes(ei_head, &pids, sh))
+		return (0);
+	if (close_all_pipes(ei_head) < 0)
+		return (0);
+	if (!wait_pids(pids, cmd_count))
+		return (0);
+	return (1);
 }
+
+// void print_ei_list(t_exec_info *ei_head)
+// {
+// 	t_exec_info	*ei;
+// 	int i;
+
+// 	ei = ei_head;
+// 	i = 0;
+// 	while(ei)
+// 	{
+// 		printf("%d ", i);
+// 		printf("ei %s \nis_built_in=%d\npath=%s\n",
+// 			ei->argv[0], ei->is_built_in, ei->path);
+// 		printf("infd=%d\noutfd=%d\n", ei->infd, ei->outfd);
+// 		printf("pipe_infd=%d\npipe_outfd=%d\n", ei->pipe_infd, ei->pipe_outfd);
+// 		printf("----------------\n");
+// 		i++;
+// 		ei=ei->next;
+// 	}
+// }
 
 /*
 	Return
@@ -144,10 +144,9 @@ int	execute(t_minishell *sh)
 	if (!ei_head || !ei_head->argv || !ei_head->argv[0])
 		return (1);
 	sh->ei_list = ei_head;
-	//print_ei_list(ei_head);
 	if (ei_head->next == NULL && ei_head->is_built_in)
-		return(execute_built_in_parent(ei_head, sh));
+		return (execute_builtin_cmd_in_parent_process(ei_head, sh));
 	else
-		return(execute_in_child(sh, ei_head));
+		return (execute_cmd_in_child_process(sh, ei_head));
 	return (1);
 }

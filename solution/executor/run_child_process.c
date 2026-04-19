@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   external_cmd.c                                     :+:      :+:    :+:   */
+/*   run_child_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/17 21:49:28 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:36:51 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "executor/apply_redirection.h"
-#include "executor/cmd_path.h"
-#include "executor/redirection.h"
 #include "minishell.h"
+#include "executor/execute_built_in.h"
+#include "executor/redirect.h"
+#include "executor/close_fd.h"
 #include <sys/wait.h>
 
 /*
@@ -31,11 +30,10 @@
 		8-15   low 8 bits of value passed to _exit/exit or returned by main,
 		       or signal that caused child to stop/continue
 */
-void	execute_external_in_child(t_exec_info *ei)
+static void	execute_external_cmd_in_child_process(t_exec_info *ei)
 {
 	if (execve(ei->path, ei->argv, ei->envp) == -1)
 	{
-		// msh_error(ei->argv[0], NULL);
 		if (errno == ENOENT)
 			exit(EXIT_CMD_NOT_FOUND);
 		else if (errno == EACCES)
@@ -44,4 +42,28 @@ void	execute_external_in_child(t_exec_info *ei)
 			exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
+}
+
+/* Return PID */
+int	run_child_process(t_exec_info *ei, t_minishell *sh)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		set_signals_in_child_process();
+		if (redirect_infd_in_child(ei) < 0
+			|| redirect_outfd_in_child(ei) < 0
+			|| close_all_pipes(sh->ei_list) < 0)
+		{
+			exit(errno);
+		}
+		if (ei->is_built_in)
+			execute_builtin_cmd_in_child_process(ei, sh);
+		else
+			execute_external_cmd_in_child_process(ei);
+		exit(g_info.exit_code);
+	}
+	return (pid);
 }
