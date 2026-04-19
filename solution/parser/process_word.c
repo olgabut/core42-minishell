@@ -1,55 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_word.c                                       :+:      :+:    :+:   */
+/*   process_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:03:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/06 11:25:33 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 22:32:22 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_split_by_chars.h"
-#include "parser.h"
-
-t_list	*apply_ifs(t_minishell *mshell, char *word)
-{
-	char	*ifs;
-	t_list	*fields;
-
-	ifs = get_env_value(mshell->env_list, "IFS");
-	if (!ifs || !*ifs)
-		ifs = " \t\n";
-	fields = ft_split_by_chars(word, ifs);
-	free(word);
-	return (fields);
-}
-
-// char	*check_word(t_minishell *mshell, char *word)
-// {
-// 	enum e_quote	flag;
-// 	char			*trimmed;
-// 	char			*expanded;
-
-// 	if (!word)
-// 		return (NULL);
-// 	flag = NONE;
-// 	if (word[0] == SINGLE || word[0] == DOUBLE)
-// 		flag = word[0];
-// 	if (flag)
-// 		trimmed = trim_quotes(word, flag);
-// 	if (flag == SINGLE)
-// 		expanded = trimmed;
-// 	else
-// 	{
-// 		expanded = expand_variables(mshell, trimmed);
-// 		free(trimmed);
-// 		if (!expanded)
-// 			return (NULL);
-// 	}
-// 	return (expanded);
-// }
+#include "parser/expand.h"
+#include "parser/parser_utils.h"
 
 /*
 	Result will be in <substr> from <str> up to the character quote
@@ -79,7 +42,7 @@ static int	substr_in_quotes(char **substr, char *str, int quote)
 	 <substr_list> = 123 -> "abc" -> 555 -> 'dd"d' -> 'ccc' -> 8 -> NULL
 	It needs to understand where expand env and apply ifs
 */
-static void	cut_word(t_list **substr_list_head, char *word)
+static void	cut_word_at_quots(t_list **substr_list_head, char *word)
 {
 	int		i;
 	char	*substr;
@@ -107,7 +70,7 @@ static void	cut_word(t_list **substr_list_head, char *word)
 		ft_lstadd_back(substr_list_head, ft_lstnew(substr));
 }
 
-void	remove_quotes(t_list **substr_list)
+static void	remove_quotes(t_list **substr_list)
 {
 	t_list	*node;
 	char	*str;
@@ -134,12 +97,11 @@ void	remove_quotes(t_list **substr_list)
 	}
 }
 
-char	*check_word(t_minishell *mshell, char *word)
+char	*process_word(t_minishell *mshell, char *word)
 {
 	t_list	*substr_list;
 
-	(void)*mshell;
-	cut_word(&substr_list, word);
+	cut_word_at_quots(&substr_list, word);
 	expand(mshell, &substr_list);
 	remove_quotes(&substr_list);
 	return (combine_str_from_list(&substr_list));

@@ -6,23 +6,36 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/09 22:16:19 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/14 22:31:36 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parser.h"
+#include "parser/parse.h"
+#include "parser/cmd_list_manager.h"
 
-static t_cmd	*init_cmd(t_minishell *mshell)
+static int	parse_tokens(t_minishell *sh, t_token *tokens, t_cmd **cmd_head)
 {
-	t_cmd	*cmd;
+	enum e_token_type	redir_type;
 
-	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->next = NULL;
-	add_new_memory_link_for_control(&mshell->memory_head, cmd);
-	return (cmd);
+	while (tokens)
+	{
+		if (tokens->type == TOKEN_PIPE)
+			add_new_cmd(cmd_head, create_empty_cmd(sh));
+		else if (tokens->type == TOKEN_WORD)
+			parse_word(sh, get_last_cmd(cmd_head), tokens->value);
+		else
+		{
+			redir_type = tokens->type;
+			tokens = tokens->next;
+			if (!parse_redirection(sh, get_last_cmd(cmd_head),
+					redir_type, tokens->value))
+				return (0);
+		}
+		if (tokens)
+			tokens = tokens->next;
+	}
+	return (1);
 }
 
 /*
@@ -30,51 +43,25 @@ static t_cmd	*init_cmd(t_minishell *mshell)
 		0 = we need to stop program (malloc errors or ambiguous redirect)
 		1 = OK, continue
 */
-int	parse(t_minishell *mshell, t_token *tokens)
+int	parse(t_minishell *sh, t_token *tokens)
 {
-	t_cmd	*cmd;
 	t_cmd	*cmd_head;
-	t_list	*temp_args;
+	t_cmd	*cmd;
 
 	if (!tokens || !tokens->value)
 		return (1);
-	cmd_head = init_cmd(mshell);
+	cmd_head = create_empty_cmd(sh);
+	if (!cmd_head)
+		return (0);
+	if (!parse_tokens(sh, tokens, &cmd_head))
+		return (0);
+	sh->cmd_list = cmd_head;
 	cmd = cmd_head;
-	temp_args = NULL;
-	while (tokens)
+	while (cmd)
 	{
-		if (tokens->type == TOKEN_PIPE)
-		{
-			cmd->args = ft_strvec_from_word_list(temp_args);
-			add_new_memory_link_for_control(&mshell->memory_head, cmd->args);
-			ft_lstclear(&temp_args, NULL);
-			cmd->next = init_cmd(mshell);
-			cmd = cmd->next;
-		}
-		else if (is_redirection(tokens->type))
-		{
-			if (!add_io(mshell, cmd, &tokens))
-				return (0);
-		}
-		else if (tokens->type == TOKEN_HEREDOC)
-		{
-			if (!add_here_doc(mshell, cmd, &tokens))
-			{
-				mshell->cmd_list = NULL;
-				return (1);// NULL
-			}
-		}
-		else
-			add_arg(mshell, &temp_args, tokens->value);
-		if (tokens)
-			tokens = tokens->next;
+		cmd->args = ft_strvec_from_word_list(cmd->args_list);
+		add_new_memory_link_for_control(&sh->memory_head, cmd->args);
+		cmd = cmd->next;
 	}
-	if (temp_args)
-	{
-		cmd->args = ft_strvec_from_word_list(temp_args);
-		add_new_memory_link_for_control(&mshell->memory_head, cmd->args);
-		ft_lstclear(&temp_args, NULL);
-	}
-	mshell->cmd_list = cmd_head;
 	return (1);
 }

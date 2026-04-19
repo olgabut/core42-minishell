@@ -6,15 +6,19 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:13:43 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/14 13:09:44 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:46:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
-#include "executor/apply_redirection.h"
-#include "executor/execute_built_in.h"
+#include "executor/close_fd.h"
+#include "executor/redirect.h"
 
-static void	choose_built_in(t_exec_info *ei, t_minishell *sh)
+/*
+	Return	1  - ok
+			0  - need_exit
+*/
+static int	choose_built_in(t_exec_info *ei, t_minishell *sh)
 {
 	bool	need_exit;
 
@@ -32,28 +36,31 @@ static void	choose_built_in(t_exec_info *ei, t_minishell *sh)
 		g_info.exit_code = built_in_env(ei->argv, sh->env_list);
 	need_exit = false;
 	if (ft_strcmp(ei->argv[0], "exit") == 0)
+	{
 		g_info.exit_code = built_in_exit(ei->argv, &need_exit);
-}
-int	execute_built_in_parent(t_exec_info *ei, t_minishell *sh)
-{
-	if (redirect_in_parent(sh, ei))
-		return (-2);
-	if (!ei->argv || !ei->argv[0])
-		return (-1);
-	choose_built_in(ei, sh);
-	if (restore_stdio(sh) < 0)
-		return (errno);
-	return (g_info.exit_code);
+		return (!need_exit);
+	}
+	return (true);
 }
 
-void	execute_built_in_child(t_exec_info *ei, t_minishell *sh)
+int	execute_builtin_cmd_in_parent_process(t_exec_info *ei, t_minishell *sh)
 {
-	if (redirect_simple(ei))
-	{
-		ft_fprintf(STDERR_FILENO, "ms: %s\n", strerror(errno));
-		exit (-1);
-	}
+	int	res;
+
 	if (!ei->argv || !ei->argv[0])
+		return (1);
+	if (redirect_in_parent(sh, ei))
+		return (1);
+	res = choose_built_in(ei, sh);
+	close_fd_in_parent(ei);
+	if (restore_stdio_from_backup(sh) < 0)
+		msh_error("redirection", NULL);
+	return (res);
+}
+
+void	execute_builtin_cmd_in_child_process(t_exec_info *ei, t_minishell *sh)
+{
+	if (!ei || !ei->argv || !ei->argv[0])
 		exit (-1);
 	choose_built_in(ei, sh);
 	exit(g_info.exit_code);

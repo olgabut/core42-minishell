@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_variables.c                                 :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/08 09:36:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 16:08:03 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "parser/parser_utils.h"
 
 /* Return var with '$' (first character)*/
 static char	*get_var_name(const char *word)
@@ -72,6 +72,7 @@ static char	*get_value_from_env(t_env *env_list, char *key)
 		return (ft_strdup(""));
 }
 
+//ifs on value with flag need_open_ifd == true (before unpdate_content)
 static char	*expand_variables(t_minishell *mshell, char *word)
 {
 	t_list	*substr_for_expand;
@@ -91,7 +92,6 @@ static char	*expand_variables(t_minishell *mshell, char *word)
 				value = ft_itoa(g_info.exit_code);
 			else
 				value = get_value_from_env(mshell->env_list, substr + 1);
-			//ifs on value with flag need_open_ifd == true
 			update_content(&node, value);
 		}
 		node = node->next;

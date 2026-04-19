@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   apply_redirection.h                                :+:      :+:    :+:   */
+/*   redirect.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:43:04 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/03 10:01:40 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:15:39 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef APPLY_REDIRECTION_H
-# define APPLY_REDIRECTION_H
+#ifndef REDIRECT_H
+# define REDIRECT_H
 
-# include "executor/execute.h"
 # include "minishell.h"
 
 /*
@@ -25,7 +24,8 @@
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int	redirect_simple(t_exec_info *ei);
+int	redirect_infd_in_child(t_exec_info *ei);
+int	redirect_outfd_in_child(t_exec_info *ei);
 
 /*
  *	# DESCRIPTION
@@ -47,19 +47,19 @@ int	redirect_in_parent(t_minishell *sh, t_exec_info *ei);
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int	restore_stdio(t_minishell *sh);
+int	restore_stdio_from_backup(t_minishell *sh);
 /*
  *	# DESCRIPTION
  *	This function is meant to be called, when built-in command should be 
  *	executed in parent process. It is higher level function to redirect I/O if
  *	needed and set backup file descriptors inside `sh` structure to be restored
- *	later. 
+ *	later.
  *
  *
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
+// int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
 
 /*
  *	# DESCRIPTION
@@ -69,5 +69,5 @@ int	redirect_built_in(t_cmd *cmd, t_minishell *sh);
  *	# RETURN VALUE
  *	On success, retruns 0. On failure returns -1.
  */
-int close_in_parent(t_exec_info *ei);
+
 #endif

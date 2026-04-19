@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   apply_redirection.c                                :+:      :+:    :+:   */
+/*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/13 20:36:39 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:45:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor/apply_redirection.h"
-#include "executor/redirection.h"
+#include "minishell.h"
 
-int	redirect_simple(t_exec_info *ei)
+int	redirect_infd_in_child(t_exec_info *ei)
 {
 	if (ei->infd != STDIN_FILENO)
 	{
-		if (dup2(ei->infd, STDIN_FILENO) < 0)
-			return (-1);
-		close(ei->infd);
+		dup2(ei->infd, STDIN_FILENO);
+		if (ei->pipe_infd != -1)
+			close(ei->pipe_infd);
 	}
+	else if (ei->pipe_infd != -1)
+	{
+		dup2(ei->pipe_infd, STDIN_FILENO);
+	}
+	return (0);
+}
+
+int	redirect_outfd_in_child(t_exec_info *ei)
+{
 	if (ei->outfd != STDOUT_FILENO)
 	{
-		if (dup2(ei->outfd, STDOUT_FILENO) < 0)
-			return (-1);
-		close(ei->outfd);
+		dup2(ei->outfd, STDOUT_FILENO);
+		if (ei->pipe_outfd != -1)
+			close(ei->pipe_outfd);
+	}
+	else if (ei->pipe_outfd != -1)
+	{
+		dup2(ei->pipe_outfd, STDOUT_FILENO);
 	}
 	return (0);
 }
@@ -51,7 +63,7 @@ int	redirect_in_parent(t_minishell *sh, t_exec_info *ei)
 	return (0);
 }
 
-int	restore_stdio(t_minishell *sh)
+int	restore_stdio_from_backup(t_minishell *sh)
 {
 	if (sh->stdin_backup != STDIN_FILENO)
 	{
@@ -65,29 +77,5 @@ int	restore_stdio(t_minishell *sh)
 			return (-1);
 		sh->stdout_backup = STDOUT_FILENO;
 	}
-	return (0);
-}
-
-int	redirect_built_in(t_cmd *cmd, t_minishell *sh)
-{
-	t_exec_info	*ei;
-
-	if (!cmd->io_list)
-		return (-1);
-	ei = exec_info_init(cmd->args, sh->env_list, &sh->memory_head);
-	if (!ei)
-		return (18);
-	prepare_redirs_before_exec(cmd, ei);
-	return (redirect_in_parent(sh, ei));
-}
-
-int	close_in_parent(t_exec_info *ei)
-{
-	if (ei->infd != STDIN_FILENO)
-		if (close(ei->infd) < -1)
-			return (-1);
-	if (ei->outfd != STDOUT_FILENO)
-		if (close(ei->outfd) < -1)
-			return (-1);
 	return (0);
 }

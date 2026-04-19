@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print_parsed_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:50:30 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/24 17:39:20 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/14 22:32:07 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
+#include "parser/parser_utils.h"
 
 static char	*redir_type_to_str(enum e_token_type type)
 {
@@ -84,6 +85,7 @@ void	print_parsed_commands(t_cmd *cmds)
 			print_io_list(cmd->io_list);
 		else
 			printf("  IO list: (empty)\n");
+		print_list(cmd->args_list, "arg_list");
 		printf("\n");
 		cmd = cmd->next;
 	}

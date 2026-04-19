@@ -6,125 +6,127 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 15:01:30 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 14:46:55 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor/apply_redirection.h"
 #include "executor/execute_built_in.h"
-#include "executor/redirection.h"
-#include "executor/external_cmd.h"
-#include "executor/cmd_path.h"
+#include "executor/execute.h"
+#include "executor/close_fd.h"
+#include "executor/run_child_process.h"
 #include "minishell.h"
 #include <sys/wait.h>
 
-int	execute_cmd(t_exec_info *ei, t_minishell *sh, bool need_fork, int pipefd)
+static int	create_pids(pid_t **pids, int cmd_count, t_memory_info **memory)
 {
-	int	pid;
-
-	pid = 0;
-	if (is_built_in_cmd(ei->argv[0]))
-		if (need_fork)
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				set_signals_for_child_proces();
-				if (pipefd != -1)
-					close(pipefd);
-				execute_built_in_child(ei, sh);
-			}
-		}
-		else
-			return (execute_built_in_parent(ei, sh));
-	else
+	*pids = ft_calloc(cmd_count, sizeof(pid_t));
+	if (*pids == NULL)
 	{
-		find_cmd_path(ei, sh->env_list, &sh->memory_head);
-		pid = fork();
-		if (pid == 0)
-		{
-			set_signals_for_child_proces();
-			if (pipefd != -1)
-				close(pipefd);
-			external_child_process(ei);
-		}
+		msh_error("malloc", "Malloc Error");
+		return (0);
 	}
-	close_in_parent(ei);
-	return (pid);
-}
-/*
- * # RETURN VALUE
- * on success returns 1, on failure return 0
-*/
-static int	execute_pipeline(t_minishell *sh)
-{
-	t_cmd		*cur_cmd;
-	int			prev_read_fd;
-	t_exec_info	*ei;
-	int			pid[MAX_PIPE_COUNT];
-	int			i = 0;
-	int			status;
-
-	prev_read_fd = -1;
-	cur_cmd = sh->cmd_list;
-	while (cur_cmd)
+	if (!add_new_memory_link_for_control(memory, *pids))
 	{
-		ei = exec_info_init(cur_cmd->args, sh->env_list, &sh->memory_head);
-		if (!ei)
-		{
-			msh_error("memory", "Memory allocation error");
-			return (0);
-		}
-		if (prev_read_fd != -1)
-		{
-			ei->infd = prev_read_fd;
-			prev_read_fd = -1;
-		}
-		if (cur_cmd->next)
-		{
-			prev_read_fd = create_pipefd(ei);
-			if (prev_read_fd == -1)
-			{
-				msh_error("read_fd", NULL);
-				return (0);
-			}
-		}
-		if (prepare_redirs_before_exec(cur_cmd, ei) != 0)
-		{
-			msh_error("redirections", NULL);
-			return (0);
-		}
-		pid[i] = execute_cmd(ei, sh, cur_cmd->next != NULL, prev_read_fd);
-		if (pid[i] < 0)
-			break ;
-		i++;
-		cur_cmd = cur_cmd->next;
-	}
-	while (i > 0)
-	{
-		i--;
-		if (pid[i] != 0)
-			waitpid(pid[i], &status, 0);
-		g_info.exit_code = WEXITSTATUS(status);
+		msh_error("malloc", "Malloc Error");
+		return (0);
 	}
 	return (1);
 }
 
-static int	execute_single_cmd(t_minishell *sh)
+static int	run_child_processes(t_exec_info *ei_head, pid_t **pids,
+	t_minishell *sh)
 {
-	int	res;
+	t_exec_info	*ei;
+	pid_t		*local_pids;
+	int			i;
 
-	if (sh->cmd_list && sh->cmd_list->args && sh->cmd_list->args[0]
-		&& is_built_in_cmd(sh->cmd_list->args[0]))
+	i = 0;
+	ei = ei_head;
+	local_pids = *pids;
+	while (ei)
 	{
-		res = execute_built_in_cmd(sh->cmd_list, sh);
-		if (restore_stdio(sh) < 0)
-			res = 0;
-		return (res);
+		local_pids[i] = run_child_process(ei, sh);
+		if (local_pids[i] == -1)
+		{
+			msh_error("fork", "Fork error");
+			return (0);
+		}
+		i++;
+		ei = ei->next;
 	}
-	else
-		return (execute_external_cmd(sh->cmd_list, sh));
+	return (1);
 }
+
+static int	wait_pids(pid_t *pids, int cmd_count)
+{
+	int	i;
+	int	status;
+	int	sig;
+
+	i = 0;
+	while (i < cmd_count)
+	{
+		waitpid(pids[i], &status, 0);
+		if (i == cmd_count - 1)
+		{
+			if (WIFEXITED(status))
+				g_info.exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				sig = WTERMSIG(status);
+				g_info.exit_code = 128 + sig;
+				if (sig == SIGQUIT)
+					write(1, "Quit (core dumped)\n", 19);
+				if (sig == SIGINT)
+					write(1, "\n", 1);
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+/*
+	Return
+		0 = we need to stop program (readirection errors or malloc errors)
+		1 = OK, continue
+*/
+static int	execute_cmd_in_child_process(t_minishell *sh, t_exec_info *ei_head)
+{
+	pid_t		*pids;
+	int			cmd_count;
+
+	cmd_count = get_cmd_count_by_ei(ei_head);
+	if (!create_pids(&pids, cmd_count, &sh->memory_head))
+		return (0);
+	if (!run_child_processes(ei_head, &pids, sh))
+		return (0);
+	if (close_all_pipes(ei_head) < 0)
+		return (0);
+	if (!wait_pids(pids, cmd_count))
+		return (0);
+	return (1);
+}
+
+// void print_ei_list(t_exec_info *ei_head)
+// {
+// 	t_exec_info	*ei;
+// 	int i;
+
+// 	ei = ei_head;
+// 	i = 0;
+// 	while(ei)
+// 	{
+// 		printf("%d ", i);
+// 		printf("ei %s \nis_built_in=%d\npath=%s\n",
+// 			ei->argv[0], ei->is_built_in, ei->path);
+// 		printf("infd=%d\noutfd=%d\n", ei->infd, ei->outfd);
+// 		printf("pipe_infd=%d\npipe_outfd=%d\n", ei->pipe_infd, ei->pipe_outfd);
+// 		printf("----------------\n");
+// 		i++;
+// 		ei=ei->next;
+// 	}
+// }
 
 /*
 	Return
@@ -133,10 +135,18 @@ static int	execute_single_cmd(t_minishell *sh)
 */
 int	execute(t_minishell *sh)
 {
+	t_exec_info	*ei_head;
+
 	if (!sh || !sh->cmd_list || !sh->cmd_list->args)
 		return (1);
-	if (sh->cmd_list->next)
-		return (execute_pipeline(sh));
+	if (!prepare_exec_info_list(&ei_head, sh))
+		return (1);
+	if (!ei_head || !ei_head->argv || !ei_head->argv[0])
+		return (1);
+	sh->ei_list = ei_head;
+	if (ei_head->next == NULL && ei_head->is_built_in)
+		return (execute_builtin_cmd_in_parent_process(ei_head, sh));
 	else
-		return (execute_single_cmd(sh));
+		return (execute_cmd_in_child_process(sh, ei_head));
+	return (1);
 }

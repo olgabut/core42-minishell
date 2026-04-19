@@ -6,10 +6,9 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/12 10:08:52 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:51:14 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -88,6 +87,7 @@ typedef struct s_cmd
 {
 	struct s_cmd		*next;
 	char				**args;
+	t_list				*args_list;
 	char				*path;
 	t_io				*io_list;
 }						t_cmd;
@@ -99,10 +99,25 @@ typedef struct s_env
 	char				*value;
 }						t_env;
 
+typedef struct s_exec_info
+{
+	struct s_exec_info	*next;
+	struct s_exec_info	*prev;
+	int					outfd;
+	int					pipe_infd;
+	int					pipe_outfd;
+	int					infd;
+	char				**argv;
+	char				**envp;
+	char				*path;
+	bool				is_built_in;
+}	t_exec_info;
+
 typedef struct s_minishell
 {
 	t_env				*env_list;
 	t_cmd				*cmd_list;
+	t_exec_info			*ei_list;
 	t_memory_info		*memory_head;
 	int					stdin_backup;
 	int					stdout_backup;
@@ -122,7 +137,7 @@ void	msh_error(char *reason, char *message);
 
 // signals
 void	set_signals_for_common_code(void);
-void	set_signals_for_child_proces(void);
+void	set_signals_in_child_process(void);
 int		heredoc_rl_getc(FILE *stream);
 
 // lexer
@@ -140,17 +155,12 @@ char	**get_env_array(t_memory_info **memory, t_env *env);
 
 // parser
 int		parse(t_minishell *mshell, t_token *tokens);
+void	print_parsed_commands(t_cmd *cmds);
 
 // built_in
 bool	is_built_in_cmd(char *cmd_name);
-int		execute_built_in_cmd(t_cmd *cmd, t_minishell *sh);
 
 // executor
-/*
-*	# RETURN VALUE
-*
-*	returns exit code of executed command, in case of empty 's' returns 1
-*/
 int		execute(t_minishell *sh);
 
 #endif

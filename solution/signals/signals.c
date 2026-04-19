@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:35:19 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/10 12:28:53 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/19 16:15:07 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sigint_handler(int sig)
 	}
 }
 
-void	set_signals_for_child_proces(void)
+void	set_signals_in_child_process(void)
 {
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
 		perror("signal");
