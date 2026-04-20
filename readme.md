@@ -84,7 +84,7 @@
 | `echo '$HOME'` | 0 | `$HOME` |
 | **Exit status** |||
 | `ls`<br/>`echo $?` | 0 | `0` |
-| `invalid`<br/>`echo $?`| ≠0 | Not 0 |
+| `invalid`<br/>`echo $?`| 127 | Not 0 exit_status|
 | **Pipes** |||
 | `ls \| cat` | 0 | List of files of the current directory in a column |
 | `ls \| grep .c` | 0 | Filtered list of files |
