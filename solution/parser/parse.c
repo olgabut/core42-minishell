@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/14 22:31:36 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:23:35 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ int	parse(t_minishell *sh, t_token *tokens)
 	if (!cmd_head)
 		return (0);
 	if (!parse_tokens(sh, tokens, &cmd_head))
+	{
+		if (g_info.sigint)
+			return (1);
 		return (0);
+	}
 	sh->cmd_list = cmd_head;
 	cmd = cmd_head;
 	while (cmd)

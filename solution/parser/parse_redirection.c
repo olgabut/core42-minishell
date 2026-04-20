@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:07:52 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 22:31:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:37:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	parse_redirection(t_minishell *sh, t_cmd *cmd,
 	{
 		msh_error(word, "ambiguous redirect");
 		ft_lstclear(&word_list, free);
+		g_info.exit_code = 1;
 		return (0);
 	}
 	io_node = create_io_node(redir_type, word_list->content);

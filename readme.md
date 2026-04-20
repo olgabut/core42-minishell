@@ -99,6 +99,8 @@
 | `cat << EOF` | 0 | Input until EOF |
 | `cat << EOF \| wc -l` | 0 | Count lines until EOF |
 | `<< EOF` | 0 | Nothing |
+| !!!!!`export FILE=Makefile`<br/>`cat < $FILE` | 0 | Makefile output |
+| !!!!!`export NOFILE=no_file`<br/>`cat < $NOFILE` | 1 | `minishell: no_file: No such file or directory` |
 | **Built in command - echo** |||
 | `echo -n hello` | 0 | `hello` without \n |
 | `echo -nnnn hi` | 0 | `hi` without \n |
@@ -145,7 +147,7 @@
 | readline has text + Ctrl+C | 130 | New line |
 | `sleep 4` + Ctrl+C | 130 | New line |
 | `cat` + Ctrl+C | 130 | New line |
-| `cat << EOF`<br/>`abc` + Ctrl+C | 130 | New line (!Leaks in readline)|
+| !!!!!`cat << EOF`<br/>`abc` + Ctrl+C | 130 | New line (!Leaks in readline)|
 
 
 
