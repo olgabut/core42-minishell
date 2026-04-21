@@ -100,7 +100,6 @@
 | `cat << EOF \| wc -l` | 0 | Count lines until EOF |
 | `<< EOF` | 0 | Nothing |
 | `export FILE=Makefile`<br/>`cat < $FILE` | 0 | Makefile output |
-| !!!!!`export NOFILE=no_file`<br/>`cat < $NOFILE` | 1 | `minishell: no_file: No such file or directory` |
 | `export MANYFILES="f1 f2 f3"`<br/>`cat < $MANYFILES` | 1 | `minishell: $MANYFILES: ambiguous redirect` |
 | **Built in command - echo** |||
 | `echo -n hello` | 0 | `hello` without \n |
