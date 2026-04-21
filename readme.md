@@ -99,8 +99,9 @@
 | `cat << EOF` | 0 | Input until EOF |
 | `cat << EOF \| wc -l` | 0 | Count lines until EOF |
 | `<< EOF` | 0 | Nothing |
-| !!!!!`export FILE=Makefile`<br/>`cat < $FILE` | 0 | Makefile output |
+| `export FILE=Makefile`<br/>`cat < $FILE` | 0 | Makefile output |
 | !!!!!`export NOFILE=no_file`<br/>`cat < $NOFILE` | 1 | `minishell: no_file: No such file or directory` |
+| `export MANYFILES="f1 f2 f3"`<br/>`cat < $MANYFILES` | 1 | `minishell: $MANYFILES: ambiguous redirect` |
 | **Built in command - echo** |||
 | `echo -n hello` | 0 | `hello` without \n |
 | `echo -nnnn hi` | 0 | `hi` without \n |
@@ -123,6 +124,8 @@
 | `export C=abc D=def` | 0 | Add 2 varuables |
 | `echo $A` | 0 | Empty line ($A=null)
 | `echo $B` | 0 | `3` |
+| `export =1` | 1 | `minishell: export: '=1': not a valid identifier` |
+| `export 2A=4` | 1 | `minishell: export: '2A=4': not a valid identifier` |
 | **Built in command - unset** |||
 | `unset` | 0 | No changes |
 | `unset D` | 0 | Delete $D variable (chack using `export` or `env` cmd) |
@@ -144,10 +147,14 @@
 | `echo hi` | 0 | All built in commands should work |
 | **Signals** |||
 | Ctrl+D | | Exit minishell |
-| readline has text + Ctrl+C | 130 | New line |
-| `sleep 4` + Ctrl+C | 130 | New line |
-| `cat` + Ctrl+C | 130 | New line |
-| !!!!!`cat << EOF`<br/>`abc` + Ctrl+C | 130 | New line (!Leaks in readline)|
+| `echo ` + Ctrl+C | 130 | New line (readline stage)|
+| `sleep 4` + Ctrl+C | 130 | New line (child process stage) |
+| `cat` + Ctrl+C | 130 | New line (child process stage) |
+| `cat << EOF`<br/>`abc` + Ctrl+C | 130 | New line (heredoc stage)|
+| `echo ` + Ctrl+\ | | Nothing |
+| `sleep 4` + Ctrl+\ | 131 | `^\Quit (core dumped)` (child process stage) |
+
+
 
 
 

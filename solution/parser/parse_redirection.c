@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:07:52 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/20 12:37:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/21 09:58:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ static t_list	*apply_ifs(t_minishell *mshell, char *word)
 }
 
 /*
-	Return 0 - error
-		   1 - ok
+Return
+		0 - error (critical like malloc error - stop program)
+		1 - ok (all is good)
+		-1 - logic error or stop signal (can't execute cmd, but continue prog)
 */
 int	parse_redirection(t_minishell *sh, t_cmd *cmd,
 	enum e_token_type redir_type, char *word)
@@ -51,7 +53,7 @@ int	parse_redirection(t_minishell *sh, t_cmd *cmd,
 		msh_error(word, "ambiguous redirect");
 		ft_lstclear(&word_list, free);
 		g_info.exit_code = 1;
-		return (0);
+		return (-1);
 	}
 	io_node = create_io_node(redir_type, word_list->content);
 	if (!io_node)
