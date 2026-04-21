@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:34:57 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/14 22:31:36 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/21 10:02:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,16 @@
 #include "parser/parse.h"
 #include "parser/cmd_list_manager.h"
 
+/*
+	Result:
+		0 - error (critical like malloc error - stop program)
+		1 - ok (all is good)
+		-1 - logic error or stop signal (can't execute cmd, but continue prog)
+*/
 static int	parse_tokens(t_minishell *sh, t_token *tokens, t_cmd **cmd_head)
 {
 	enum e_token_type	redir_type;
+	int					res;
 
 	while (tokens)
 	{
@@ -28,9 +35,10 @@ static int	parse_tokens(t_minishell *sh, t_token *tokens, t_cmd **cmd_head)
 		{
 			redir_type = tokens->type;
 			tokens = tokens->next;
-			if (!parse_redirection(sh, get_last_cmd(cmd_head),
-					redir_type, tokens->value))
-				return (0);
+			res = parse_redirection(sh, get_last_cmd(cmd_head),
+					redir_type, tokens->value);
+			if (res != 1)
+				return (res);
 		}
 		if (tokens)
 			tokens = tokens->next;
@@ -53,8 +61,10 @@ int	parse(t_minishell *sh, t_token *tokens)
 	cmd_head = create_empty_cmd(sh);
 	if (!cmd_head)
 		return (0);
-	if (!parse_tokens(sh, tokens, &cmd_head))
-		return (0);
+	if (parse_tokens(sh, tokens, &cmd_head) != 1)
+		return (1);
+	if (g_info.sigint)
+		return (1);
 	sh->cmd_list = cmd_head;
 	cmd = cmd_head;
 	while (cmd)

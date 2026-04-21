@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:07:52 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 22:31:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/21 11:14:20 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,30 @@ static t_list	*apply_ifs(t_minishell *mshell, char *word)
 	return (fields);
 }
 
+static int	check_redirections(t_list	*word_list)
+{
+	if (ft_lstsize(word_list) != 1)
+	{
+		msh_error(word_list->content, "ambiguous redirect");
+		ft_lstclear(&word_list, free);
+		g_info.exit_code = 1;
+		return (-1);
+	}
+	if (access(word_list->content, X_OK) != 0)
+	{
+		msh_error(word_list->content, "No such file or directory");
+		ft_lstclear(&word_list, free);
+		g_info.exit_code = 1;
+		return (-1);
+	}
+	return (0);
+}
+
 /*
-	Return 0 - error
-		   1 - ok
+Return
+		0 - error (critical like malloc error - stop program)
+		1 - ok (all is good)
+		-1 - logic error or stop signal (can't execute cmd, but continue prog)
 */
 int	parse_redirection(t_minishell *sh, t_cmd *cmd,
 	enum e_token_type redir_type, char *word)
@@ -46,12 +67,8 @@ int	parse_redirection(t_minishell *sh, t_cmd *cmd,
 		&& redir_type != TOKEN_REDIR_IN)
 		return (1);
 	word_list = apply_ifs(sh, process_word(sh, word));
-	if (ft_lstsize(word_list) != 1)
-	{
-		msh_error(word, "ambiguous redirect");
-		ft_lstclear(&word_list, free);
-		return (0);
-	}
+	if (check_redirections(word_list) != 1)
+		return (-1);
 	io_node = create_io_node(redir_type, word_list->content);
 	if (!io_node)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/05 22:11:05 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:00:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static int	change_to_old_directory(t_env **env)
 		cd /: Change to the root directory
 
 	return:
-		(-1) - error (it's not exit status, the command wasn't completed)
 		(0) - success exit status
 		(1..255) - error exit status
 */
@@ -89,6 +88,5 @@ int	built_in_cd(char **argv, t_env **env)
 		return (change_to_home_directory(env));
 	if (ft_strcmp(argv[1], "-") == 0)
 		return (change_to_old_directory(env));
-	change_directory(env, argv[1], false);
-	return (EXIT_SUCCESS);
+	return (change_directory(env, argv[1], false));
 }

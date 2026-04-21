@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/19 16:08:03 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/21 11:43:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ static char	*expand_variables(t_minishell *mshell, char *word)
 		substr = (char *)(node->content);
 		if (substr && substr[0] == '$')
 		{
-			if (substr[1] == '?')
+			if (substr[1] == '\0')
+				value = ft_strdup("$");
+			else if (substr[1] == '?')
 				value = ft_itoa(g_info.exit_code);
 			else
 				value = get_value_from_env(mshell->env_list, substr + 1);

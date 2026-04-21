@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 15:42:43 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/14 22:30:42 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:07:33 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,28 @@ https://tiswww.case.edu/php/chet/readline/readline.html
 static int	read_here_doc_lines(char **res, char *eof)
 {
 	char	*buf;
-	int		status;
 
-	status = 0;
 	while (1)
 	{
 		buf = readline("> ");
 		if (g_info.sigint)
-			break ;
-		if (!buf)
-			status = 0;
+		{
+			if (buf)
+				free(buf);
+			return (0);
+		}
 		if (ft_strcmp(buf, eof) == 0)
 		{
-			status = 1;
-			break ;
+			free(buf);
+			return (1);
 		}
 		*res = ft_strjoin_free(*res, buf);
 		*res = ft_strjoin_free(*res, "\n");
+		if (buf)
+				free(buf);
 		if (!res)
-			break ;
+			return (0);
 	}
-	if (buf)
-		free(buf);
-	return (status);
 }
 
 /*
