@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 09:39:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/20 10:31:47 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/21 12:37:26 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	built_in_exit(char **argv, bool *need_exit)
 	if (!ft_strtoint(&num_argv, argv[1]))
 	{
 		msh_error("exit", "numeric argument required");
-		return (EXIT_INVALID_ARG);
+		return (2);
 	}
 	if (argv[2])
 	{
 		*need_exit = false;
 		msh_error("exit", "too many arguments");
-		return (g_info.exit_code);
+		return (EXIT_FAILURE);
 	}
 	return (num_argv % 256);
 }
