@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 16:09:27 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/21 12:07:46 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_env_list(&sh.env_list);
 	free_memory_links(&sh.memory_head);
-	return (0);
+	return (g_info.exit_code);
 }
