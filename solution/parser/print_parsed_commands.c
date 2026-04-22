@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:50:30 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/14 22:32:07 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 22:29:11 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static void	print_string_array(char **arr, const char *label)
 static void	print_one_io(t_io *io)
 {
 	printf("    Type: %s\n", redir_type_to_str(io->type));
-	printf("    Path: %s\n", io->path ? io->path : "(null)");
+	if (io->path)
+		printf("    Path: %s\n", io->path);
+	else
+		printf("    Path: %s\n", "(null)");
 }
 
 static void	print_io_list(t_io *io_list)
@@ -79,7 +82,10 @@ void	print_parsed_commands(t_cmd *cmds)
 	while (cmd)
 	{
 		printf("=== COMMAND %d ===\n", cmd_idx++);
-		printf("  Path: %s\n", cmd->path ? cmd->path : "(null)");
+		if (cmd->path)
+			printf("  Path: %s\n", cmd->path);
+		else
+			printf("  Path: %s\n", "(null)");
 		print_string_array(cmd->args, "  Args");
 		if (cmd->io_list)
 			print_io_list(cmd->io_list);

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 15:42:43 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/20 12:07:33 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 22:29:38 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	read_here_doc_lines(char **res, char *eof)
 		*res = ft_strjoin_free(*res, buf);
 		*res = ft_strjoin_free(*res, "\n");
 		if (buf)
-				free(buf);
+			free(buf);
 		if (!res)
 			return (0);
 	}

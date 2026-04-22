@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/22 20:22:43 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 22:25:10 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*find_cmd_path(char *cmd_name, t_env *env)
 		return (path);
 	}
 }
+
 /*
 	struct stat {
 		mode_t st_mode;   // file type + permissions
