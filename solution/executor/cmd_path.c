@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 13:17:43 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 14:20:20 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,16 @@ int	check_cmd_path(t_exec_info *ei)
 		g_info.exit_code = EXIT_CMD_NOT_FOUND;
 		return (0);
 	}
-	if (!ei->is_built_in && access(ei->path, X_OK) != 0)
+	if (!ei->is_built_in && access(ei->path, F_OK) != 0)
 	{
 		msh_error(ei->argv[0], "No such file or directory");
 		g_info.exit_code = EXIT_CMD_NOT_FOUND;
+		return (0);
+	}
+	if (!ei->is_built_in && access(ei->path, X_OK) != 0)
+	{
+		msh_error(ei->argv[0], "Permission denied");
+		g_info.exit_code = EXIT_PERMISSION_DENIED;
 		return (0);
 	}
 	return (1);
