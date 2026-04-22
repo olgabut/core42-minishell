@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/22 14:20:20 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 20:22:43 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,37 @@ char	*find_cmd_path(char *cmd_name, t_env *env)
 		return (path);
 	}
 }
-
+/*
+	struct stat {
+		mode_t st_mode;   // file type + permissions
+		off_t  st_size;   // file size (bytes)
+	};
+	S_ISREG(st.st_mode)  // regular file
+	S_ISDIR(st.st_mode)  // directory
+*/
 int	check_cmd_path(t_exec_info *ei)
 {
-	if (!ei->is_built_in && ei->path == NULL)
+	struct stat	path_stat;
+
+	if (ei->path == NULL)
 	{
 		msh_error(ei->argv[0], "command not found");
-		g_info.exit_code = EXIT_CMD_NOT_FOUND;
-		return (0);
+		return (g_info.exit_code = EXIT_CMD_NOT_FOUND, 0);
 	}
-	if (!ei->is_built_in && access(ei->path, F_OK) != 0)
+	if (stat(ei->path, &path_stat) != 0)
 	{
 		msh_error(ei->argv[0], "No such file or directory");
-		g_info.exit_code = EXIT_CMD_NOT_FOUND;
-		return (0);
+		return (g_info.exit_code = EXIT_CMD_NOT_FOUND, 0);
 	}
-	if (!ei->is_built_in && access(ei->path, X_OK) != 0)
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		msh_error(ei->argv[0], "is a directory");
+		return (g_info.exit_code = EXIT_PERMISSION_DENIED, 0);
+	}
+	if (access(ei->path, X_OK) != 0)
 	{
 		msh_error(ei->argv[0], "Permission denied");
-		g_info.exit_code = EXIT_PERMISSION_DENIED;
-		return (0);
+		return (g_info.exit_code = EXIT_PERMISSION_DENIED, 0);
 	}
 	return (1);
 }

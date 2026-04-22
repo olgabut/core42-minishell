@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/22 12:32:37 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 18:23:57 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
