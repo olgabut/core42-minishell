@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:13:43 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/19 13:46:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 13:19:49 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	execute_builtin_cmd_in_parent_process(t_exec_info *ei, t_minishell *sh)
 
 	if (!ei->argv || !ei->argv[0])
 		return (1);
+	if (ei->is_error)
+	{
+		g_info.exit_code = EXIT_FAILURE;
+		return (1);
+	}
 	if (redirect_in_parent(sh, ei))
 		return (1);
 	res = choose_built_in(ei, sh);

@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 15:36:51 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 13:31:04 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 */
 static void	execute_external_cmd_in_child_process(t_exec_info *ei)
 {
-	if (execve(ei->path, ei->argv, ei->envp) == -1)
+	if (ei->is_error)
+		exit(EXIT_FAILURE);
+	else if (execve(ei->path, ei->argv, ei->envp) == -1)
 	{
 		if (errno == ENOENT)
 			exit(EXIT_CMD_NOT_FOUND);
@@ -53,8 +55,8 @@ int	run_child_process(t_exec_info *ei, t_minishell *sh)
 	if (pid == 0)
 	{
 		set_signals_in_child_process();
-		if (redirect_infd_in_child(ei) < 0
-			|| redirect_outfd_in_child(ei) < 0
+		if (redirect_outfd_in_child(ei) < 0
+			|| redirect_infd_in_child(ei) < 0
 			|| close_all_pipes(sh->ei_list) < 0)
 		{
 			exit(errno);
@@ -63,7 +65,7 @@ int	run_child_process(t_exec_info *ei, t_minishell *sh)
 			execute_builtin_cmd_in_child_process(ei, sh);
 		else
 			execute_external_cmd_in_child_process(ei);
-		exit(g_info.exit_code);
+		// exit(g_info.exit_code);
 	}
 	return (pid);
 }

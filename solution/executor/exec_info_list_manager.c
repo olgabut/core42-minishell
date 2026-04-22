@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:12:04 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 13:42:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 12:33:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_exec_info	*create_exec_info(t_cmd *cmd, t_minishell *sh)
 		return (NULL);
 	new_ei->next = NULL;
 	new_ei->prev = NULL;
+	new_ei->is_error = false;
 	new_ei->argv = get_arg_array(&sh->memory_head, cmd->args_list);
 	if (!new_ei->argv)
 		return (NULL);

@@ -6,39 +6,45 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/19 15:45:25 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 13:30:48 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "executor/close_fd.h"
 
 int	redirect_infd_in_child(t_exec_info *ei)
 {
-	if (ei->infd != STDIN_FILENO)
+	if (!ei->is_error && ei->infd != STDIN_FILENO)
 	{
 		dup2(ei->infd, STDIN_FILENO);
 		if (ei->pipe_infd != -1)
 			close(ei->pipe_infd);
 	}
 	else if (ei->pipe_infd != -1)
-	{
 		dup2(ei->pipe_infd, STDIN_FILENO);
-	}
+
+	if (ei->is_error && ei->pipe_infd != -1)
+		close(ei->pipe_infd);
+	if (ei->prev && ei->prev->is_error && ei->pipe_infd != -1)
+		close(ei->pipe_infd);
 	return (0);
 }
 
 int	redirect_outfd_in_child(t_exec_info *ei)
 {
-	if (ei->outfd != STDOUT_FILENO)
+	if (!ei->is_error && ei->outfd != STDOUT_FILENO)
 	{
 		dup2(ei->outfd, STDOUT_FILENO);
 		if (ei->pipe_outfd != -1)
 			close(ei->pipe_outfd);
 	}
 	else if (ei->pipe_outfd != -1)
-	{
 		dup2(ei->pipe_outfd, STDOUT_FILENO);
-	}
+	if (ei->is_error && ei->pipe_outfd != -1)
+		close(ei->pipe_outfd);
+	if (ei->next && ei->next->is_error && ei->pipe_outfd != -1)
+		close(ei->pipe_outfd);
 	return (0);
 }
 

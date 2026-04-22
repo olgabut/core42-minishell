@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 13:08:44 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 15:49:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 11:58:45 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ int	close_all_pipes(t_exec_info *ei_head)
 	return (0);
 }
 
+int	close_pipe_fd_in_parent(t_exec_info *ei)
+{
+	if (ei->pipe_infd != -1)
+		if (close(ei->pipe_infd) == -1)
+			return (-1);
+	if (ei->pipe_outfd != -1)
+		if (close(ei->pipe_outfd) == -1)
+			return (-1);
+	return (0);
+}
+
 int	close_fd_in_parent(t_exec_info *ei)
 {
 	if (ei->infd != STDIN_FILENO)
@@ -39,11 +50,5 @@ int	close_fd_in_parent(t_exec_info *ei)
 	if (ei->outfd != STDOUT_FILENO)
 		if (close(ei->outfd) == -1)
 			return (-1);
-	if (ei->pipe_infd != -1)
-		if (close(ei->pipe_infd) == -1)
-			return (-1);
-	if (ei->pipe_outfd != -1)
-		if (close(ei->pipe_outfd) == -1)
-			return (-1);
-	return (0);
+	return (close_pipe_fd_in_parent(ei));
 }

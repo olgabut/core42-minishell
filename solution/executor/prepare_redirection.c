@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 13:17:20 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/21 15:00:42 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 13:24:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	prepare_redirections(t_exec_info *ei, t_io *io_head)
 		{
 			msh_error(io->path, NULL);
 			g_info.exit_code = 1;
-			return (0);
+			ei->is_error = true;
 		}
 		io = io->next;
 	}

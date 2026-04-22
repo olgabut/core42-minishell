@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:31:23 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 15:51:14 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 12:32:37 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_exec_info
 	int					outfd;
 	int					pipe_infd;
 	int					pipe_outfd;
+	bool				is_error;
 	int					infd;
 	char				**argv;
 	char				**envp;
