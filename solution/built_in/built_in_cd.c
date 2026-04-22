@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/20 12:00:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 20:41:23 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	built_in_cd(char **argv, t_env **env)
 		return (EXIT_SUCCESS);
 	if (!env)
 		return (EXIT_SUCCESS);
-	if (count_argv(argv) >= 3)
-		return (msh_error("cd", "too many arguments"), EXIT_FAILURE);
 	if (!argv[1] || ft_strcmp(argv[1], "~") == 0)
 		return (change_to_home_directory(env));
 	if (ft_strcmp(argv[1], "-") == 0)

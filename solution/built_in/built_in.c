@@ -6,26 +6,12 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 10:12:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 12:02:56 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 20:42:35 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "built_in.h"
-
-size_t	count_argv(char **argv)
-{
-	size_t	i;
-
-	if (!argv)
-		return (0);
-	i = 0;
-	while (argv[i])
-	{
-		i++;
-	}
-	return (i);
-}
 
 /*
 	Return
