@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:35:21 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/22 13:31:04 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 22:01:24 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	run_child_process(t_exec_info *ei, t_minishell *sh)
 			execute_builtin_cmd_in_child_process(ei, sh);
 		else
 			execute_external_cmd_in_child_process(ei);
-		// exit(g_info.exit_code);
 	}
 	return (pid);
 }

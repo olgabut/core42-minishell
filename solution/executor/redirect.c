@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:28:42 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/22 13:30:48 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 21:24:21 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	redirect_infd_in_child(t_exec_info *ei)
 	}
 	else if (ei->pipe_infd != -1)
 		dup2(ei->pipe_infd, STDIN_FILENO);
-
+	if (ei->is_error)
+		close(ei->infd);
 	if (ei->is_error && ei->pipe_infd != -1)
 		close(ei->pipe_infd);
-	if (ei->prev && ei->prev->is_error && ei->pipe_infd != -1)
-		close(ei->pipe_infd);
+	if (ei->is_error && ei->prev && ei->prev->pipe_outfd != -1)
+		close(ei->prev->pipe_outfd);
 	return (0);
 }
 
@@ -41,10 +42,12 @@ int	redirect_outfd_in_child(t_exec_info *ei)
 	}
 	else if (ei->pipe_outfd != -1)
 		dup2(ei->pipe_outfd, STDOUT_FILENO);
+	if (ei->is_error)
+		close(ei->outfd);
 	if (ei->is_error && ei->pipe_outfd != -1)
 		close(ei->pipe_outfd);
-	if (ei->next && ei->next->is_error && ei->pipe_outfd != -1)
-		close(ei->pipe_outfd);
+	if (ei->is_error && ei->next && ei->next->pipe_infd != -1)
+		close(ei->next->pipe_infd);
 	return (0);
 }
 
