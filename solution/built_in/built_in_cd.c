@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 13:37:11 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/22 20:41:23 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/23 12:49:18 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,20 @@ static int	change_to_old_directory(t_env **env)
 	return (change_directory(env, old_dir, true));
 }
 
+static size_t	count_argv(char **argv)
+{
+	size_t	i;
+
+	if (!argv)
+		return (0);
+	i = 0;
+	while (argv[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
 /*
 	built in CD command
 	minishell: cd with only a relative or absolute path
@@ -82,6 +96,8 @@ int	built_in_cd(char **argv, t_env **env)
 		return (EXIT_SUCCESS);
 	if (!env)
 		return (EXIT_SUCCESS);
+	if (count_argv(argv) >= 3)
+		return (msh_error("cd", "too many arguments"), EXIT_FAILURE);
 	if (!argv[1] || ft_strcmp(argv[1], "~") == 0)
 		return (change_to_home_directory(env));
 	if (ft_strcmp(argv[1], "-") == 0)

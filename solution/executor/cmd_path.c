@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 21:00:37 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/22 22:25:10 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/23 09:07:09 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	check_cmd_path(t_exec_info *ei)
 	}
 	if (S_ISDIR(path_stat.st_mode))
 	{
-		msh_error(ei->argv[0], "is a directory");
+		msh_error(ei->argv[0], "Is a directory");
 		return (g_info.exit_code = EXIT_PERMISSION_DENIED, 0);
 	}
 	if (access(ei->path, X_OK) != 0)
