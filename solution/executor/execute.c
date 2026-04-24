@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/24 11:11:41 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:45:25 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	wait_pids(pid_t *pids, int cmd_count)
 {
 	int		finished;
 	pid_t	cur_pid;
-	int	status;
+	int		status;
 
 	finished = 0;
 	while (finished < cmd_count)
