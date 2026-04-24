@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 09:30:33 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/21 12:07:46 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:38:59 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 
 t_global	g_info;
 
-static void	init_shell(t_minishell *sh, t_env **env_list)
+static void	init_shell(t_minishell *sh)
 {
-	sh->env_list = *env_list;
 	sh->cmd_list = NULL;
 	sh->memory_head = NULL;
 	sh->stdin_backup = STDIN_FILENO;
@@ -34,11 +33,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)**argv;
 	init_env(&env_list, envp);
+	sh.env_list = env_list;
 	g_info.sigint = 0;
 	g_info.exit_code = 0;
 	while (1)
 	{
-		init_shell(&sh, &env_list);
+		init_shell(&sh);
 		token_head = NULL;
 		if (!lexer(&sh, &token_head))
 			break ;
