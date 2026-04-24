@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprikhod <dprikhod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 12:56:25 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/02/08 13:07:29 by dprikhod         ###   ########.fr       */
+/*   Updated: 2026/04/22 22:32:33 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int	ft_fprintf(int fd, const char *format, ...)
 	return (count);
 }
 
-int ft_printf(const char *format, ...) { 
+int	ft_printf(const char *format, ...)
+{
 	va_list	args;
 	int		i;
 	int		count;

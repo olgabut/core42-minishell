@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 12:11:48 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 13:44:41 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/24 10:35:33 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	prepare_exec_info_list(t_exec_info **ei_head, t_minishell *sh)
 		if (!new_ei)
 			return (0);
 		add_new_exec_info_to_list(ei_head, new_ei);
-		if (!check_cmd_path(new_ei))
-			return (0);
-		if (!prepare_redirections(new_ei, cmd->io_list))
+		if (!new_ei->is_built_in && !check_cmd_path(new_ei))
 			return (0);
 		if (!prepare_pipe_fd(new_ei))
+			return (0);
+		if (!prepare_redirections(new_ei, cmd->io_list))
 			return (0);
 		cmd = cmd->next;
 	}

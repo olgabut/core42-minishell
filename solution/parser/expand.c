@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 13:30:28 by dprikhod          #+#    #+#             */
-/*   Updated: 2026/04/21 11:43:37 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/22 22:48:07 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	cut_word_before_expand(t_list **substr_list_head, char *word)
 	char	*substr;
 
 	i = 0;
-	*substr_list_head = NULL;
 	while (word[i] != '\0')
 	{
 		if (word[i] == '$')
@@ -37,21 +36,13 @@ void	cut_word_before_expand(t_list **substr_list_head, char *word)
 			beginning_of_str(&substr, word, i);
 			if (substr)
 				ft_lstadd_back(substr_list_head, ft_lstnew(substr));
-			word += i;
-			i = 0;
 			if (word[i + 1] == '?')
-			{
 				substr = ft_strdup("$?");
-				i = 2;
-			}
 			else
-			{
-				substr = get_var_name(word);
-				i = ft_strlen(substr);
-			}
+				substr = get_var_name(word + i);
 			if (substr)
 				ft_lstadd_back(substr_list_head, ft_lstnew(substr));
-			word += i;
+			word += i + ft_strlen(substr);
 			i = -1;
 		}
 		i++;
