@@ -6,7 +6,7 @@
 /*   By: obutolin <obutolin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 08:34:55 by obutolin          #+#    #+#             */
-/*   Updated: 2026/04/19 14:46:55 by obutolin         ###   ########.fr       */
+/*   Updated: 2026/04/24 11:11:41 by obutolin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,28 @@ static int	run_child_processes(t_exec_info *ei_head, pid_t **pids,
 
 static int	wait_pids(pid_t *pids, int cmd_count)
 {
-	int	i;
+	int		finished;
+	pid_t	cur_pid;
 	int	status;
-	int	sig;
 
-	i = 0;
-	while (i < cmd_count)
+	finished = 0;
+	while (finished < cmd_count)
 	{
-		waitpid(pids[i], &status, 0);
-		if (i == cmd_count - 1)
+		cur_pid = waitpid(-1, &status, 0);
+		if (cur_pid == pids[cmd_count - 1])
 		{
 			if (WIFEXITED(status))
 				g_info.exit_code = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				sig = WTERMSIG(status);
-				g_info.exit_code = 128 + sig;
-				if (sig == SIGQUIT)
+				g_info.exit_code = 128 + WTERMSIG(status);
+				if (WTERMSIG(status) == SIGQUIT)
 					write(1, "Quit (core dumped)\n", 19);
-				if (sig == SIGINT)
+				if (WTERMSIG(status) == SIGINT)
 					write(1, "\n", 1);
 			}
 		}
-		i++;
+		finished++;
 	}
 	return (1);
 }
